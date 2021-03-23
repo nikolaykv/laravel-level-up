@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 use Faker\Factory;
 
 
-$factory->define(Student::class, function (Faker $faker) {
+$factory->define(Student::class, function (Faker $faker)  {
 
     $faker = Factory::create('ru_RU');
 

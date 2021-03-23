@@ -11,10 +11,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
         $this->call([
             GroupSeeder::class,
-            GradeSeeder::class
+            GradeSeeder::class,
         ]);
+
         factory(\App\Models\Student::class, 5)->create();
     }
 }

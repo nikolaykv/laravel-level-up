@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class GradeSeeder extends Seeder
 {
@@ -18,7 +19,7 @@ class GradeSeeder extends Seeder
 
             $grades[] = [
                 'name' => $name,
-                'value' => mt_rand(1, 5)
+                'value' => mt_rand(1, 5),
             ];
         }
 
