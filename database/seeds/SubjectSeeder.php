@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class GradeSeeder extends Seeder
+class SubjectSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,17 +12,18 @@ class GradeSeeder extends Seeder
      */
     public function run()
     {
-        $grades = [];
+        $subjects = [];
 
         for ($i = 1; $i <= 5; $i++) {
             $name = 'Название предмета №' . $i;
 
-            $grades[] = [
+            $subjects[] = [
                 'name' => $name,
-                'value' => mt_rand(1, 5),
+                'value' => rand(1, 5),
+                'student_id' => factory('App\Models\Student')->create()->id,
             ];
         }
 
-        DB::table('grades')->insert($grades);
+        DB::table('subjects')->insert($subjects);
     }
 }

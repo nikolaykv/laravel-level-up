@@ -19,9 +19,6 @@ class CreateStudentsTable extends Migration
             $table->bigInteger('group_id')->unsigned()->nullable();
             $table->foreign('group_id')->references('id')->on('groups');
 
-            $table->bigInteger('grade_id')->unsigned()->nullable();
-            $table->foreign('grade_id')->references('id')->on('grades');
-
             $table->string('name')->nullable()->comment('Имя студента');
             $table->string('surname')->nullable()->comment('Фамилия студента');
             $table->timestamp('created_at')->useCurrent();

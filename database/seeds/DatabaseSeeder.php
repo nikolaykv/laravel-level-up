@@ -14,9 +14,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             GroupSeeder::class,
-            GradeSeeder::class,
+            SubjectSeeder::class,
         ]);
-
-        factory(\App\Models\Student::class, 5)->create();
     }
 }

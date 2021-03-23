@@ -15,6 +15,5 @@ $factory->define(Student::class, function (Faker $faker)  {
         'name' => $faker->firstName,
         'surname' => $faker->lastName,
         'group_id' => $faker->numberBetween(1, 5),
-        'grade_id' => $faker->numberBetween(1, 5)
     ];
 });

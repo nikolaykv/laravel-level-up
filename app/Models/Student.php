@@ -10,4 +10,8 @@ class Student extends Model
     {
         return $this->belongsTo(Group::class);
     }
+
+    public function subject() {
+        return $this->hasOne(Subject::class);
+    }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGradesTable extends Migration
+class CreateSubjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateGradesTable extends Migration
      */
     public function up()
     {
-        Schema::create('grades', function (Blueprint $table) {
+        Schema::create('subjects', function (Blueprint $table) {
             $table->id();
+
             $table->string('name')->comment('Название предмета');
-            $table->string('value')->comment('Оценка');
+            $table->integer('value')->comment('Оценка студенту по предмету');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
@@ -29,6 +30,6 @@ class CreateGradesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grades');
+        Schema::dropIfExists('subjects');
     }
 }
