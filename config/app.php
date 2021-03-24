@@ -174,8 +174,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        \Agontuk\Schema\SchemaServiceProvider::class,
-        App\Providers\FakerServiceProvider::class
 
 
     ],

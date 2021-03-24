@@ -18,8 +18,10 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 - Database agnostic [schema migrations](https://laravel.com/docs/migrations).
 - [Robust background job processing](https://laravel.com/docs/queues).
 - [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-  
-###Журнал изменений [Laravel level up от Framework Team](https://docs.google.com/document/d/1iyhYo-xlRT5Xq-p8wzOwyY6d79zZiGhoDhbj18J215g/edit#heading=h.3qvtvhi25eb4):
+
+###Журнал изменений 
+
+[Laravel level up от Framework Team](https://docs.google.com/document/d/1iyhYo-xlRT5Xq-p8wzOwyY6d79zZiGhoDhbj18J215g/edit#heading=h.3qvtvhi25eb4):
 
     1. initial commit
         - Новые миграции;
@@ -33,3 +35,8 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Организовать связть один к одному между моделями Student and Subject;
         - Subject на Student - обратное отношение;
         - Миграции и seeders - в рамках задания №2 (Laravel, миграции и модели)
+    4. В текщуем коммите:
+        - Student - модель пользователя, с полями по дефолту как у User;
+        - Для регистрации используем FormRequest;
+        - шаблоны для авторизации и регистрации, npm сборка, composer.phar и обновление зависимостей, языковые файлы;
+        - стандартная ui bootsrtap аутенфикация переделана под нужны проекта;

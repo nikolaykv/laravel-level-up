@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b5b68c3b3711f52d352d5818dc5f7aa7",
+    "content-hash": "30c914d21933e21cbfb9d8a155e6e8db",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -599,22 +599,22 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.2.0",
+            "version": "7.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "0aa74dfb41ae110835923ef10a9d803a22d50e79"
+                "reference": "7008573787b430c1c1f650e3722d9bba59967628"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/0aa74dfb41ae110835923ef10a9d803a22d50e79",
-                "reference": "0aa74dfb41ae110835923ef10a9d803a22d50e79",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/7008573787b430c1c1f650e3722d9bba59967628",
+                "reference": "7008573787b430c1c1f650e3722d9bba59967628",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/promises": "^1.4",
-                "guzzlehttp/psr7": "^1.7",
+                "guzzlehttp/psr7": "^1.7 || ^2.0",
                 "php": "^7.2.5 || ^8.0",
                 "psr/http-client": "^1.0"
             },
@@ -622,6 +622,7 @@
                 "psr/http-client-implementation": "1.0"
             },
             "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.4.1",
                 "ext-curl": "*",
                 "php-http/client-integration-tests": "^3.0",
                 "phpunit/phpunit": "^8.5.5 || ^9.3.5",
@@ -635,7 +636,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "7.1-dev"
+                    "dev-master": "7.3-dev"
                 }
             },
             "autoload": {
@@ -677,7 +678,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.2.0"
+                "source": "https://github.com/guzzle/guzzle/tree/7.3.0"
             },
             "funding": [
                 {
@@ -697,7 +698,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-10T11:47:56+00:00"
+            "time": "2021-03-23T11:33:13+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -828,6 +829,51 @@
                 "source": "https://github.com/guzzle/psr7/tree/1.8.1"
             },
             "time": "2021-03-21T16:25:00+00:00"
+        },
+        {
+            "name": "laravel-lang/lang",
+            "version": "7.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Laravel-Lang/lang.git",
+                "reference": "679a65755db37b35acd36a5e0ca51e055815a00a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/679a65755db37b35acd36a5e0ca51e055815a00a",
+                "reference": "679a65755db37b35acd36a5e0ca51e055815a00a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*"
+            },
+            "suggest": {
+                "andrey-helldar/laravel-lang-publisher": "Easy installation and update of translation files for your project",
+                "arcanedev/laravel-lang": "Translations manager and checker for Laravel 5",
+                "overtrue/laravel-lang": "Command to add languages in your project"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Laravel-Lang Team"
+                }
+            ],
+            "description": "Languages for Laravel",
+            "keywords": [
+                "lang",
+                "languages",
+                "laravel",
+                "lpm"
+            ],
+            "support": {
+                "issues": "https://github.com/Laravel-Lang/lang/issues",
+                "source": "https://github.com/Laravel-Lang/lang/tree/7.0.9"
+            },
+            "time": "2020-11-30T20:35:41+00:00"
         },
         {
             "name": "laravel/framework",
@@ -1058,6 +1104,61 @@
                 "source": "https://github.com/laravel/tinker/tree/v2.6.1"
             },
             "time": "2021-03-02T16:53:12+00:00"
+        },
+        {
+            "name": "laravel/ui",
+            "version": "v2.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/ui.git",
+                "reference": "d01a705763c243b07be795e9d1bb47f89260f73d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/ui/zipball/d01a705763c243b07be795e9d1bb47f89260f73d",
+                "reference": "d01a705763c243b07be795e9d1bb47f89260f73d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^7.0",
+                "illuminate/filesystem": "^7.0",
+                "illuminate/support": "^7.0",
+                "php": "^7.2.5|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Ui\\UiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Ui\\": "src/",
+                    "Illuminate\\Foundation\\Auth\\": "auth-backend/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Laravel UI utilities and presets.",
+            "keywords": [
+                "laravel",
+                "ui"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/ui/issues",
+                "source": "https://github.com/laravel/ui/tree/v2.5.0"
+            },
+            "time": "2020-11-03T19:45:19+00:00"
         },
         {
             "name": "league/commonmark",
@@ -4738,71 +4839,6 @@
     ],
     "packages-dev": [
         {
-            "name": "agontuk/schema-builder",
-            "version": "1.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Agontuk/schema-builder.git",
-                "reference": "9e36b611228bd94dc83a21c4aa55f05e48979350"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Agontuk/schema-builder/zipball/9e36b611228bd94dc83a21c4aa55f05e48979350",
-                "reference": "9e36b611228bd94dc83a21c4aa55f05e48979350",
-                "shasum": ""
-            },
-            "require": {
-                "ext-zip": "*",
-                "illuminate/filesystem": "^5.1|^6|^7|^8",
-                "illuminate/http": "^5.1|^6|^7|^8",
-                "illuminate/support": "^5.1|^6|^7|^8",
-                "league/flysystem": "^1.0",
-                "league/flysystem-ziparchive": "^1.0"
-            },
-            "require-dev": {
-                "phpmd/phpmd": "^2.6"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Agontuk\\Schema\\SchemaServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Agontuk\\Schema\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Iftekhar Rifat",
-                    "email": "rifat662@gmail.com",
-                    "homepage": "https://github.com/Agontuk",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Schema designer & migration generator for laravel & lumen",
-            "homepage": "https://github.com/Agontuk/schema-builder",
-            "keywords": [
-                "database",
-                "migration generator",
-                "schema",
-                "schema builder",
-                "schema design"
-            ],
-            "support": {
-                "issues": "https://github.com/Agontuk/schema-builder/issues",
-                "source": "https://github.com/Agontuk/schema-builder/tree/v1.3.0"
-            },
-            "time": "2021-02-05T17:30:47+00:00"
-        },
-        {
             "name": "barryvdh/laravel-debugbar",
             "version": "v3.5.1",
             "source": {
@@ -5321,57 +5357,6 @@
             "time": "2020-07-09T08:09:16+00:00"
         },
         {
-            "name": "league/flysystem-ziparchive",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/flysystem-ziparchive.git",
-                "reference": "c6d7c7ea23a57ee802d533ab9eb9f19dd5c5fc45"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-ziparchive/zipball/c6d7c7ea23a57ee802d533ab9eb9f19dd5c5fc45",
-                "reference": "c6d7c7ea23a57ee802d533ab9eb9f19dd5c5fc45",
-                "shasum": ""
-            },
-            "require": {
-                "ext-zip": "*",
-                "league/flysystem": "~1.0",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "0.9.*",
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "League\\Flysystem\\ZipArchive\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Frank de Jonge",
-                    "email": "info@frenky.net"
-                }
-            ],
-            "description": "Flysystem adapter for ZipArchive's",
-            "support": {
-                "issues": "https://github.com/thephpleague/flysystem-ziparchive/issues",
-                "source": "https://github.com/thephpleague/flysystem-ziparchive/tree/master"
-            },
-            "time": "2016-12-20T08:36:16+00:00"
-        },
-        {
             "name": "maximebf/debugbar",
             "version": "v1.16.5",
             "source": {
@@ -5435,57 +5420,6 @@
                 "source": "https://github.com/maximebf/php-debugbar/tree/v1.16.5"
             },
             "time": "2020-12-07T11:07:24+00:00"
-        },
-        {
-            "name": "mbezhanov/faker-provider-collection",
-            "version": "2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mbezhanov/faker-provider-collection.git",
-                "reference": "ae3a9ba9421c3a593836689f08da1443b4065bc0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mbezhanov/faker-provider-collection/zipball/ae3a9ba9421c3a593836689f08da1443b4065bc0",
-                "reference": "ae3a9ba9421c3a593836689f08da1443b4065bc0",
-                "shasum": ""
-            },
-            "require": {
-                "fakerphp/faker": "^1.13",
-                "php": "^7.4|^8.0"
-            },
-            "require-dev": {
-                "php-mock/php-mock": "^2.3",
-                "phpunit/phpunit": "^9.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Bezhanov\\Faker\\": "src/Faker"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marin Bezhanov",
-                    "email": "marin.bezhanov@gmail.com",
-                    "homepage": "http://marinbezhanov.com"
-                }
-            ],
-            "description": "A collection of custom providers for the Faker library",
-            "keywords": [
-                "data",
-                "faker",
-                "fixtures"
-            ],
-            "support": {
-                "issues": "https://github.com/mbezhanov/faker-provider-collection/issues",
-                "source": "https://github.com/mbezhanov/faker-provider-collection/tree/2.0.1"
-            },
-            "time": "2021-03-12T06:57:05+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -6361,16 +6295,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.3",
+            "version": "9.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "27241ac75fc37ecf862b6e002bf713b6566cbe41"
+                "reference": "c73c6737305e779771147af66c96ca6a7ed8a741"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/27241ac75fc37ecf862b6e002bf713b6566cbe41",
-                "reference": "27241ac75fc37ecf862b6e002bf713b6566cbe41",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c73c6737305e779771147af66c96ca6a7ed8a741",
+                "reference": "c73c6737305e779771147af66c96ca6a7ed8a741",
                 "shasum": ""
             },
             "require": {
@@ -6448,7 +6382,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.3"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.4"
             },
             "funding": [
                 {
@@ -6460,7 +6394,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-03-17T07:30:34+00:00"
+            "time": "2021-03-23T07:16:29+00:00"
         },
         {
             "name": "sebastian/cli-parser",
