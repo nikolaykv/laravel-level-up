@@ -18,6 +18,8 @@ class CreateAdminsTable extends Migration
             $table->text('name')->nullable()->comment('Имя админа');
             $table->string('email')->nullable()->comment('E-mail для входа');
             $table->string('password');
+            $table->rememberToken()
+                ->comment('Для хранения токена, пользователей, выбравших вариант "Запомнить меня"');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });

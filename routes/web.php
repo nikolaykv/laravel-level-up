@@ -13,10 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['verify' => true]);
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    Route::get('login', 'AdminController@index');
+    Route::post('login', 'AdminController@login')->name('admin.login');
+});
 
+Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
