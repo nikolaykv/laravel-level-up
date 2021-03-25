@@ -1,0 +1,61 @@
+/* xl-размер (>=1200px) */
+/* CSS для >=1200px */
+
+/* lg-размер (<=1199px) */
+@media (max-width: 1199px) {
+    /* CSS для ширины от 992px до 1199px */
+    .root-page {
+        margin-top: 25%;
+    }
+}
+
+/* md-размер (<=991px) */
+@media (max-width: 991px) {
+    /* CSS для ширины от 768px до 991px */
+    .root-page {
+        margin-top: 32%;
+    }
+}
+
+/* sm-размер (<=768px) */
+@media (max-width: 767px) {
+    /* CSS для ширины от 576px до 767px */
+    .root-page {
+        margin-top: 40%;
+    }
+    .root-page a {
+        font-size: 16px;
+    }
+
+    .root-page .title {
+        font-size: 3.5em;
+    }
+}
+
+/* xs-размер (<=575px) */
+@media (max-width: 575px) {
+    /* CSS для ширины до 575px (включительно) */
+    .root-page {
+        margin-top: 40%;
+    }
+}
+
+@media (max-width: 425px) {
+    .root-page {
+        margin-top: 50%;
+    }
+    .root-page a {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 375px) {
+    .root-page {
+        margin-top: 70%;
+    }
+    .root-page a {
+        font-size: 12px;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+}

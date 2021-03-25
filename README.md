@@ -40,3 +40,5 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Для регистрации используем FormRequest;
         - шаблоны для авторизации и регистрации, npm сборка, composer.phar и обновление зависимостей, языковые файлы;
         - стандартная ui bootsrtap аутенфикация переделана под нужны проекта;
+    5. В текущем коммите:
+        - Разметка, стили, адаптив, сборка под прод;
