@@ -19,10 +19,10 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 - [Robust background job processing](https://laravel.com/docs/queues).
 - [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-###Журнал изменений 
 
 [Laravel level up от Framework Team](https://docs.google.com/document/d/1iyhYo-xlRT5Xq-p8wzOwyY6d79zZiGhoDhbj18J215g/edit#heading=h.3qvtvhi25eb4):
 
+    Журнал изменений:
     1. initial commit
         - Новые миграции;
         - Новые фабрики;
@@ -32,7 +32,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Организована связь Один ко многим (между моделью группа и студент). В одной группе может быть несколько студентов.
         - Также организована обратная связь Один ко многим (можно получить информацию о группе, в которой находиться тот или иной студент)
     3. В текущем коммите:
-        - Организовать связть один к одному между моделями Student and Subject;
+        - Организовать связь один к одному между моделями Student and Subject;
         - Subject на Student - обратное отношение;
         - Миграции и seeders - в рамках задания №2 (Laravel, миграции и модели)
     4. В текщуем коммите:
