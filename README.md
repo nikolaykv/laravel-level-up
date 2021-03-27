@@ -49,3 +49,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Правки в шаблоне регистрации пользователей студентов;
     7. В текущем коммите:
         - Наработки по авторизации для админа.
+    8. В текущем коммите::
+        - Установка и настройка laravel/telescope;
+        - Удалил Barryvdh/laravel-debugbar;
+        - Отказался полностью от изменений в седьмом коммите.
