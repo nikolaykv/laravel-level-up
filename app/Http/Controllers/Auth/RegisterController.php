@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Models\Student;
+use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterFormRequest;
+
 
 class RegisterController extends Controller
 {
@@ -63,18 +65,25 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return \App\Models\Student
+     * @param array $data
+     * @return \App\Models\User
      */
     protected function create(array $data)
     {
-        return Student::create([
+        $user = User::create([
             'name' => $data['name'],
             'surname' => $data['surname'],
-            'group_id' => $data['group_id'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $student = Student::create([
+            'group_id' => $data['group_id'],
+        ]);
+
+        $student->user()->save(User::find($user->id));
+
+        return $user;
     }
 
 }

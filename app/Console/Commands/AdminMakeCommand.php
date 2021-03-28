@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 
@@ -47,16 +47,19 @@ class AdminMakeCommand extends Command
             $details = $this->askForUserDetails($details ?? null);
 
             $name = $details['name'];
+            $surname = $details['surname'];
             $email = $details['email'];
             $password = $details['password'];
 
-        } while (!$this->confirm("Создать нового пользователя: {$name} <{$email}>?", true));
+        } while (!$this->confirm("Создать нового пользователя: {$name} {$surname} <{$email}>?", true));
 
 
-        $user = Admin::forceCreate([
+        $user = User::forceCreate([
             'name' => $name,
+            'surname' => $surname,
             'email' => $email,
-            'password' => Hash::make($password)
+            'password' => Hash::make($password),
+            'email_verified_at' => now(),
         ]);
 
         $this->info("Создан новый пользователь #{$user->id}");
@@ -68,11 +71,12 @@ class AdminMakeCommand extends Command
      */
     protected function askForUserDetails($defaults = null)
     {
-        $name = $this->ask('Полное имя нового пользователя?', $defaults['name'] ?? null);
+        $name = $this->ask('Имя нового пользователя?', $defaults['name'] ?? null);
+        $surname = $this->ask('Фамилия имя нового пользователя?', $defaults['surname'] ?? null);
         $email = $this->askUniqueEmail('Email адрес нового пользователя?', $defaults['email'] ?? null);
         $password = $this->ask('Пароль нового пользователя?', $defaults['password'] ?? null);
 
-        return compact('name', 'email', 'password');
+        return compact('name', 'surname', 'email', 'password');
     }
 
     /**
@@ -109,7 +113,7 @@ class AdminMakeCommand extends Command
      */
     public function checkEmailIsUnique($email)
     {
-        if ($existingUser = Admin::whereEmail($email)->first()) {
+        if ($existingUser = User::whereEmail($email)->first()) {
             $this->error('Email адрес, "' . $existingUser->email . '" уже используется ' . $existingUser->name . '!');
             return false;
         }

@@ -23,26 +23,6 @@ class CreateStudentsTable extends Migration
                 ->references('id')
                 ->on('groups');
 
-            $table->string('name')
-                ->nullable()
-                ->comment('Имя студента');
-
-            $table->string('password');
-
-            $table->string('surname')
-                ->nullable()
-                ->comment('Фамилия студента');
-
-            $table->string('email')
-                ->unique()
-                ->comment('E-mail при регистрации');
-
-            $table->timestamp('email_verified_at')
-                ->nullable()
-                ->comment('Поле подтверждения E-mail');
-
-            $table->rememberToken()
-                ->comment('Для хранения токена, пользователей, выбравших вариант "Запомнить меня"');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });

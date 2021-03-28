@@ -2,45 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class Student extends Authenticatable implements MustVerifyEmail
+class Student extends Model
 {
-    use Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'surname',
-        'group_id'
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // Все атрибуты данной модели не должны быть назначены массово
+    protected $guarded = [];
 
     public function group()
     {
@@ -50,5 +17,11 @@ class Student extends Authenticatable implements MustVerifyEmail
     public function subject()
     {
         return $this->hasOne(Subject::class);
+    }
+
+    // Обратное полиморфное отношение
+    public function user()
+    {
+        return $this->morphOne('App\Models\User', 'profile');
     }
 }

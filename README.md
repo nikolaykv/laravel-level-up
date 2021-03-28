@@ -53,3 +53,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Установка и настройка laravel/telescope;
         - Удалил Barryvdh/laravel-debugbar;
         - Отказался полностью от изменений в седьмом коммите.
+    9. В текущем коммите:
+        - Реализация полиморфных отношений между моделью Student и User;
+        - В связи с этим частично переписаны миграции и начальные данные;
+        - Отредактирована консольная команда на создание Admin.
