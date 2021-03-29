@@ -65,3 +65,6 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Разделение авторизации Admin и Student, также отдельные шаблоны;
         - Новые языковые переменные;
         - Стили, сборка под прод.
+    11. В текущем коммите:
+        - Некоторые наработки для CRUD groups (маршруты, контролёр, шаблоны, языковые констатны);
+        - Install and incluede Fontawesome free

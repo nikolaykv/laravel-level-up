@@ -25,6 +25,13 @@ Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => 'verified'], function () {
     Route::get('/home', 'HomeController@index')->middleware('is_student')->name('home');
-    Route::view('/admin', 'admin.index')->middleware('is_admin');
-});
 
+    // Учебные группы
+    Route::middleware(['is_admin'])->group(function () {
+        Route::get('/admin', 'CRUD\Groups\GroupController@index')->name('groups.index');
+        Route::resource('/groups', CRUD\Groups\GroupController::class);
+
+        // Редиректы
+        Route::redirect('/groups', '/admin');
+    });
+});

@@ -14,3 +14,4 @@ yarn-error.log
 composer.phar
 public/vendor
 composer.lock
+routes.txt
