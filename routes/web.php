@@ -18,5 +18,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/admin/login', 'Auth\LoginController@showLoginForm');
+Route::post('/admin/login', 'Auth\LoginController@login')->name('admin.login');
+
 Auth::routes(['verify' => true]);
-Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
+
+Route::group(['middleware' => 'verified'], function () {
+    Route::get('/home', 'HomeController@index')->middleware('is_student')->name('home');
+    Route::view('/admin', 'admin.index')->middleware('is_admin');
+});
+

@@ -5,10 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">{{ __('common.login') }}</div>
+                <div class="card-header">
+                    {{ __('common.login') }}
+                </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="@isset($url) {{ route('admin.login') }} @else {{ route('login') }} @endisset">
                         @csrf
 
                         <div class="form-group row">
@@ -70,6 +72,10 @@
                                 </div>
                             </div>
                         </div>
+
+                        @isset($url)
+                            <input type="hidden" name="admin" value="{{ $url }}">
+                        @endisset
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">

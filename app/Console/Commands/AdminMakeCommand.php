@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
@@ -54,12 +55,16 @@ class AdminMakeCommand extends Command
         } while (!$this->confirm("Создать нового пользователя: {$name} {$surname} <{$email}>?", true));
 
 
+        $admin = Admin::create();
+
         $user = User::forceCreate([
             'name' => $name,
             'surname' => $surname,
             'email' => $email,
             'password' => Hash::make($password),
             'email_verified_at' => now(),
+            'profile_id' => $admin->id,
+            'profile_type' => 'App\Models\Admin'
         ]);
 
         $this->info("Создан новый пользователь #{$user->id}");
