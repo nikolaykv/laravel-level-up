@@ -48,7 +48,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        //
+        return view('admin.crud.groups.show', compact('group'));
     }
 
     /**
@@ -59,7 +59,7 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        //
+        return view('admin.crud.groups.edit', compact('group'));
     }
 
     /**
@@ -82,6 +82,6 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        //
+
     }
 }

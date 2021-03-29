@@ -67,4 +67,6 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Стили, сборка под прод.
     11. В текущем коммите:
         - Некоторые наработки для CRUD groups (маршруты, контролёр, шаблоны, языковые констатны);
-        - Install and incluede Fontawesome free
+        - Install and include Fontawesome free
+    12. В текущем коммите:
+        - Продолжаю работу над CRUD groups в интерфейсе админа (шаблоны и логика в ресурсном контролёре GroupController.php)
