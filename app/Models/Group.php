@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Group extends Model
 {
@@ -10,4 +11,8 @@ class Group extends Model
    {
        return $this->hasMany(Student::class);
    }
+    protected $casts = [
+        'created_at'  => 'datetime:Y-m-d H:m',
+        'updated_at' => 'datetime:Y-m-d H:00',
+    ];
 }

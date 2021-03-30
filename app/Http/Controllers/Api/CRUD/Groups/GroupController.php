@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\CRUD\Groups;
+namespace App\Http\Controllers\Api\CRUD\Groups;
 
 use App\Http\Controllers\Controller;
 use App\Models\Group;
@@ -16,7 +16,12 @@ class GroupController extends Controller
     public function index()
     {
         $groups = Group::all();
-        return view('admin.index', compact('groups'));
+
+        if (count($groups) > 0) {
+            return response()->json(compact('groups'));
+        } else {
+            return response('Нет данных', 204);
+        }
     }
 
     /**
@@ -26,7 +31,7 @@ class GroupController extends Controller
      */
     public function create()
     {
-        return view('admin.crud.groups.create');
+        //
     }
 
     /**
@@ -48,7 +53,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        return view('admin.crud.groups.show', compact('group'));
+        return response()->json(compact('group'));
     }
 
     /**
@@ -59,7 +64,7 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        return view('admin.crud.groups.edit', compact('group'));
+        //
     }
 
     /**
@@ -82,6 +87,6 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-
+        //
     }
 }
