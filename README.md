@@ -74,4 +74,8 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Решено переписать логику ресурсного контроллера GroupController.php с учётом jQuery Ajax запросов в темплейтах. 
           GroupController.php теперь стал апи контроллером.
         - Удалены и редактированы шаблоны, а также маршруты с учётом последних изменений.
+    14. В текущем коммите:
+        - Новая ветка, попробую юзануть Vue.js + Ларовское АПИ через jQuery Ajax;
+        - Установлен Vue.js;
+        - Переделаны шаблоны с учётом компонентов vue.
         
