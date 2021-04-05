@@ -27,6 +27,7 @@ Route::group(['middleware' => 'verified'], function () {
     Route::get('/home', 'HomeController@index')->middleware('is_student')->name('home');
 
     Route::middleware(['is_admin'])->group(function () {
+
         Route::group(['prefix' => 'api', 'namespace' => 'Api\CRUD\Groups'], function () {
             Route::resource('/groups', GroupController::class);
         });
