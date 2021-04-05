@@ -18,8 +18,8 @@
                             {{ __('common.admin.you_are_logged') }}
                         </p>
 
-                        <div id="groups">
-                            <groups-component></groups-component>
+                        <div id="tabs">
+                            <tabs></tabs>
                         </div>
                     </div>
                 </div>
@@ -28,4 +28,7 @@
     </div>
 @endsection
 
+@push('vue-components')
+    <script src="{{ asset('js/tabs.js') }}"></script>
+@endpush
 

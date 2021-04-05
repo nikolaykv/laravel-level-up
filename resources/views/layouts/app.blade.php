@@ -83,6 +83,6 @@
 <main class="py-4">
     @yield('content')
 </main>
-<script src="{{ asset('js/vue-app.js') }}"></script>
+@stack('vue-components')
 </body>
 </html>

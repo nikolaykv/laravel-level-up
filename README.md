@@ -78,4 +78,5 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Новая ветка, попробую юзануть Vue.js + Ларовское АПИ через jQuery Ajax;
         - Установлен Vue.js;
         - Переделаны шаблоны с учётом компонентов vue.
-        
+    15. В текущем коммите:
+        - Переделаны табы Bootsrap 4 с использованием возможностей Vue.js
