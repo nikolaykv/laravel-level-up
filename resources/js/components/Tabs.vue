@@ -1,4 +1,4 @@
-<template>
+<template v-on>
     <div>
         <ul class="nav nav-tabs">
             <li class="nav-item">
@@ -23,18 +23,21 @@
                 </a>
             </li>
 
-            <li class="nav-item" v-if="sericeTab">
+            <li class="nav-item" v-if="serviceTab">
                 <a class="nav-link"
                    @click.prevent="setActive('service')"
                    :class="{ active: isActive('service') }">
-                    {{ sericeTab.name }}
+                    {{ serviceTab.name }}
                 </a>
             </li>
         </ul>
 
         <div class="tab-content">
             <div class="tab-pane fade" :class="{ 'active show': isActive('groups') }">
-                <index v-bind:groups="groups" v-on:showDetail="showDetailGroup"></index>
+                <index v-bind:groups="groups"
+                       v-on:showDetail="showDetailGroup"
+                       v-on:editGroup="editDetailGroup">
+                </index>
             </div>
             <div class="tab-pane fade"
                  :class="{ 'active show': isActive('subjects') }">
@@ -44,31 +47,36 @@
                  :class="{ 'active show': isActive('students') }">
                 Студенты
             </div>
-            <div class="tab-pane fade" v-if="sericeTab"
+            <div class="tab-pane fade" v-if="serviceTab"
                  :class="{ 'active show': isActive('service') }">
-                <show v-bind:group="sericeTab"></show>
+
+                <show v-if="components === 'show'" v-bind:group="serviceTab"></show>
+                <edit v-else-if="components === 'edit'" v-bind:obj="serviceTab"></edit>
             </div>
-
-
         </div>
+
     </div>
 </template>
+
 
 <script>
 
 import index from "./groups/index";
 import show from "./groups/show";
+import edit from "./groups/edit";
 
 export default {
     name: 'Tabs',
     components: {
+        edit,
         index,
         show,
     },
     data: () => ({
         activeItem: 'groups',
+        components: false,
         groups: [],
-        sericeTab: false,
+        serviceTab: false,
     }),
     methods: {
         // Переключение и определение текущей вкладки
@@ -78,7 +86,6 @@ export default {
         setActive(menuItem) {
             this.activeItem = menuItem
         },
-
         getGroups() {
             $.ajax({
                 url: '/api/groups',
@@ -93,9 +100,16 @@ export default {
 
         // Обработка данных из дочернего компонента
         showDetailGroup(group) {
-            this.sericeTab = group // Принимаем данные
+            this.serviceTab = group // Принимаем данные
+            this.components = 'show';
             this.activeItem = 'service' // Переключаем вкладку
-        }
+        },
+
+        editDetailGroup(obj) {
+            this.serviceTab = obj;
+            this.components = 'edit';
+            this.activeItem = 'service';
+        },
     },
     watch: {
         // Отслеживание состояния вкладок
@@ -107,13 +121,13 @@ export default {
             }
 
             if (value !== 'service') {
-                this.sericeTab = false
+                this.serviceTab = false
             }
         },
     },
     created() {
         // Делаем Ajax запрос как только создан экземпляр
         this.getGroups();
-    }
+    },
 }
 </script>

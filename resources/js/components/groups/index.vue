@@ -18,7 +18,8 @@
                 <td>{{ group.created_at }}</td>
                 <td>{{ group.updated_at }}</td>
                 <td class="d-xl-flex justify-content-xl-around">
-                    <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"></i>
+                    <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
+                       v-on:click="editGroup({'id':group.id, name: group.name})"></i>
                     <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
                        v-on:click="showGroup(group.id)"></i>
                     <i class="far fa-trash-alt bg-danger text-white btn d-flex align-items-center"></i>
@@ -60,7 +61,12 @@ export default {
                     }
                 });
             }
+        },
+        editGroup(obj) {
+            if (obj) {
+                this.$emit('editGroup', obj);
+            }
         }
-    }
+    },
 }
 </script>
