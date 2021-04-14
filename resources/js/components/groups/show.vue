@@ -18,7 +18,7 @@
                 <td>{{ group.created_at }}</td>
                 <td>{{ group.updated_at }}</td>
                 <td class="d-xl-flex justify-content-xl-around">
-                    <i class="far fa-trash-alt bg-danger text-white btn d-flex align-items-center"></i>
+                   <delete v-bind:id="group.id"></delete>
                 </td>
             </tr>
             </tbody>
@@ -30,12 +30,15 @@
 <script>
 
 import LangVariables from '../../../lang/ru/crud.json'
+import Delete from "./delete";
 
 export default {
     name: 'show',
+    components: {Delete},
     props: ['group'],
     data: () => ({
         variables: LangVariables,
+        id: false
     }),
 }
 </script>
