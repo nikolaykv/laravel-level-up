@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\CRUD;
 use App\Http\Controllers\Controller;
 use App\Models\Group;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\CRUD\Group\NewNameFormRequest;
 
 class GroupController extends Controller
 {
@@ -50,43 +50,20 @@ class GroupController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\CRUD\Group $request
      * @param \App\Models\Group $group
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Group $group)
+    public function update(NewNameFormRequest $request, Group $group)
     {
         $updateItem = Group::findOrFail($group->id);
         if ($updateItem) {
-
-            // Да, запихал проверку сюда, ради одного поля нет смысла юзать FormRequest
-            $rules = [
-                'name' => ['required', 'string', 'max:20'],
-            ];
-            $messages = [
-                'name.required' => 'Поле должно быть заполнено!',
-                'name.string' => 'Поле должно быть строкой!',
-                'name.max:20' => 'Поле не должно быть длиннее 20 символов!'
-            ];
-
-            $validator = Validator::make($request->all(), $rules, $messages);
-
-            if ($validator->fails()) {
-                return response([
-                    'message' => $validator->errors()->first()
-                ]);
-            } else {
-                $updateItem->update($request->all('name'));
-                return response([
-                    'success' => true,
-                    'message' => 'Успешно обновлено!',
-                    'name' => $updateItem->name
-                ]);
-            }
+            $validator = $request->validated();
+            $updateItem->update($request->all('name'));
+            return response()->json($validator);
         } else {
-            return response('Нет данных', 404);
+            return response('Not Found', 404);
         }
-
     }
 
     /**

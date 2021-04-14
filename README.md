@@ -106,3 +106,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Переписан для него роутинг;
         - В update методе - валидация с отправкой ошибок на фронт;
         - Немного стилей, разметки и костылей.
+    18. В текущем коммите:
+        - описал валидацию на изменение имени группы в отдельном классе NewNameFormRequest;
+        - чуть переделал вывод информационных сообщений в edit.vue;
+        - избавился от vue router в package.json.

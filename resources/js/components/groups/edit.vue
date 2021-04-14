@@ -14,15 +14,16 @@
                        autofocus
                        v-model="group.name">
 
-                <div class="alert alert-success mt-3" v-if="success">
-                    {{ message }}
-                </div>
-
-                <span class="invalid-error" v-else>
+              <span class="invalid-error" v-if="error">
                     <strong>
-                        {{ message }}
+                        {{ messages }}
                     </strong>
                 </span>
+
+
+                <div class="alert alert-success mt-3" v-bind:class="isActive">
+                    Успешно обновлено
+                </div>
 
             </div>
 
@@ -37,8 +38,6 @@
 </template>
 
 <script>
-
-
 export default {
     name: "edit",
     props: ['obj'],
@@ -46,8 +45,9 @@ export default {
         group: {
             name: ''
         },
-        message: '',
-        success: '',
+        error: false,
+        messages: '',
+        isActive: 'd-none'
     }),
     methods: {
         updateGroup(obj) {
@@ -61,17 +61,15 @@ export default {
                 dataType: 'json',
                 cache: false,
                 success: (data) => {
-                    if (data.success) {
-                        this.success = data.success
-                        this.message = data.message
-
-                        $('.nav-link.active').text(data.name)
-
-                    } else {
-                        this.success = false
-                        this.message = data.message
-                    }
+                    this.isActive = 'd-block';
+                    $('.nav-link.active').text(data.name);
+                    this.messages = '';
                 },
+                error: (error) => {
+                  this.isActive = 'd-none';
+                    this.error = true;
+                    this.messages = error.responseJSON.errors.name[0];
+                }
             });
         },
     },
