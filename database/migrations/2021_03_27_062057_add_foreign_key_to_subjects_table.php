@@ -14,7 +14,11 @@ class AddForeignKeyToSubjectsTable extends Migration
     public function up()
     {
         Schema::table('subjects', function (Blueprint $table) {
-            $table->foreignId('student_id')->nullable()->references('id')->on('students');
+
+            $table->foreignId('student_id')
+                ->constrained('students')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

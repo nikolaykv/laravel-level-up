@@ -59,7 +59,6 @@ export default {
                 },
                 method: 'patch',
                 dataType: 'json',
-                cache: false,
                 success: (data) => {
                     this.isActive = 'd-block';
                     $('.nav-link.active').text(data.name);
@@ -75,3 +74,13 @@ export default {
     },
 }
 </script>
+
+<style scoped="scoped">
+.invalid-error {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #e3342f;
+}
+</style>

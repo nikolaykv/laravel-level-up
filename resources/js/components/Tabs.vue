@@ -1,4 +1,4 @@
-<template v-on>
+<template>
     <div>
         <ul class="nav nav-tabs">
             <li class="nav-item">
@@ -90,8 +90,6 @@ export default {
             $.ajax({
                 url: '/api/groups',
                 method: 'get',
-                dataType: 'json',
-                cache: false,
                 success: (data) => {
                     this.groups = data.groups
                 }

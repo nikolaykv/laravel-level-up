@@ -11,7 +11,6 @@
             </tr>
             </thead>
             <tbody>
-
             <tr v-for="group in groups" v-bind:key="group.id">
                 <td>{{ group.id }}</td>
                 <td>{{ group.name }}</td>
@@ -22,7 +21,7 @@
                        v-on:click="editGroup({'id':group.id, name: group.name})"></i>
                     <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
                        v-on:click="showGroup(group.id)"></i>
-                    <i class="far fa-trash-alt bg-danger text-white btn d-flex align-items-center"></i>
+                    <delete v-bind:id="group.id"></delete>
                 </td>
             </tr>
 
@@ -41,9 +40,11 @@
 <script>
 
 import LangVariables from '../../../lang/ru/crud.json'
+import Delete from "./delete";
 
 export default {
     name: 'index',
+    components: {Delete},
     props: ['groups'],
     data: () => ({
         variables: LangVariables,
@@ -54,8 +55,6 @@ export default {
                 $.ajax({
                     url: '/api/groups/' + id,
                     method: 'get',
-                    dataType: 'json',
-                    cache: false,
                     success: (data) => {
                         this.$emit('showDetail', data.group)
                     }
@@ -66,7 +65,7 @@ export default {
             if (obj) {
                 this.$emit('editGroup', obj);
             }
-        }
+        },
     },
 }
 </script>

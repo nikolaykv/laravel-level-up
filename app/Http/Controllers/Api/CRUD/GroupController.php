@@ -74,6 +74,11 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        //
+        $deleteItem = Group::findOrFail($group->id);
+        if ($deleteItem) {
+            $deleteItem->delete();
+        } else {
+            return response('error', 404);
+        }
     }
 }
