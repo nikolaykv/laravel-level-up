@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\CRUD;
 
 use App\Http\Controllers\Controller;
 use App\Models\Group;
-use Illuminate\Http\Request;
 use App\Http\Requests\CRUD\Group\NewNameFormRequest;
 
 class GroupController extends Controller
@@ -17,12 +16,7 @@ class GroupController extends Controller
     public function index()
     {
         $groups = Group::all();
-
-        if (count($groups) > 0) {
-            return response()->json(compact('groups'));
-        } else {
-            return response('Нет данных', 204);
-        }
+        return response()->json(compact('groups'));
     }
 
     /**
@@ -31,9 +25,13 @@ class GroupController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NewNameFormRequest $request)
     {
-        //
+        $validator = $request->validated();
+
+        Group::create($request->all());
+
+        return response()->json($validator);
     }
 
     /**

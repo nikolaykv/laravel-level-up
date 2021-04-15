@@ -1,33 +1,25 @@
 <template>
     <div class="form-group row col-md-8 ml-auto mr-auto mt-4">
         <label for="group-name"
-               class="col-md-2 col-form-label text-md-right">
-            {{ variables.edit.name }}
+               class="col-md-3 col-form-label text-md-right">
+            {{ variables.add.name }}
         </label>
 
-
-        <div class="col-md-10">
+        <div class="col-md-9">
             <input id="group-name"
                    type="text"
                    class="form-control"
                    required
                    autofocus
-                   v-bind:placeholder="obj.name"
                    v-model="group.name">
 
-            <span class="invalid-error" v-if="error">
-                    <strong>
-                        {{ messages }}
-                    </strong>
-                </span>
+            <span class="success-message" v-bind:class="isActive">{{ variables.add.success }}</span>
+            <span class="invalid-error" v-if="error">{{ messages }}</span>
 
-            <div class="alert alert-success mt-3" v-bind:class="isActive">
-                {{ variables.edit.success }}
-            </div>
         </div>
         <div class="offset-md-2 col-md-10 text-right mt-3">
-            <button class="btn btn-primary" @click.prevent="updateGroup(obj)">
-                {{ variables.edit["edit-btn"] }}
+            <button class="btn btn-primary" v-on:click="addNew">
+                {{ variables.add.save }}
             </button>
         </div>
     </div>
@@ -37,39 +29,48 @@
 import LangVariables from '../../../lang/ru/crud.json'
 
 export default {
-    name: "edit",
-    props: ['obj'],
+    name: 'add',
     data: () => ({
         group: {
             name: ''
         },
+        counter: 0,
+        variables: LangVariables,
         error: false,
         messages: '',
-        isActive: 'd-none',
-        variables: LangVariables,
+        isActive: 'd-none'
     }),
     methods: {
-        updateGroup(obj) {
+        addNew() {
             $.ajax({
-                url: '/api/groups/' + obj.id,
+                url: '/api/groups',
+                method: 'post',
                 data: {
                     _token: $('meta[name="csrf-token"]').attr('content'),
                     name: this.group.name,
                 },
-                method: 'patch',
-                dataType: 'json',
                 success: (data) => {
+                    this.counter += 1;
                     this.isActive = 'd-block';
-                    $('.nav-link.active').text(data.name);
                     this.messages = '';
+
+                    if (this.counter > 1) {
+                        $('.success-message').text('Вы успешно добавили ещё одну запись!')
+                    }
                 },
                 error: (error) => {
                     this.isActive = 'd-none';
                     this.error = true;
                     this.messages = error.responseJSON.errors.name[0];
-                }
+                },
             });
         },
-    },
+    }
 }
 </script>
+
+<style scoped="scoped">
+.success-message {
+    color: #1d643b;
+}
+</style>

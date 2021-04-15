@@ -3,14 +3,15 @@
         <table class="table table-bordered list">
             <thead>
             <tr>
-                <th>{{ variables.groups.id }}</th>
-                <th>{{ variables.groups.name }}</th>
-                <th>{{ variables.groups.created }}</th>
-                <th>{{ variables.groups.updated }}</th>
-                <th>{{ variables.groups.available_actions }}</th>
+                <th>{{ variables.index.id }}</th>
+                <th>{{ variables.index.name }}</th>
+                <th>{{ variables.index.created }}</th>
+                <th>{{ variables.index.updated }}</th>
+                <th>{{ variables.index.available_actions }}</th>
             </tr>
             </thead>
             <tbody>
+
             <tr v-for="group in groups" v-bind:key="group.id">
                 <td>{{ group.id }}</td>
                 <td>{{ group.name }}</td>
@@ -29,8 +30,8 @@
         </table>
         <div class="container-xl">
             <div class="row d-flex flex-row-reverse justify-content-between">
-                <a class="btn btn-primary" href="#">
-                    {{ variables.groups.add_new }}
+                <a class="btn btn-primary" v-on:click.prevent="addNew('new')">
+                    {{ variables.index.add_new }}
                 </a>
             </div>
         </div>
@@ -55,6 +56,7 @@ export default {
                 $.ajax({
                     url: '/api/groups/' + id,
                     method: 'get',
+                    cache: false,
                     success: (data) => {
                         this.$emit('showDetail', data.group)
                     }
@@ -66,10 +68,11 @@ export default {
                 this.$emit('editGroup', obj);
             }
         },
+        addNew(str) {
+            this.$parent.$data.activeItem = 'service';
+            this.$parent.$data.components = str;
+            this.$parent.$data.serviceTab = {name: 'Добавить новую группу'};
+        }
     },
-
-    created() {
-        console.log(this.html)
-    }
 }
 </script>

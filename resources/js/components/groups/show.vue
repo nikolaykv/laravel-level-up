@@ -3,22 +3,22 @@
         <table class="table table-bordered list">
             <thead>
             <tr>
-                <th>{{ variables.groups.id }}</th>
-                <th>{{ variables.groups.name }}</th>
-                <th>{{ variables.groups.created }}</th>
-                <th>{{ variables.groups.updated }}</th>
-                <th>{{ variables.groups.available_actions }}</th>
+                <th>{{ variables.index.id }}</th>
+                <th>{{ variables.index.name }}</th>
+                <th>{{ variables.index.created }}</th>
+                <th>{{ variables.index.updated }}</th>
+                <th>{{ variables.index.available_actions }}</th>
             </tr>
             </thead>
             <tbody>
 
-            <tr>
+            <tr class="show-group">
                 <td>{{ group.id }}</td>
                 <td>{{ group.name }}</td>
                 <td>{{ group.created_at }}</td>
                 <td>{{ group.updated_at }}</td>
                 <td class="d-xl-flex justify-content-xl-around">
-                   <delete v-bind:id="group.id"></delete>
+                    <delete v-bind:id="group.id"></delete>
                 </td>
             </tr>
             </tbody>
@@ -29,6 +29,7 @@
 
 <script>
 
+
 import LangVariables from '../../../lang/ru/crud.json'
 import Delete from "./delete";
 
@@ -38,7 +39,12 @@ export default {
     props: ['group'],
     data: () => ({
         variables: LangVariables,
-        id: false
+        id: false,
     }),
+    methods: {
+        redrawHtml() {
+            $('.show-group').html('<td class="alert alert-success mt-3 text-center" colspan="5">Запись успешно удалена!</td>')
+        }
+    }
 }
 </script>

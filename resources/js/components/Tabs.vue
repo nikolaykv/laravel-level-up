@@ -5,21 +5,21 @@
                 <a class="nav-link"
                    @click.prevent="setActive('groups')"
                    :class="{ active: isActive('groups') }">
-                    Учебные группы
+                    {{ variables.titles.groups }}
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"
                    @click.prevent="setActive('subjects')"
                    :class="{ active: isActive('subjects') }">
-                    Учебные предметы
+                    {{ variables.titles.subjects }}
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"
                    @click.prevent="setActive('students')"
                    :class="{ active: isActive('students') }">
-                    Студенты
+                    {{ variables.titles.students }}
                 </a>
             </li>
 
@@ -34,27 +34,29 @@
 
         <div class="tab-content">
             <div class="tab-pane fade" :class="{ 'active show': isActive('groups') }">
+
                 <index v-bind:groups="groups"
                        v-on:showDetail="showDetailGroup"
                        v-on:editGroup="editDetailGroup">
                 </index>
+
             </div>
             <div class="tab-pane fade"
                  :class="{ 'active show': isActive('subjects') }">
-                Предметы
+                {{ variables.titles.subjects }}
             </div>
             <div class="tab-pane fade"
                  :class="{ 'active show': isActive('students') }">
-                Студенты
+                {{ variables.titles.students }}
             </div>
             <div class="tab-pane fade" v-if="serviceTab"
                  :class="{ 'active show': isActive('service') }">
 
                 <show v-if="components === 'show'" v-bind:group="serviceTab"></show>
                 <edit v-else-if="components === 'edit'" v-bind:obj="serviceTab"></edit>
+                <add v-else-if="components === 'new'"></add>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -64,10 +66,13 @@
 import index from "./groups/index";
 import show from "./groups/show";
 import edit from "./groups/edit";
+import add from "./groups/add";
+import LangVariables from '../../lang/ru/crud.json'
 
 export default {
     name: 'Tabs',
     components: {
+        add,
         edit,
         index,
         show,
@@ -77,6 +82,7 @@ export default {
         components: false,
         groups: [],
         serviceTab: false,
+        variables: LangVariables,
     }),
     methods: {
         // Переключение и определение текущей вкладки
@@ -92,7 +98,7 @@ export default {
                 method: 'get',
                 success: (data) => {
                     this.groups = data.groups
-                }
+                },
             });
         },
 
@@ -102,7 +108,6 @@ export default {
             this.components = 'show';
             this.activeItem = 'service' // Переключаем вкладку
         },
-
         editDetailGroup(obj) {
             this.serviceTab = obj;
             this.components = 'edit';
@@ -112,7 +117,7 @@ export default {
     watch: {
         // Отслеживание состояния вкладок
         activeItem: function (value) {
-            // пр переключении на соответствующую вкладку
+            // при переключении на соответствующую вкладку
             if (value === 'groups') {
                 // это Ajax запрос
                 this.getGroups();
@@ -127,5 +132,8 @@ export default {
         // Делаем Ajax запрос как только создан экземпляр
         this.getGroups();
     },
+    updated() {
+        this.getGroups();
+    }
 }
 </script>
