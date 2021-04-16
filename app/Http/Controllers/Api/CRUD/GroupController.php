@@ -15,8 +15,22 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Group::all();
-        return response()->json(compact('groups'));
+        $groups = Group::paginate(5);
+
+        $response = [
+            'pagination' => [
+                'total' => $groups->total(),
+                'per_page' => $groups->perPage(),
+                'current_page' => $groups->currentPage(),
+                'last_page' => $groups->lastPage(),
+                'from' => $groups->firstItem(),
+                'to' => $groups->lastItem(),
+            ],
+            'groups' => $groups
+        ];
+
+        return response()->json($response);
+
     }
 
     /**

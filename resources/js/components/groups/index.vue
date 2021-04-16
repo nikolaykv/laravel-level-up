@@ -22,7 +22,8 @@
                        v-on:click="editGroup({'id':group.id, name: group.name})"></i>
                     <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
                        v-on:click="showGroup(group.id)"></i>
-                    <delete v-bind:id="group.id"></delete>
+                    <delete v-bind:id="group.id">
+                    </delete>
                 </td>
             </tr>
 
@@ -46,7 +47,7 @@ import Delete from "./delete";
 export default {
     name: 'index',
     components: {Delete},
-    props: ['groups'],
+    props: ['groups', 'page'],
     data: () => ({
         variables: LangVariables,
     }),
