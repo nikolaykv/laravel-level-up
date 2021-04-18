@@ -120,3 +120,5 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Метод update и фронт для него, общая полировка;
     22. В текущем коммите:
         - Пагинация для group crud на vue.js;
+    23. В текущем коммите:
+        - Завeрешён CRUD фронт на vue.js для групп, без адаптива;

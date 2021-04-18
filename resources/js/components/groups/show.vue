@@ -43,7 +43,7 @@ export default {
     }),
     methods: {
         redrawHtml() {
-            $('.show-group').html('<td class="alert alert-success mt-3 text-center" colspan="5">Запись успешно удалена!</td>')
+            $('.show-group').html('<td class="alert alert-success text-center" colspan="5">Запись успешно удалена!</td>')
         }
     }
 }

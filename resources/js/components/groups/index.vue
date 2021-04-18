@@ -1,6 +1,6 @@
 <template>
     <div>
-        <table class="table table-bordered list">
+        <table class="table table-bordered list" v-if="groups.length > 0">
             <thead>
             <tr>
                 <th>{{ variables.index.id }}</th>
@@ -26,9 +26,13 @@
                     </delete>
                 </td>
             </tr>
-
             </tbody>
         </table>
+
+        <div class="alert alert-danger text-center d-none empty-result mt-3" v-else>
+            {{ variables.index.empty }}
+        </div>
+
         <div class="container-xl">
             <div class="row d-flex flex-row-reverse justify-content-between">
                 <a class="btn btn-primary" v-on:click.prevent="addNew('new')">
@@ -75,5 +79,12 @@ export default {
             this.$parent.$data.serviceTab = {name: 'Добавить новую группу'};
         }
     },
+    updated() {
+        setTimeout(function () {
+            if ($('.empty-result').hasClass('d-none')) {
+                $('.empty-result').removeClass('d-none')
+            }
+        }, 500)
+    }
 }
 </script>
