@@ -122,3 +122,8 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Пагинация для group crud на vue.js;
     23. В текущем коммите:
         - Завeрешён CRUD фронт на vue.js для групп, без адаптива;
+    24. В текущем коммите:
+        - index для CRUD SubjectController и выборка всех предметов через модель User;
+        - Пустой API StudentController;
+        - Маршрутизация;
+        - Переписан GroupSeeder, теперь он запускает фабрику для групп.

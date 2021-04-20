@@ -29,7 +29,9 @@ Route::group(['middleware' => 'verified'], function () {
     Route::middleware(['is_admin'])->group(function () {
         Route::group(['prefix' => 'api', 'namespace' => 'Api\CRUD'], function () {
             Route::apiResources([
-                'groups' => GroupController::class
+                'groups' => GroupController::class,
+                'subjects' => SubjectController::class,
+                'students' => StudentController::class,
             ]);
         });
         Route::view('/admin', 'admin.index');

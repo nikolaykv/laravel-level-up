@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
+
+    protected $appends = ['full_name'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -46,5 +49,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function profile()
     {
         return $this->morphTo();
+    }
+
+    function getFullNameAttribute () {
+        return $this->name . ' ' . $this->surname;
     }
 }

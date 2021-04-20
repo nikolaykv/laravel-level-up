@@ -4,10 +4,14 @@
 
 use App\Models\Subject;
 use Faker\Generator as Faker;
+use Faker\Factory;
 
 $factory->define(Subject::class, function (Faker $faker) {
+
+    $faker = Factory::create('ru_RU');
+
     return [
-        'name' => 'Название предмета №' . strval(rand(1, 5)),
+        'name' => 'Название предмета ' . $faker->text(7),
         'value' => rand(1, 5)
     ];
 });

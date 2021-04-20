@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class GroupSeeder extends Seeder
 {
@@ -12,16 +11,6 @@ class GroupSeeder extends Seeder
      */
     public function run()
     {
-        $groups = [];
-
-        for ($i = 1; $i <= 5; $i++) {
-            $name = 'Учебная группа №' . $i;
-
-            $groups[] = [
-                'name' => $name
-            ];
-        }
-
-        DB::table('groups')->insert($groups);
+        factory(App\Models\Group::class, 5)->create();
     }
 }

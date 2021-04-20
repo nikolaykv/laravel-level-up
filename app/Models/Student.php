@@ -24,4 +24,5 @@ class Student extends Model
     {
         return $this->morphOne('App\Models\User', 'profile');
     }
+
 }

@@ -74,7 +74,7 @@
             </div>
             <div class="tab-pane fade"
                  :class="{ 'active show': isActive('subjects') }">
-                {{ variables.titles.subjects }}
+                <subjectIndex v-bind:subjects="subjects"></subjectIndex>
             </div>
             <div class="tab-pane fade"
                  :class="{ 'active show': isActive('students') }">
@@ -100,6 +100,8 @@ import edit from "./groups/edit";
 import add from "./groups/add";
 import LangVariables from '../../lang/ru/crud.json'
 
+import subjectIndex from './subjects/index'
+
 export default {
     name: 'Tabs',
     components: {
@@ -107,11 +109,13 @@ export default {
         edit,
         index,
         show,
+        subjectIndex
     },
     data: () => ({
         activeItem: 'groups',
         components: false,
         groups: [],
+        subjects: [],
         serviceTab: false,
         variables: LangVariables,
         pagination: {
@@ -138,6 +142,16 @@ export default {
 
                     this.pagination.current_page = page;
                     this.pagination.last_page = data.pagination.last_page;
+                },
+            });
+        },
+
+        getSubjects(page) {
+            $.ajax({
+                url: '/api/subjects?page=' + page,
+                method: 'get',
+                success: (data) => {
+                  this.subjects = data.subjects.data
                 },
             });
         },
@@ -174,6 +188,7 @@ export default {
     created() {
         // Делаем Ajax запрос как только создан экземпляр
         this.getGroups(this.pagination.current_page);
+        this.getSubjects(this.pagination.current_page);
     },
     computed: {
         pages() {

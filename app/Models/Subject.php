@@ -10,4 +10,9 @@ class Subject extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    protected $casts = [
+        'created_at'  => 'datetime:Y-m-d H:m',
+        'updated_at' => 'datetime:Y-m-d H:00',
+    ];
 }
