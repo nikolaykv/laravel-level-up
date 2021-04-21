@@ -127,3 +127,5 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Пустой API StudentController;
         - Маршрутизация;
         - Переписан GroupSeeder, теперь он запускает фабрику для групп.
+    25. В текущем коммите:
+        - Универсиализировал пагинацию для сущностей crud, вынес её логику в отдельный компонент.

@@ -1,33 +1,40 @@
 <template>
     <div>
-        <table class="table table-bordered list" v-if="groups.length > 0">
-            <thead>
-            <tr>
-                <th>{{ variables.index.id }}</th>
-                <th>{{ variables.index.name }}</th>
-                <th>{{ variables.index.created }}</th>
-                <th>{{ variables.index.updated }}</th>
-                <th>{{ variables.index.available_actions }}</th>
-            </tr>
-            </thead>
-            <tbody>
+        <div v-if="groups.length > 0">
+            <table class="table table-bordered list">
+                <thead>
+                <tr>
+                    <th>{{ variables.index.id }}</th>
+                    <th>{{ variables.index.name }}</th>
+                    <th>{{ variables.index.created }}</th>
+                    <th>{{ variables.index.updated }}</th>
+                    <th>{{ variables.index.available_actions }}</th>
+                </tr>
+                </thead>
+                <tbody>
 
-            <tr v-for="group in groups" v-bind:key="group.id">
-                <td>{{ group.id }}</td>
-                <td>{{ group.name }}</td>
-                <td>{{ group.created_at }}</td>
-                <td>{{ group.updated_at }}</td>
-                <td class="d-xl-flex justify-content-xl-around">
-                    <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
-                       v-on:click="editGroup({'id':group.id, name: group.name})"></i>
-                    <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
-                       v-on:click="showGroup(group.id)"></i>
-                    <delete v-bind:id="group.id">
-                    </delete>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                <tr v-for="group in groups" v-bind:key="group.id">
+                    <td>{{ group.id }}</td>
+                    <td>{{ group.name }}</td>
+                    <td>{{ group.created_at }}</td>
+                    <td>{{ group.updated_at }}</td>
+                    <td class="d-xl-flex justify-content-xl-around">
+                        <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
+                           v-on:click="editGroup({'id':group.id, name: group.name})"></i>
+                        <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
+                           v-on:click="showGroup(group.id)"></i>
+                        <deleteGroup v-bind:id="group.id"></deleteGroup>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <pagination
+                v-if="pagination.last_page > 1"
+                v-bind:url="url"
+                v-bind:pagination="pagination">
+            </pagination>
+        </div>
 
         <div class="alert alert-danger text-center d-none empty-result mt-3" v-else>
             {{ variables.index.empty }}
@@ -45,15 +52,17 @@
 
 <script>
 
-import LangVariables from '../../../lang/ru/crud.json'
-import Delete from "./delete";
+import langVariables from '../../../lang/ru/crud.json'
+import deleteGroup from "./delete";
+import pagination from "../pagination";
 
 export default {
-    name: 'index',
-    components: {Delete},
-    props: ['groups', 'page'],
+    name: 'groupIndex',
+    components: {pagination, deleteGroup},
+    props: ['groups', 'pagination'],
     data: () => ({
-        variables: LangVariables,
+        variables: langVariables,
+        url: '/api/groups?page='
     }),
     methods: {
         showGroup(id) {
@@ -85,6 +94,6 @@ export default {
                 $('.empty-result').removeClass('d-none')
             }
         }, 500)
-    }
+    },
 }
 </script>

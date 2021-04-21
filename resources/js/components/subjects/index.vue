@@ -15,7 +15,7 @@
                 </thead>
                 <tbody>
 
-               <tr v-for="subject in subjects" v-bind:key="subject.id">
+                <tr v-for="subject in subjects" v-bind:key="subject.id">
                     <td>{{ subject.id }}</td>
                     <td>{{ subject.name }}</td>
                     <td>{{ subject.student.full_name }}</td>
@@ -23,7 +23,7 @@
                     <td>{{ subject.created_at }}</td>
                     <td>{{ subject.updated_at }}</td>
                     <td class="d-xl-flex justify-content-xl-around">
-                       <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"></i>
+                        <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"></i>
                         <i class="far fa-eye bg-success text-white btn d-flex align-items-center"></i>
                         <i class="far fa-trash-alt bg-danger text-white btn d-flex align-items-center"></i>
 
@@ -32,6 +32,11 @@
                 </tbody>
             </table>
 
+            <pagination
+                v-if="pagination.last_page > 1"
+                v-bind:url="url"
+                v-bind:pagination="pagination">
+            </pagination>
 
             <div class="container-xl">
                 <div class="row d-flex flex-row-reverse justify-content-between">
@@ -45,12 +50,17 @@
 </template>
 
 <script>
-import LangVariables from '../../../lang/ru/crud.json'
+import langVariables from '../../../lang/ru/crud.json'
+
+import pagination from "../pagination";
+
 export default {
-    name: 'index',
-    props: ['subjects'],
+    name: 'subjectIndex',
+    components: {pagination},
+    props: ['subjects', 'pagination'],
     data: () => ({
-        variables: LangVariables,
+        variables: langVariables,
+        url: '/api/subjects?page='
     }),
 }
 </script>

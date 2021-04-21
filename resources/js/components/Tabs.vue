@@ -33,55 +33,26 @@
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane fade" :class="{ 'active show': isActive('groups') }">
-
-                <index v-bind:groups="groups"
-                       v-bind:page="pagination.current_page"
-                       v-on:showDetail="showDetailGroup"
-                       v-on:editGroup="editDetailGroup">
-                </index>
-
-                <nav aria-label="Page navigation example" v-if="pagination.last_page > 1">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item"
-                            v-bind:class="pagination.current_page <= 1 ? 'disabled' : ''">
-                            <a class="page-link"
-                               aria-label="Previous"
-                               v-on:click.prevent="getGroups(pagination.current_page - 1)">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Предыдущая</span>
-                            </a>
-                        </li>
-                        <li class="page-item" v-for="(page, index) in pages" v-bind:key="index"
-                            v-bind:class="isCurrentPage(page) ? 'active' : ''">
-                            <a class="page-link" v-on:click.prevent="getGroups(page)">
-                                {{ page }}
-                            </a>
-                        </li>
-
-                        <li class="page-item"
-                            v-bind:class="pagination.current_page >= pagination.last_page ? 'disabled' : ''">
-                            <a class="page-link"
-                               aria-label="Next"
-                               v-on:click.prevent="getGroups(pagination.current_page + 1)">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Следующая</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+            <div class="tab-pane fade" v-bind:class="{ 'active show': isActive('groups') }">
+                <groupIndex
+                    v-bind:groups="groups"
+                    v-bind:pagination="pagination"
+                    v-on:showDetail="showDetailGroup"
+                    v-on:editGroup="editDetailGroup">
+                </groupIndex>
 
             </div>
-            <div class="tab-pane fade"
-                 :class="{ 'active show': isActive('subjects') }">
-                <subjectIndex v-bind:subjects="subjects"></subjectIndex>
+            <div class="tab-pane fade" v-bind:class="{ 'active show': isActive('subjects') }">
+                <subjectIndex
+                    v-bind:subjects="subjects"
+                    v-bind:pagination="pagination">
+                </subjectIndex>
             </div>
             <div class="tab-pane fade"
-                 :class="{ 'active show': isActive('students') }">
+                 v-bind:class="{ 'active show': isActive('students') }">
                 {{ variables.titles.students }}
             </div>
-            <div class="tab-pane fade" v-if="serviceTab"
-                 :class="{ 'active show': isActive('service') }">
+            <div class="tab-pane fade" v-if="serviceTab" v-bind:class="{ 'active show': isActive('service') }">
 
                 <show v-if="components === 'show'" v-bind:group="serviceTab"></show>
                 <edit v-else-if="components === 'edit'" v-bind:obj="serviceTab"></edit>
@@ -94,11 +65,11 @@
 
 <script>
 
-import index from "./groups/index";
+import groupIndex from "./groups/index";
 import show from "./groups/show";
 import edit from "./groups/edit";
 import add from "./groups/add";
-import LangVariables from '../../lang/ru/crud.json'
+import langVariables from '../../lang/ru/crud.json'
 
 import subjectIndex from './subjects/index'
 
@@ -107,7 +78,7 @@ export default {
     components: {
         add,
         edit,
-        index,
+        groupIndex,
         show,
         subjectIndex
     },
@@ -115,14 +86,10 @@ export default {
         activeItem: 'groups',
         components: false,
         groups: [],
+        pagination: [],
         subjects: [],
         serviceTab: false,
-        variables: LangVariables,
-        pagination: {
-            'current_page': 1,
-            'last_page': false
-        },
-        offset: 6
+        variables: langVariables,
     }),
     methods: {
         // Переключение и определение текущей вкладки
@@ -132,26 +99,24 @@ export default {
         setActive(menuItem) {
             this.activeItem = menuItem
         },
-        getGroups(page) {
-
+        getGroups() {
             $.ajax({
-                url: '/api/groups?page=' + page,
+                url: '/api/groups',
                 method: 'get',
                 success: (data) => {
                     this.groups = data.groups.data
-
-                    this.pagination.current_page = page;
-                    this.pagination.last_page = data.pagination.last_page;
+                    this.pagination = data.pagination
                 },
             });
         },
 
-        getSubjects(page) {
+        getSubjects() {
             $.ajax({
-                url: '/api/subjects?page=' + page,
+                url: '/api/subjects',
                 method: 'get',
                 success: (data) => {
-                  this.subjects = data.subjects.data
+                    this.subjects = data.subjects.data
+                    this.pagination = data.pagination
                 },
             });
         },
@@ -167,19 +132,10 @@ export default {
             this.components = 'edit';
             this.activeItem = 'service';
         },
-        isCurrentPage(page) {
-            return this.pagination.current_page === page;
-        }
     },
     watch: {
         // Отслеживание состояния вкладок
         activeItem: function (value) {
-            // при переключении на соответствующую вкладку
-            if (value === 'groups') {
-                // это Ajax запрос
-                this.getGroups(this.pagination.current_page);
-            }
-
             if (value !== 'service') {
                 this.serviceTab = false
             }
@@ -187,29 +143,8 @@ export default {
     },
     created() {
         // Делаем Ajax запрос как только создан экземпляр
-        this.getGroups(this.pagination.current_page);
-        this.getSubjects(this.pagination.current_page);
-    },
-    computed: {
-        pages() {
-            let pages = [];
-            let from = this.pagination.current_page - Math.floor(this.offset / 2);
-
-            if (from < 1) {
-                from = 1;
-            }
-
-            let to = from + this.offset - 1;
-
-            if (to > this.pagination.last_page) {
-                to = this.pagination.last_page;
-            }
-            while (from <= to) {
-                pages.push(from);
-                from++;
-            }
-            return pages;
-        }
+        this.getGroups();
+        this.getSubjects();
     },
 }
 </script>

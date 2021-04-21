@@ -35,5 +35,9 @@
         "add_new": "Добавить предмет",
         "students": "Студент",
         "academic_grades": "Оценка"
+    },
+    "pagination": {
+        "next": "Следующая",
+        "previous": "Предыдущая"
     }
 }
