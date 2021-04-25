@@ -136,3 +136,6 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Унверсиализация компонентов show и delete-item;
         - Доработка компонентов index-group и index-subject;
         - show метод для API subjects.
+    28. В текущем коммите:
+        - Дописал show метод для API subjects, для того чтобы корректно возвращать имена студентов;
+        - Работа с датой и временем в моделях.

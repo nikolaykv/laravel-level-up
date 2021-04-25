@@ -17,6 +17,6 @@ class Group extends Model
    }
     protected $casts = [
         'created_at'  => 'datetime:Y-m-d H:m',
-        'updated_at' => 'datetime:Y-m-d H:00',
+        'updated_at' => 'datetime:Y-m-d H:m',
     ];
 }

@@ -159,9 +159,9 @@ export default {
         this.getGroups();
         this.getSubjects();
     },
-    updated() {
+/*    updated() {
         this.getGroups();
         this.getSubjects();
-    }
+    }*/
 }
 </script>

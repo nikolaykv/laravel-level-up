@@ -43,12 +43,12 @@
             <tr class="show-item">
                 <td>{{ data.subject.id }}</td>
                 <td>{{ data.subject.name }}</td>
-                <td>{{ data.subject.student_id }}</td>
+                <td>{{ data.subject.student_full_name }}</td>
                 <td>{{ data.subject.value }}</td>
                 <td>{{ data.subject.created_at }}</td>
                 <td>{{ data.subject.updated_at }}</td>
                 <td class="d-xl-flex justify-content-xl-around">
-<!--                    <delete-item v-bind:id="data.subject.id"></delete-item>-->
+                    <i class="far fa-trash-alt bg-danger text-white btn d-flex align-items-center"></i>
                 </td>
             </tr>
             </tbody>
