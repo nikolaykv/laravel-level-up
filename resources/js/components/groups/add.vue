@@ -29,7 +29,7 @@
 import LangVariables from '../../../lang/ru/crud.json'
 
 export default {
-    name: 'add',
+    name: 'add-group',
     data: () => ({
         group: {
             name: ''

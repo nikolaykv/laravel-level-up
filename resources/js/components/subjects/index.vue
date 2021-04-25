@@ -24,7 +24,8 @@
                     <td>{{ subject.updated_at }}</td>
                     <td class="d-xl-flex justify-content-xl-around">
                         <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"></i>
-                        <i class="far fa-eye bg-success text-white btn d-flex align-items-center"></i>
+                        <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
+                           v-on:click="showSubject(subject.id)"></i>
                         <i class="far fa-trash-alt bg-danger text-white btn d-flex align-items-center"></i>
 
                     </td>
@@ -55,12 +56,24 @@ import langVariables from '../../../lang/ru/crud.json'
 import pagination from "../pagination";
 
 export default {
-    name: 'subjectIndex',
+    name: 'index-subject',
     components: {pagination},
     props: ['subjects', 'pagination'],
     data: () => ({
         variables: langVariables,
         url: '/api/subjects?page='
     }),
+    methods: {
+        showSubject(id) {
+            $.ajax({
+                url: '/api/subjects/' + id,
+                method: 'get',
+                cache: false,
+                success: (data) => {
+                    this.$emit('showDetail', data)
+                }
+            });
+        }
+    }
 }
 </script>

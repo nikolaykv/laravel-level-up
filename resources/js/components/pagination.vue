@@ -11,6 +11,7 @@
                     </a>
                 </li>
 
+
                 <li class="page-item" v-for="(page, index) in pages" v-bind:key="index"
                     v-bind:class="isCurrentPage(page) ? 'active' : ''">
                     <a class="page-link" v-on:click.prevent="fetchData(url, page)">
@@ -54,6 +55,7 @@ export default {
                     if ('groups' in data) {
                         this.$parent.$parent.$data.groups = data.groups.data
                     } else if ('subjects' in data) {
+
                         this.$parent.$parent.$data.subjects = data.subjects.data
                     }
                     this.paginationData.current_page = page;
@@ -69,17 +71,13 @@ export default {
         pages() {
             let pages = [];
             let from = this.paginationData.current_page - Math.floor(this.offset / 2);
-
             if (from < 1) {
                 from = 1;
             }
-
             let to = from + this.offset - 1;
-
             if (to > this.paginationData.last_page) {
                 to = this.pagination.last_page;
             }
-
             while (from <= to) {
                 pages.push(from);
                 from++;

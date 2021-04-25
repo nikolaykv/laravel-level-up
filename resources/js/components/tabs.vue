@@ -27,26 +27,35 @@
                 <a class="nav-link"
                    @click.prevent="setActive('service')"
                    :class="{ active: isActive('service') }">
-                    {{ serviceTab.name }}
+
+                    <span v-if="serviceTab.hasOwnProperty('group')">
+                        {{ serviceTab.group.name }}
+                    </span>
+
+                    <span v-else-if="serviceTab.hasOwnProperty('subject')">
+                        {{ serviceTab.subject.name }}
+                    </span>
+
                 </a>
             </li>
         </ul>
 
         <div class="tab-content">
             <div class="tab-pane fade" v-bind:class="{ 'active show': isActive('groups') }">
-                <groupIndex
+                <index-groups
                     v-bind:groups="groups"
-                    v-bind:pagination="pagination"
-                    v-on:showDetail="showDetailGroup"
+                    v-bind:pagination="pagination.groups"
+                    v-on:showDetail="showDetail"
                     v-on:editGroup="editDetailGroup">
-                </groupIndex>
+                </index-groups>
 
             </div>
             <div class="tab-pane fade" v-bind:class="{ 'active show': isActive('subjects') }">
-                <subjectIndex
+                <index-subjects
                     v-bind:subjects="subjects"
-                    v-bind:pagination="pagination">
-                </subjectIndex>
+                    v-bind:pagination="pagination.subjects"
+                    v-on:showDetail="showDetail">
+                </index-subjects>
             </div>
             <div class="tab-pane fade"
                  v-bind:class="{ 'active show': isActive('students') }">
@@ -54,9 +63,9 @@
             </div>
             <div class="tab-pane fade" v-if="serviceTab" v-bind:class="{ 'active show': isActive('service') }">
 
-                <show v-if="components === 'show'" v-bind:group="serviceTab"></show>
-                <edit v-else-if="components === 'edit'" v-bind:obj="serviceTab"></edit>
-                <add v-else-if="components === 'new'"></add>
+                <show v-if="components === 'show'" v-bind:data="serviceTab"></show>
+                <edit-group v-else-if="components === 'edit'" v-bind:obj="serviceTab"></edit-group>
+                <add-group v-else-if="components === 'new'"></add-group>
             </div>
         </div>
     </div>
@@ -65,28 +74,32 @@
 
 <script>
 
-import groupIndex from "./groups/index";
-import show from "./groups/show";
-import edit from "./groups/edit";
-import add from "./groups/add";
 import langVariables from '../../lang/ru/crud.json'
 
-import subjectIndex from './subjects/index'
+import indexGroups from "./groups/index";
+import show from "./show";
+import editGroup from "./groups/edit";
+import addGroup from "./groups/add";
+
+import indexSubjects from './subjects/index'
 
 export default {
-    name: 'Tabs',
+    name: 'tabs',
     components: {
-        add,
-        edit,
-        groupIndex,
+        addGroup,
+        editGroup,
+        indexGroups,
         show,
-        subjectIndex
+        indexSubjects
     },
     data: () => ({
         activeItem: 'groups',
         components: false,
         groups: [],
-        pagination: [],
+        pagination: {
+            "groups": [],
+            "subjects": []
+        },
         subjects: [],
         serviceTab: false,
         variables: langVariables,
@@ -105,7 +118,7 @@ export default {
                 method: 'get',
                 success: (data) => {
                     this.groups = data.groups.data
-                    this.pagination = data.pagination
+                    this.pagination.groups = data.pagination
                 },
             });
         },
@@ -116,14 +129,14 @@ export default {
                 method: 'get',
                 success: (data) => {
                     this.subjects = data.subjects.data
-                    this.pagination = data.pagination
+                    this.pagination.subjects = data.pagination
                 },
             });
         },
 
         // Обработка данных из дочернего компонента
-        showDetailGroup(group) {
-            this.serviceTab = group // Принимаем данные
+        showDetail(data) {
+            this.serviceTab = data
             this.components = 'show';
             this.activeItem = 'service' // Переключаем вкладку
         },
@@ -146,5 +159,9 @@ export default {
         this.getGroups();
         this.getSubjects();
     },
+    updated() {
+        this.getGroups();
+        this.getSubjects();
+    }
 }
 </script>

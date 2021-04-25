@@ -1,10 +1,10 @@
 window.Vue = require('vue')
 
-import Tabs from './components/Tabs';
+import tabs from './components/tabs';
 
-Vue.component('tabs', Tabs)
+Vue.component('tabs', tabs)
 
-const tabs = new Vue({
+const Tabs = new Vue({
     el: '#tabs',
 });
 

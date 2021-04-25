@@ -37,7 +37,7 @@
 import LangVariables from '../../../lang/ru/crud.json'
 
 export default {
-    name: "edit",
+    name: "edit-group",
     props: ['obj'],
     data: () => ({
         group: {

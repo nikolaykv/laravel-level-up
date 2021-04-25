@@ -23,7 +23,7 @@
                            v-on:click="editGroup({'id':group.id, name: group.name})"></i>
                         <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
                            v-on:click="showGroup(group.id)"></i>
-                        <deleteGroup v-bind:id="group.id"></deleteGroup>
+                        <delete-item v-bind:id="group.id"></delete-item>
                     </td>
                 </tr>
                 </tbody>
@@ -53,12 +53,12 @@
 <script>
 
 import langVariables from '../../../lang/ru/crud.json'
-import deleteGroup from "./delete";
+import deleteItem from "../delete";
 import pagination from "../pagination";
 
 export default {
-    name: 'groupIndex',
-    components: {pagination, deleteGroup},
+    name: 'index-group',
+    components: {pagination, deleteItem},
     props: ['groups', 'pagination'],
     data: () => ({
         variables: langVariables,
@@ -72,7 +72,7 @@ export default {
                     method: 'get',
                     cache: false,
                     success: (data) => {
-                        this.$emit('showDetail', data.group)
+                        this.$emit('showDetail', data)
                     }
                 });
             }
