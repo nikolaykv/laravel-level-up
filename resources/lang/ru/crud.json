@@ -34,7 +34,8 @@
         "available_actions": "Доступные действия",
         "add_new": "Добавить предмет",
         "students": "Студент",
-        "academic_grades": "Оценка"
+        "academic_grades": "Оценка",
+        "empty": "В системе не заведено учебных предметов!"
     },
     "pagination": {
         "next": "Следующая",

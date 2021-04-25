@@ -23,7 +23,7 @@
                            v-on:click="editGroup({'id':group.id, name: group.name})"></i>
                         <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
                            v-on:click="showGroup(group.id)"></i>
-                        <delete-item v-bind:id="group.id"></delete-item>
+                        <delete-item v-bind:deleteData="{id:group.id, url:'/api/groups/'}"></delete-item>
                     </td>
                 </tr>
                 </tbody>
@@ -57,7 +57,7 @@ import deleteItem from "../delete";
 import pagination from "../pagination";
 
 export default {
-    name: 'index-group',
+    name: 'index',
     components: {pagination, deleteItem},
     props: ['groups', 'pagination'],
     data: () => ({

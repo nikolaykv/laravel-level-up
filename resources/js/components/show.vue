@@ -13,13 +13,13 @@
             </thead>
             <tbody>
 
-            <tr class="show-item">
+            <tr class="show-item-group">
                 <td>{{ data.group.id }}</td>
                 <td>{{ data.group.name }}</td>
                 <td>{{ data.group.created_at }}</td>
                 <td>{{ data.group.updated_at }}</td>
                 <td class="d-xl-flex justify-content-xl-around">
-                    <delete-item v-bind:id="data.group.id"></delete-item>
+                    <delete-item v-bind:deleteData="{id:data.group.id, url:'/api/groups/'}"></delete-item>
                 </td>
             </tr>
             </tbody>
@@ -40,7 +40,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="show-item">
+            <tr class="show-item-subject">
                 <td>{{ data.subject.id }}</td>
                 <td>{{ data.subject.name }}</td>
                 <td>{{ data.subject.student_full_name }}</td>
@@ -48,7 +48,7 @@
                 <td>{{ data.subject.created_at }}</td>
                 <td>{{ data.subject.updated_at }}</td>
                 <td class="d-xl-flex justify-content-xl-around">
-                    <i class="far fa-trash-alt bg-danger text-white btn d-flex align-items-center"></i>
+                    <delete-item v-bind:deleteData="{id:data.subject.id, url:'/api/subjects/'}"></delete-item>
                 </td>
             </tr>
             </tbody>
@@ -69,11 +69,11 @@ export default {
     props: ['data'],
     data: () => ({
         variables: LangVariables,
-        id: false,
     }),
     methods: {
         redrawHtml() {
-            $('.show-item').html('<td class="alert alert-success text-center" colspan="5">Запись успешно удалена!</td>')
+            $('.show-item-group').html('<td class="alert alert-success text-center" colspan="5">Запись успешно удалена!</td>')
+            $('.show-item-subject').html('<td class="alert alert-success text-center" colspan="7">Запись успешно удалена!</td>')
         }
     },
 }

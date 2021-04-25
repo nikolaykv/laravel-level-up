@@ -55,7 +55,6 @@ export default {
                     if ('groups' in data) {
                         this.$parent.$parent.$data.groups = data.groups.data
                     } else if ('subjects' in data) {
-
                         this.$parent.$parent.$data.subjects = data.subjects.data
                     }
                     this.paginationData.current_page = page;

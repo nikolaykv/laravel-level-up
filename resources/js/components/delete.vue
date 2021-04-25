@@ -1,6 +1,14 @@
 <template>
     <div>
-        <i class="far fa-trash-alt bg-danger text-white btn d-flex align-items-center" v-on:click="deleteGroup()"></i>
+        <i class="far
+                  fa-trash-alt
+                  bg-danger
+                  text-white
+                  btn
+                  d-flex
+                  align-items-center"
+           v-on:click="deleteItem(deleteData)">
+        </i>
     </div>
 </template>
 
@@ -9,26 +17,26 @@
 
 export default {
     name: 'delete-item',
-    props: ['id'],
+    props: ['deleteData'],
     data: () => ({
         currentPage: false,
     }),
     methods: {
-        deleteGroup() {
+        deleteItem(value) {
             $.ajax({
-                url: '/api/groups/' + this.id,
+                url: value.url + value.id,
                 method: 'delete',
                 data: {
                     _token: $('meta[name="csrf-token"]').attr('content'),
                 },
-                success: (data) => {
-                   if (this.$parent.$options.name === 'show') {
-                       this.$parent.$options.methods.redrawHtml()
-                   } else if (this.$parent.$options.name === 'index-group') {
-                       $($(this.$el).parent()).parent().fadeOut("slow")
-                   }
+                success: () => {
+                    if (this.$parent.$options.name === 'show') {
+                        this.$parent.$options.methods.redrawHtml()
+                    } else if (this.$parent.$options.name === 'index') {
+                        $($(this.$el).parent()).parent().fadeOut("slow")
+                    }
                 }
-            });
+            })
         },
     },
 }

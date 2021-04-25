@@ -87,6 +87,11 @@ class SubjectController extends Controller
      */
     public function destroy(Subject $subject)
     {
-        //
+        $deleteItem = Subject::findOrFail($subject->id);
+        if ($deleteItem) {
+            $deleteItem->delete();
+        } else {
+            return response('error', 404);
+        }
     }
 }

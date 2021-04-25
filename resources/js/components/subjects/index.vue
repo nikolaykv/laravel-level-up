@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>
+        <div v-if="subjects.length > 0">
             <table class="table table-bordered list">
                 <thead>
                 <tr>
@@ -26,8 +26,7 @@
                         <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"></i>
                         <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
                            v-on:click="showSubject(subject.id)"></i>
-                        <i class="far fa-trash-alt bg-danger text-white btn d-flex align-items-center"></i>
-
+                        <delete-item v-bind:deleteData="{id:subject.id, url:'/api/subjects/'}"></delete-item>
                     </td>
                 </tr>
                 </tbody>
@@ -38,13 +37,17 @@
                 v-bind:url="url"
                 v-bind:pagination="pagination">
             </pagination>
+        </div>
 
-            <div class="container-xl">
-                <div class="row d-flex flex-row-reverse justify-content-between">
-                    <a class="btn btn-primary">
-                        {{ variables.subjects.add_new }}
-                    </a>
-                </div>
+        <div class="alert alert-danger text-center d-none empty-result mt-3" v-else>
+            {{ variables.subjects.empty }}
+        </div>
+
+        <div class="container-xl">
+            <div class="row d-flex flex-row-reverse justify-content-between">
+                <a class="btn btn-primary">
+                    {{ variables.subjects.add_new }}
+                </a>
             </div>
         </div>
     </div>
@@ -53,11 +56,12 @@
 <script>
 import langVariables from '../../../lang/ru/crud.json'
 
+import deleteItem from "../delete";
 import pagination from "../pagination";
 
 export default {
-    name: 'index-subject',
-    components: {pagination},
+    name: 'index',
+    components: {pagination, deleteItem},
     props: ['subjects', 'pagination'],
     data: () => ({
         variables: langVariables,
@@ -74,6 +78,13 @@ export default {
                 }
             });
         }
-    }
+    },
+    updated() {
+        setTimeout(function () {
+            if ($('.empty-result').hasClass('d-none')) {
+                $('.empty-result').removeClass('d-none')
+            }
+        }, 500)
+    },
 }
 </script>
