@@ -46,7 +46,7 @@
                     v-bind:groups="groups"
                     v-bind:pagination="pagination.groups"
                     v-on:showDetail="showDetail"
-                    v-on:editGroup="editDetailGroup">
+                    v-on:edit="editDetail">
                 </index-groups>
 
             </div>
@@ -54,7 +54,8 @@
                 <index-subjects
                     v-bind:subjects="subjects"
                     v-bind:pagination="pagination.subjects"
-                    v-on:showDetail="showDetail">
+                    v-on:showDetail="showDetail"
+                    v-on:edit="editDetail">
                 </index-subjects>
             </div>
             <div class="tab-pane fade"
@@ -64,7 +65,7 @@
             <div class="tab-pane fade" v-if="serviceTab" v-bind:class="{ 'active show': isActive('service') }">
 
                 <show v-if="components === 'show'" v-bind:data="serviceTab"></show>
-                <edit-group v-else-if="components === 'edit'" v-bind:obj="serviceTab"></edit-group>
+                <edit v-else-if="components === 'edit'" v-bind:obj="serviceTab"></edit>
                 <add-group v-else-if="components === 'new'"></add-group>
             </div>
         </div>
@@ -78,7 +79,7 @@ import langVariables from '../../lang/ru/crud.json'
 
 import indexGroups from "./groups/index";
 import show from "./show";
-import editGroup from "./groups/edit";
+import edit from "./edit";
 import addGroup from "./groups/add";
 
 import indexSubjects from './subjects/index'
@@ -87,7 +88,7 @@ export default {
     name: 'tabs',
     components: {
         addGroup,
-        editGroup,
+        edit,
         indexGroups,
         show,
         indexSubjects
@@ -140,7 +141,7 @@ export default {
             this.components = 'show';
             this.activeItem = 'service' // Переключаем вкладку
         },
-        editDetailGroup(obj) {
+        editDetail(obj) {
             this.serviceTab = obj;
             this.components = 'edit';
             this.activeItem = 'service';

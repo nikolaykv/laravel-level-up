@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\CRUD\Group;
+namespace App\Http\Requests\CRUD\Subject;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
-class NewNameFormRequest extends FormRequest
+class SubjectFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,16 +25,23 @@ class NewNameFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:20'],
+            'name' => ['required', 'string', 'max:40'],
+            'student' => ['required', 'string', 'max:40'],
+            'value' => ['required', 'numeric', 'max:1'],
         ];
     }
-
     public function messages()
     {
         return [
             'name.required' => 'Поле должно быть заполнено!',
             'name.string' => 'Поле должно быть строкой!',
-            'name.max:20' => 'Поле не должно быть не длиннее 20 символов!'
+            'name.max:40' => 'Поле не должно быть не длиннее 40 символов!',
+            'student.required' => 'Поле должно быть заполнено!',
+            'student.string' => 'Поле должно быть строкой!',
+            'student.max:40' => 'Поле не должно быть не длиннее 40 символов!',
+            'value.required' => 'Поле должно быть заполнено!',
+            'value.max:1' => 'Поле не должно быть не длиннее 40 символов!',
+            'value.numeric' => 'Поле должно быть числом!'
         ];
     }
 
@@ -48,5 +55,4 @@ class NewNameFormRequest extends FormRequest
             );
         }
     }
-
 }

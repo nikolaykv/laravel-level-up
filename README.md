@@ -143,4 +143,10 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Универсализация компонента удаления для сущности Группы и Учебные предметы;
         - Метод destroy для CRUD Subject;
         ЗАМЕЧАНИЕ: Vue компоенты работают не совсем корректно - проблема с обновлением данных при переключении вкладок.
+    30. В текущем коммите;
+        - Универсиализация vue компонента edit для групп и учебных предметов;
+        - Метод update в crud subject;
+        - SubjectFormRequest котролер для update в crud subject;
+        - В модели Subject add $fillable;
+        - Вывод ошибок валидации на фронте в компоненте edit.vue - на закончен.
         

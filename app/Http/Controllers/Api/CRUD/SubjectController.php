@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Subject;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use App\Http\Requests\CRUD\Subject\SubjectFormRequest;
 
 class SubjectController extends Controller
 {
@@ -70,13 +70,40 @@ class SubjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\CRUD\Subject $request
      * @param \App\Models\Subject $subject
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subject $subject)
+    public function update(SubjectFormRequest $request, Subject $subject)
     {
-        //
+        $updateItem = Subject::findOrFail($subject->id);
+        $studentData = explode(' ', $request->student);
+
+        $name = $studentData[0];
+        if (count($studentData) < 2) {
+            $surname = ' ';
+        } else {
+            $surname = $studentData[1];
+        }
+
+        if ($updateItem) {
+            // Валидация входящих данных формы
+            $validator = $request->validated();
+            // Поиск связанной модели
+            $student = User::find($subject->student_id);
+            // Обновить информацию об учебном предмете
+            $updateItem->update($request->all('name', 'value'));
+
+            // Обновить связанную модель
+            $student->update(array(
+                'name' => $name,
+                'surname' => $surname,
+            ));
+
+            return response()->json($validator);
+        } else {
+            return response('Not Found', 404);
+        }
     }
 
     /**

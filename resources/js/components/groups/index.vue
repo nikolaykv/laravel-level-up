@@ -20,7 +20,7 @@
                     <td>{{ group.updated_at }}</td>
                     <td class="d-xl-flex justify-content-xl-around">
                         <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
-                           v-on:click="editGroup({'id':group.id, name: group.name})"></i>
+                           v-on:click="editGroup({group: {'id':group.id, name: group.name, url:'/api/groups/'}})"></i>
                         <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
                            v-on:click="showGroup(group.id)"></i>
                         <delete-item v-bind:deleteData="{id:group.id, url:'/api/groups/'}"></delete-item>
@@ -79,7 +79,7 @@ export default {
         },
         editGroup(obj) {
             if (obj) {
-                this.$emit('editGroup', obj);
+                this.$emit('edit', obj);
             }
         },
         addNew(str) {
