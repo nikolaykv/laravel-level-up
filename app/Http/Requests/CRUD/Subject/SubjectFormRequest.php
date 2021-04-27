@@ -27,7 +27,7 @@ class SubjectFormRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:40'],
             'student' => ['required', 'string', 'max:40'],
-            'value' => ['required', 'numeric', 'max:1'],
+            'value' => ['required', 'numeric', 'max:5', 'min:1'],
         ];
     }
     public function messages()
@@ -35,13 +35,21 @@ class SubjectFormRequest extends FormRequest
         return [
             'name.required' => 'Поле должно быть заполнено!',
             'name.string' => 'Поле должно быть строкой!',
-            'name.max:40' => 'Поле не должно быть не длиннее 40 символов!',
+            'name.max' => 'Поле не должно быть не длиннее 40 символов!',
             'student.required' => 'Поле должно быть заполнено!',
             'student.string' => 'Поле должно быть строкой!',
-            'student.max:40' => 'Поле не должно быть не длиннее 40 символов!',
+            'student.max' => 'Поле не должно быть не длиннее 40 символов!',
             'value.required' => 'Поле должно быть заполнено!',
-            'value.max:1' => 'Поле не должно быть не длиннее 40 символов!',
+            'value.max' => 'Оценка не может быть больше 5 (пяти) баллов!',
+            'value.min' => 'Оценка не может быть меньше 1 (одного) бала!',
             'value.numeric' => 'Поле должно быть числом!'
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+          'value' => 'оценка по предмету'
         ];
     }
 

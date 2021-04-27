@@ -37,7 +37,6 @@
 
     <!-- Учебный предмет START -->
     <div v-else-if="'subject' in obj">
-
         <!-- Название учебного предмета START -->
         <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
             <label for="subject-name" class="col-md-4 col-form-label text-md-right">
@@ -54,8 +53,8 @@
                        v-model="formData.subject">
 
                 <span class="invalid-error" v-if="error">
-                    <strong>
-                        {{ messages }}
+                    <strong v-if="messages.hasOwnProperty('name')">
+                        {{ messages.name[0] }}
                     </strong>
                 </span>
             </div>
@@ -78,8 +77,8 @@
                        v-model="formData.student">
 
                 <span class="invalid-error" v-if="error">
-                    <strong>
-                        {{ messages }}
+                    <strong v-if="messages.hasOwnProperty('student')">
+                        {{ messages.student[0] }}
                     </strong>
                 </span>
             </div>
@@ -102,8 +101,8 @@
                        v-model="formData.academic_grades">
 
                 <span class="invalid-error" v-if="error">
-                    <strong>
-                        {{ messages }}
+                    <strong v-if="messages.hasOwnProperty('value')">
+                        {{ messages.value[0] }}
                     </strong>
                 </span>
 
@@ -184,10 +183,9 @@ export default {
                         this.messages = '';
                     },
                     error: (error) => {
-                        console.log(error)
                         this.isActive = 'd-none';
                         this.error = true;
-                        this.messages = error.responseJSON.errors.name[0];
+                        this.messages = error.responseJSON.errors;
                     }
                 });
             }

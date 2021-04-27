@@ -149,4 +149,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - SubjectFormRequest котролер для update в crud subject;
         - В модели Subject add $fillable;
         - Вывод ошибок валидации на фронте в компоненте edit.vue - на закончен.
+    31. В текущем коммите:
+        - Доделал вывод ошибок валидации без адаптива, в компоненте edit.vue для учеьных предметов;
+        - app/Http/Requests/CRUD/Subject/SubjectFormRequest.php - add attributes method.
         
