@@ -24,7 +24,15 @@
                     <td>{{ subject.updated_at }}</td>
                     <td class="d-xl-flex justify-content-xl-around">
                         <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
-                           v-on:click="editSubject({subject: {'id':subject.id, name: subject.name, student: subject.student.full_name, academic_grades: subject.value, url:'/api/subjects/' }})"></i>
+                           v-on:click="editSubject({
+                           subject: {
+                               'id':subject.id,
+                                name: subject.name,
+                                student: subject.student.full_name,
+                                academic_grades: subject.value,
+                                url:'/api/subjects/'
+                           }})">
+                        </i>
                         <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
                            v-on:click="showSubject(subject.id)"></i>
                         <delete-item v-bind:deleteData="{id:subject.id, url:'/api/subjects/'}"></delete-item>
@@ -46,7 +54,7 @@
 
         <div class="container-xl">
             <div class="row d-flex flex-row-reverse justify-content-between">
-                <a class="btn btn-primary">
+                <a class="btn btn-primary" v-on:click.prevent="addNew(addData)">
                     {{ variables.subjects.add_new }}
                 </a>
             </div>
@@ -66,7 +74,15 @@ export default {
     props: ['subjects', 'pagination'],
     data: () => ({
         variables: langVariables,
-        url: '/api/subjects?page='
+        url: '/api/subjects?page=',
+        addData: {
+            subject: {
+                name: 'Добавить новый учебный предмет',
+                url: '/api/subjects'
+            },
+            tabs: 'service',
+            components: 'new'
+        },
     }),
     methods: {
         showSubject(id) {
@@ -83,6 +99,9 @@ export default {
             if (obj) {
                 this.$emit('edit', obj);
             }
+        },
+        addNew(obj) {
+            this.$emit('addNewItem', obj);
         }
     },
     updated() {

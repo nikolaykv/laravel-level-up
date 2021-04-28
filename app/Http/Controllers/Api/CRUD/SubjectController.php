@@ -39,12 +39,51 @@ class SubjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\CRUD\Subject $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SubjectFormRequest $request)
     {
-        //
+        /*$studentData = explode(' ', $request->student);
+
+        $name = $studentData[0];
+        if (count($studentData) < 2) {
+            $surname = ' ';
+        } else {
+            $surname = $studentData[1];
+        }
+
+        $validator = $request->validated();
+
+        // Создать нового студента
+        $student = Student::create([
+            'group_id' => 10,
+        ]);
+
+        // Создаём нового пользователя
+        $user = $student->user()->save(
+            new User([
+                'name' => $name,
+                'surname' => $surname,
+                'password' => ' ',
+                'email' => ' ',
+                'profile_id' => $student->id,
+                'profile_type' => App\Models\User::class
+            ])
+        );
+
+        // Создаём новый учебный предмет
+        $subject = $student->subject()->save(
+            new Subject([
+                'name' => $request->name,
+                'value' => $request->value,
+                'student_id' => $student->id
+            ])
+        );
+
+        return response()->json($validator);*/
+
+        return response('ответ');
     }
 
     /**

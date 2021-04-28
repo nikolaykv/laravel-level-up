@@ -152,4 +152,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
     31. В текущем коммите:
         - Доделал вывод ошибок валидации без адаптива, в компоненте edit.vue для учеьных предметов;
         - app/Http/Requests/CRUD/Subject/SubjectFormRequest.php - add attributes method.
+    32. В текущем коммите (в процессе):
+        - Работа на добавлением учебного предмета с учётом его связей;
+        - Работа на запросом в компоненте add.vue и его логикой.
         

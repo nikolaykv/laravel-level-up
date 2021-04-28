@@ -20,7 +20,13 @@
                     <td>{{ group.updated_at }}</td>
                     <td class="d-xl-flex justify-content-xl-around">
                         <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
-                           v-on:click="editGroup({group: {'id':group.id, name: group.name, url:'/api/groups/'}})"></i>
+                           v-on:click="editGroup({
+                           group: {
+                               'id':group.id,
+                                name: group.name,
+                                url:'/api/groups/'
+                           }})">
+                        </i>
                         <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
                            v-on:click="showGroup(group.id)"></i>
                         <delete-item v-bind:deleteData="{id:group.id, url:'/api/groups/'}"></delete-item>
@@ -42,7 +48,7 @@
 
         <div class="container-xl">
             <div class="row d-flex flex-row-reverse justify-content-between">
-                <a class="btn btn-primary" v-on:click.prevent="addNew('new')">
+                <a class="btn btn-primary" v-on:click.prevent="addNew(addData)">
                     {{ variables.index.add_new }}
                 </a>
             </div>
@@ -51,7 +57,6 @@
 </template>
 
 <script>
-
 import langVariables from '../../../lang/ru/crud.json'
 import deleteItem from "../delete";
 import pagination from "../pagination";
@@ -62,7 +67,15 @@ export default {
     props: ['groups', 'pagination'],
     data: () => ({
         variables: langVariables,
-        url: '/api/groups?page='
+        url: '/api/groups?page=',
+        addData: {
+            group: {
+                name: 'Добавить новую группу',
+                url: '/api/groups'
+            },
+            tabs: 'service',
+            components: 'new'
+        },
     }),
     methods: {
         showGroup(id) {
@@ -82,10 +95,8 @@ export default {
                 this.$emit('edit', obj);
             }
         },
-        addNew(str) {
-            this.$parent.$data.activeItem = 'service';
-            this.$parent.$data.components = str;
-            this.$parent.$data.serviceTab = {name: 'Добавить новую группу'};
+        addNew(obj) {
+            this.$emit('addNewItem', obj);
         }
     },
     updated() {

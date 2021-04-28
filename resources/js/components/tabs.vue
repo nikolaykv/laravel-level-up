@@ -4,21 +4,21 @@
             <li class="nav-item">
                 <a class="nav-link"
                    @click.prevent="setActive('groups')"
-                   :class="{ active: isActive('groups') }">
+                   v-bind:class="{ active: isActive('groups') }">
                     {{ variables.titles.groups }}
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"
                    @click.prevent="setActive('subjects')"
-                   :class="{ active: isActive('subjects') }">
+                   v-bind:class="{ active: isActive('subjects') }">
                     {{ variables.titles.subjects }}
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"
                    @click.prevent="setActive('students')"
-                   :class="{ active: isActive('students') }">
+                   v-bind:class="{ active: isActive('students') }">
                     {{ variables.titles.students }}
                 </a>
             </li>
@@ -35,7 +35,6 @@
                     <span v-else-if="serviceTab.hasOwnProperty('subject')">
                         {{ serviceTab.subject.name }}
                     </span>
-
                 </a>
             </li>
         </ul>
@@ -46,7 +45,8 @@
                     v-bind:groups="groups"
                     v-bind:pagination="pagination.groups"
                     v-on:showDetail="showDetail"
-                    v-on:edit="editDetail">
+                    v-on:edit="editDetail"
+                    v-on:addNewItem="addNew">
                 </index-groups>
 
             </div>
@@ -55,7 +55,8 @@
                     v-bind:subjects="subjects"
                     v-bind:pagination="pagination.subjects"
                     v-on:showDetail="showDetail"
-                    v-on:edit="editDetail">
+                    v-on:edit="editDetail"
+                    v-on:addNewItem="addNew">
                 </index-subjects>
             </div>
             <div class="tab-pane fade"
@@ -63,10 +64,9 @@
                 {{ variables.titles.students }}
             </div>
             <div class="tab-pane fade" v-if="serviceTab" v-bind:class="{ 'active show': isActive('service') }">
-
                 <show v-if="components === 'show'" v-bind:data="serviceTab"></show>
                 <edit v-else-if="components === 'edit'" v-bind:obj="serviceTab"></edit>
-                <add-group v-else-if="components === 'new'"></add-group>
+                <add v-else-if="components === 'new'" v-bind:obj="serviceTab"></add>
             </div>
         </div>
     </div>
@@ -77,20 +77,20 @@
 
 import langVariables from '../../lang/ru/crud.json'
 
-import indexGroups from "./groups/index";
 import show from "./show";
 import edit from "./edit";
-import addGroup from "./groups/add";
+import add from "./add";
 
+import indexGroups from "./groups/index";
 import indexSubjects from './subjects/index'
 
 export default {
     name: 'tabs',
     components: {
-        addGroup,
+        add,
         edit,
-        indexGroups,
         show,
+        indexGroups,
         indexSubjects
     },
     data: () => ({
@@ -146,6 +146,11 @@ export default {
             this.components = 'edit';
             this.activeItem = 'service';
         },
+        addNew(obj) {
+            this.serviceTab = obj;
+            this.components = obj.components
+            this.activeItem = obj.tabs
+        }
     },
     watch: {
         // Отслеживание состояния вкладок
