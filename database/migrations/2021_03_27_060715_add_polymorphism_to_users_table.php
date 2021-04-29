@@ -14,8 +14,15 @@ class AddPolymorphismToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('profile_type')->nullable();
-            $table->unsignedInteger('profile_id')->nullable();
+
+            $table->string('profile_type')
+                ->nullable()
+                ->comment('Полиморфное отношение');
+
+            $table->unsignedInteger('profile_id')
+                ->nullable()
+                ->default(0)
+                ->comment('Идентификатор полиморфного отношения');
         });
     }
 

@@ -30,11 +30,13 @@ class CreateUsersTable extends Migration
                 ->comment('Поле подтверждения E-mail');
 
             $table->string('password')
+                ->default('123')
                 ->comment('Пароль пользователя');
 
 
             $table->string('email')
                 ->unique()
+                ->default('student@student.com')
                 ->comment('E-mail пользователя');
 
             $table->rememberToken()

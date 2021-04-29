@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\CRUD;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
+use App\Models\Student;
 use App\Models\User;
 use App\Models\Subject;
 use Carbon\Carbon;
@@ -17,7 +19,6 @@ class SubjectController extends Controller
      */
     public function index()
     {
-
         $subjects = Subject::with('student')->paginate(5);
 
         $response = [
@@ -44,7 +45,7 @@ class SubjectController extends Controller
      */
     public function store(SubjectFormRequest $request)
     {
-        /*$studentData = explode(' ', $request->student);
+       /* $studentData = explode(' ', $request->student);
 
         $name = $studentData[0];
         if (count($studentData) < 2) {
@@ -57,23 +58,21 @@ class SubjectController extends Controller
 
         // Создать нового студента
         $student = Student::create([
-            'group_id' => 10,
+            'group_id' => $request->group_id,
         ]);
 
         // Создаём нового пользователя
-        $user = $student->user()->save(
-            new User([
+        $student->user()->create(
+           [
                 'name' => $name,
                 'surname' => $surname,
-                'password' => ' ',
-                'email' => ' ',
                 'profile_id' => $student->id,
-                'profile_type' => App\Models\User::class
-            ])
+                'profile_type' => App\Models\Student::class
+            ]
         );
 
         // Создаём новый учебный предмет
-        $subject = $student->subject()->save(
+        $student->subject()->save(
             new Subject([
                 'name' => $request->name,
                 'value' => $request->value,
@@ -83,7 +82,7 @@ class SubjectController extends Controller
 
         return response()->json($validator);*/
 
-        return response('ответ');
+        return response()->json('Ответ');
     }
 
     /**

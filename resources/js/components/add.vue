@@ -51,11 +51,37 @@
                        v-model="formData.subject.name">
 
                 <span class="invalid-error" v-if="error">
-                    Ошибка
+                    <strong v-if="messages.hasOwnProperty('name')">
+                        {{ messages.name[0] }}
+                    </strong>
                 </span>
             </div>
         </div>
         <!-- Имя END -->
+
+        <!-- Группа START-->
+        <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
+            <label for="group"
+                   class="col-md-4 col-form-label text-md-right">
+                {{ variables.add.subjectGroup }}
+            </label>
+
+            <div class="col-md-8">
+                <select class="form-control" v-model="formData.subject.group_id" id="group" required autofocus>
+                    <option value="" selected disabled hidden>Выберите группу из списка</option>
+                    <option v-for="group in groups" v-bind:key="group.id">
+                        {{ group.id }}. {{ group.name }}
+                    </option>
+                </select>
+
+                <span class="invalid-error" v-if="error">
+                    <strong v-if="messages.hasOwnProperty('group_id')">
+                        {{ messages.group_id[0] }}
+                    </strong>
+                </span>
+            </div>
+        </div>
+        <!-- Группа END -->
 
         <!-- Студент START-->
         <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
@@ -73,7 +99,9 @@
                        v-model="formData.subject.student">
 
                 <span class="invalid-error" v-if="error">
-                    Ошибка
+                    <strong v-if="messages.hasOwnProperty('student')">
+                        {{ messages.student[0] }}
+                    </strong>
                 </span>
             </div>
         </div>
@@ -95,11 +123,17 @@
                        v-model="formData.subject.value">
 
                 <span class="invalid-error" v-if="error">
-                    Ошибка
+                    <strong v-if="messages.hasOwnProperty('value')">
+                        {{ messages.value[0] }}
+                    </strong>
                 </span>
             </div>
         </div>
         <!-- Оценка по предмету END -->
+
+        <span class="success-message" v-bind:class="isActive">
+                    {{ variables.add.subjectSuccess }}
+        </span>
 
         <div class="offset-md-2 col-md-10 text-right mt-3">
             <button class="btn btn-primary" v-on:click="addNew(obj)">
@@ -126,6 +160,7 @@ export default {
                 name: '',
                 student: '',
                 value: '',
+                group_id: '',
                 _token: $('meta[name="csrf-token"]').attr('content'),
             }
         },
@@ -133,7 +168,8 @@ export default {
         variables: langVariables,
         error: false,
         messages: '',
-        isActive: 'd-none'
+        isActive: 'd-none',
+        groups: []
     }),
     methods: {
         addNew(obj) {
@@ -151,7 +187,6 @@ export default {
                             if (this.counter > 1) {
                                 $('.success-message').text('Вы успешно добавили ещё одну запись!')
                             }
-
                         },
                         error: (error) => {
                             this.isActive = 'd-none';
@@ -161,43 +196,40 @@ export default {
                     });
                     break;
                 case obj.hasOwnProperty('subject'):
+                    this.formData.subject.group_id = this.formData.subject.group_id.split('.')[0];
                     $.ajax({
                         url: obj.subject.url,
                         method: 'post',
                         data: this.formData.subject,
-                        success: (data) => {
-                            console.log(data);
+                        success: () => {
+                            this.counter += 1;
+                            this.isActive = 'd-block';
+                            this.messages = '';
+
+                            if (this.counter > 1) {
+                                $('.success-message').text('Вы успешно добавили ещё одну запись!')
+                            }
                         },
                         error: (error) => {
-                            console.log(error);
+                            console.log(error)
+
+                            this.isActive = 'd-none';
+                            this.error = true;
+                            this.messages = error.responseJSON.errors;
                         },
                     });
                     break;
             }
-
-            /*   $.ajax({
-                   url: '/api/groups',
-                   method: 'post',
-                   data: {
-                       _token: $('meta[name="csrf-token"]').attr('content'),
-                       name: this.group.name,
-                   },
-                   success: () => {
-                       this.counter += 1;
-                       this.isActive = 'd-block';
-                       this.messages = '';
-
-                       if (this.counter > 1) {
-                           $('.success-message').text('Вы успешно добавили ещё одну запись!')
-                       }
-                   },
-                   error: (error) => {
-                       this.isActive = 'd-none';
-                       this.error = true;
-                       this.messages = error.responseJSON.errors.name[0];
-                   },
-               });*/
         },
+    },
+    beforeCreate() {
+        $.ajax({
+            url: '/api/groups',
+            method: 'get',
+            success: (data) => {
+                this.groups = data.groups.data
+            },
+        });
     }
 }
 </script>

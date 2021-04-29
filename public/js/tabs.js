@@ -209,6 +209,40 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'add',
@@ -224,6 +258,7 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
           name: '',
           student: '',
           value: '',
+          group_id: '',
           _token: $('meta[name="csrf-token"]').attr('content')
         }
       },
@@ -231,7 +266,8 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
       variables: _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0__,
       error: false,
       messages: '',
-      isActive: 'd-none'
+      isActive: 'd-none',
+      groups: []
     };
   },
   methods: {
@@ -262,42 +298,41 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
           break;
 
         case obj.hasOwnProperty('subject'):
+          this.formData.subject.group_id = this.formData.subject.group_id.split('.')[0];
           $.ajax({
             url: obj.subject.url,
             method: 'post',
             data: this.formData.subject,
-            success: function success(data) {
-              console.log(data);
+            success: function success() {
+              _this.counter += 1;
+              _this.isActive = 'd-block';
+              _this.messages = '';
+
+              if (_this.counter > 1) {
+                $('.success-message').text('Вы успешно добавили ещё одну запись!');
+              }
             },
             error: function error(_error2) {
               console.log(_error2);
+              _this.isActive = 'd-none';
+              _this.error = true;
+              _this.messages = _error2.responseJSON.errors;
             }
           });
           break;
       }
-      /*   $.ajax({
-             url: '/api/groups',
-             method: 'post',
-             data: {
-                 _token: $('meta[name="csrf-token"]').attr('content'),
-                 name: this.group.name,
-             },
-             success: () => {
-                 this.counter += 1;
-                 this.isActive = 'd-block';
-                 this.messages = '';
-                  if (this.counter > 1) {
-                     $('.success-message').text('Вы успешно добавили ещё одну запись!')
-                 }
-             },
-             error: (error) => {
-                 this.isActive = 'd-none';
-                 this.error = true;
-                 this.messages = error.responseJSON.errors.name[0];
-             },
-         });*/
-
     }
+  },
+  beforeCreate: function beforeCreate() {
+    var _this2 = this;
+
+    $.ajax({
+      url: '/api/groups',
+      method: 'get',
+      success: function success(data) {
+        _this2.groups = data.groups.data;
+      }
+    });
   }
 });
 
@@ -2499,7 +2534,114 @@ var render = function() {
               _vm._v(" "),
               _vm.error
                 ? _c("span", { staticClass: "invalid-error" }, [
-                    _vm._v("\n                Ошибка\n            ")
+                    _vm.messages.hasOwnProperty("name")
+                      ? _c("strong", [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(_vm.messages.name[0]) +
+                              "\n                "
+                          )
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group row col-md-10 ml-auto mr-auto mt-4" },
+          [
+            _c(
+              "label",
+              {
+                staticClass: "col-md-4 col-form-label text-md-right",
+                attrs: { for: "group" }
+              },
+              [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.variables.add.subjectGroup) +
+                    "\n        "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-8" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.subject.group_id,
+                      expression: "formData.subject.group_id"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "group", required: "", autofocus: "" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.formData.subject,
+                        "group_id",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "option",
+                    {
+                      attrs: {
+                        value: "",
+                        selected: "",
+                        disabled: "",
+                        hidden: ""
+                      }
+                    },
+                    [_vm._v("Выберите группу из списка")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.groups, function(group) {
+                    return _c("option", { key: group.id }, [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(group.id) +
+                          ". " +
+                          _vm._s(group.name) +
+                          "\n                "
+                      )
+                    ])
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm.error
+                ? _c("span", { staticClass: "invalid-error" }, [
+                    _vm.messages.hasOwnProperty("group_id")
+                      ? _c("strong", [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(_vm.messages.group_id[0]) +
+                              "\n                "
+                          )
+                        ])
+                      : _vm._e()
                   ])
                 : _vm._e()
             ])
@@ -2559,7 +2701,15 @@ var render = function() {
               _vm._v(" "),
               _vm.error
                 ? _c("span", { staticClass: "invalid-error" }, [
-                    _vm._v("\n                Ошибка\n            ")
+                    _vm.messages.hasOwnProperty("student")
+                      ? _c("strong", [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(_vm.messages.student[0]) +
+                              "\n                "
+                          )
+                        ])
+                      : _vm._e()
                   ])
                 : _vm._e()
             ])
@@ -2615,12 +2765,28 @@ var render = function() {
               _vm._v(" "),
               _vm.error
                 ? _c("span", { staticClass: "invalid-error" }, [
-                    _vm._v("\n                Ошибка\n            ")
+                    _vm.messages.hasOwnProperty("value")
+                      ? _c("strong", [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(_vm.messages.value[0]) +
+                              "\n                "
+                          )
+                        ])
+                      : _vm._e()
                   ])
                 : _vm._e()
             ])
           ]
         ),
+        _vm._v(" "),
+        _c("span", { staticClass: "success-message", class: _vm.isActive }, [
+          _vm._v(
+            "\n                " +
+              _vm._s(_vm.variables.add.subjectSuccess) +
+              "\n    "
+          )
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "offset-md-2 col-md-10 text-right mt-3" }, [
           _c(
@@ -16565,7 +16731,7 @@ var Tabs = new Vue({
 /*! exports provided: titles, index, add, edit, delete, subjects, pagination, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"titles\":{\"groups\":\"Учебные группы\",\"subjects\":\"Учебные предметы\",\"students\":\"Студенты\"},\"index\":{\"id\":\"Идентификатор учебной группы\",\"name\":\"Название учебной группы\",\"created\":\"Дата создания\",\"updated\":\"Дата обновления\",\"available_actions\":\"Доступные действия\",\"add_new\":\"Добавить новую группу\",\"empty\":\"В системе не заведено учебных групп!\"},\"add\":{\"name\":\"Имя новой группы\",\"success\":\"Новая группа успешно добавлена!\",\"save\":\"Сохранить\",\"subjectName\":\"Имя нового учебного предмета\",\"subjectStudentFullName\":\"Имя студента\",\"subjectStudentGrade\":\"Оценка студента\"},\"edit\":{\"name\":\"Имя группы:\",\"success\":\"Успешно обновлено\",\"edit-btn\":\"Изменить\"},\"delete\":{\"success\":\"Запись успешно удалена!\"},\"subjects\":{\"id\":\"Идентификатор\",\"name\":\"Название\",\"created\":\"Дата создания\",\"updated\":\"Дата обновления\",\"available_actions\":\"Доступные действия\",\"add_new\":\"Добавить предмет\",\"students\":\"Студент\",\"academic_grades\":\"Оценка\",\"empty\":\"В системе не заведено учебных предметов!\"},\"pagination\":{\"next\":\"Следующая\",\"previous\":\"Предыдущая\"}}");
+module.exports = JSON.parse("{\"titles\":{\"groups\":\"Учебные группы\",\"subjects\":\"Учебные предметы\",\"students\":\"Студенты\"},\"index\":{\"id\":\"Идентификатор учебной группы\",\"name\":\"Название учебной группы\",\"created\":\"Дата создания\",\"updated\":\"Дата обновления\",\"available_actions\":\"Доступные действия\",\"add_new\":\"Добавить новую группу\",\"empty\":\"В системе не заведено учебных групп!\"},\"add\":{\"name\":\"Имя новой группы\",\"success\":\"Новая группа успешно добавлена!\",\"save\":\"Сохранить\",\"subjectName\":\"Имя нового учебного предмета\",\"subjectStudentFullName\":\"Имя студента\",\"subjectStudentGrade\":\"Оценка студента\",\"subjectGroup\":\"Учебная группа\",\"subjectSuccess\":\"Новый учебный предмет успешно добавлен!\"},\"edit\":{\"name\":\"Имя группы:\",\"success\":\"Успешно обновлено\",\"edit-btn\":\"Изменить\"},\"delete\":{\"success\":\"Запись успешно удалена!\"},\"subjects\":{\"id\":\"Идентификатор\",\"name\":\"Название\",\"created\":\"Дата создания\",\"updated\":\"Дата обновления\",\"available_actions\":\"Доступные действия\",\"add_new\":\"Добавить предмет\",\"students\":\"Студент\",\"academic_grades\":\"Оценка\",\"empty\":\"В системе не заведено учебных предметов!\"},\"pagination\":{\"next\":\"Следующая\",\"previous\":\"Предыдущая\"}}");
 
 /***/ }),
 

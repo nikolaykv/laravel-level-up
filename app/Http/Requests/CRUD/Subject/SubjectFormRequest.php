@@ -26,6 +26,7 @@ class SubjectFormRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:40'],
+            'group_id' => ['required'],
             'student' => ['required', 'string', 'max:40'],
             'value' => ['required', 'numeric', 'max:5', 'min:1'],
         ];
@@ -34,6 +35,7 @@ class SubjectFormRequest extends FormRequest
     {
         return [
             'name.required' => 'Поле должно быть заполнено!',
+            'group_id.required' => 'Поле должно быть заполнено!',
             'name.string' => 'Поле должно быть строкой!',
             'name.max' => 'Поле не должно быть не длиннее 40 символов!',
             'student.required' => 'Поле должно быть заполнено!',

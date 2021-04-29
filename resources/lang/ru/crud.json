@@ -19,7 +19,9 @@
         "save": "Сохранить",
         "subjectName": "Имя нового учебного предмета",
         "subjectStudentFullName": "Имя студента",
-        "subjectStudentGrade": "Оценка студента"
+        "subjectStudentGrade": "Оценка студента",
+        "subjectGroup": "Учебная группа",
+        "subjectSuccess": "Новый учебный предмет успешно добавлен!"
     },
     "edit": {
         "name": "Имя группы:",
