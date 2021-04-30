@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api\CRUD;
 
-use App\Http\Controllers\Controller;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class StudentController extends Controller
 {
@@ -15,7 +15,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::paginate(5);
+        $students = Student::with('user')->paginate(5);
 
         $response = [
             'pagination' => [

@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\CRUD\Group;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class NewNameFormRequest extends FormRequest
 {

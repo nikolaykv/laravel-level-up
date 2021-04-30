@@ -1,40 +1,19 @@
 <template>
     <div>
         <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link"
-                   @click.prevent="setActive('groups')"
-                   v-bind:class="{ active: isActive('groups') }">
-                    {{ variables.titles.groups }}
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"
-                   @click.prevent="setActive('subjects')"
-                   v-bind:class="{ active: isActive('subjects') }">
-                    {{ variables.titles.subjects }}
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"
-                   @click.prevent="setActive('students')"
-                   v-bind:class="{ active: isActive('students') }">
-                    {{ variables.titles.students }}
+            <li class="nav-item" v-for="(item, index) in tabs" v-bind:key="index">
+                <a class="nav-link" v-on:click.prevent="setActive(item)" v-bind:class="{ active: isActive(item) }">
+                    <span v-if="item === 'groups'">{{ variables.titles.groups }}</span>
+                    <span v-else-if="item === 'subjects'">{{ variables.titles.subjects }}</span>
+                    <span v-else>{{ variables.titles.students }}</span>
                 </a>
             </li>
 
             <li class="nav-item" v-if="serviceTab">
-                <a class="nav-link"
-                   @click.prevent="setActive('service')"
-                   :class="{ active: isActive('service') }">
-
-                    <span v-if="serviceTab.hasOwnProperty('group')">
-                        {{ serviceTab.group.name }}
-                    </span>
-
-                    <span v-else-if="serviceTab.hasOwnProperty('subject')">
-                        {{ serviceTab.subject.name }}
-                    </span>
+                <a class="nav-link" v-on:click.prevent="setActive('service')"
+                   v-bind:class="{ active: isActive('service') }">
+                    <span v-if="serviceTab.hasOwnProperty('group')">{{ serviceTab.group.name }}</span>
+                    <span v-else-if="serviceTab.hasOwnProperty('subject')">{{ serviceTab.subject.name }}</span>
                 </a>
             </li>
         </ul>
@@ -59,9 +38,10 @@
                     v-on:addNewItem="addNew">
                 </index-subjects>
             </div>
-            <div class="tab-pane fade"
-                 v-bind:class="{ 'active show': isActive('students') }">
-                {{ variables.titles.students }}
+            <div class="tab-pane fade" v-bind:class="{ 'active show': isActive('students') }">
+                <index-students
+                    v-bind:students="students">
+                </index-students>
             </div>
             <div class="tab-pane fade" v-if="serviceTab" v-bind:class="{ 'active show': isActive('service') }">
                 <show v-if="components === 'show'" v-bind:data="serviceTab"></show>
@@ -83,6 +63,7 @@ import add from "./add";
 
 import indexGroups from "./groups/index";
 import indexSubjects from './subjects/index'
+import indexStudents from './students/index'
 
 export default {
     name: 'tabs',
@@ -91,19 +72,19 @@ export default {
         edit,
         show,
         indexGroups,
-        indexSubjects
+        indexSubjects,
+        indexStudents
     },
     data: () => ({
-        activeItem: 'groups',
-        components: false,
-        groups: [],
-        pagination: {
-            "groups": [],
-            "subjects": []
-        },
-        subjects: [],
-        serviceTab: false,
         variables: langVariables,
+        activeItem: 'groups',
+        subjects: [],
+        groups: [],
+        students: [],
+        serviceTab: false,
+        components: false,
+        tabs: ['groups', 'subjects', 'students'],
+        pagination: {"groups": [], "subjects": [], "student": []},
     }),
     methods: {
         // Переключение и определение текущей вкладки
@@ -123,7 +104,6 @@ export default {
                 },
             });
         },
-
         getSubjects() {
             $.ajax({
                 url: '/api/subjects',
@@ -131,6 +111,19 @@ export default {
                 success: (data) => {
                     this.subjects = data.subjects.data
                     this.pagination.subjects = data.pagination
+                },
+            });
+        },
+        getStudents() {
+            $.ajax({
+                url: '/api/students',
+                method: 'get',
+                success: (data) => {
+
+                    console.log(data)
+
+                    this.students = data.students.data
+                    this.pagination.students = data.pagination
                 },
             });
         },
@@ -164,6 +157,7 @@ export default {
         // Делаем Ajax запрос как только создан экземпляр
         this.getGroups();
         this.getSubjects();
+        this.getStudents()
     },
 }
 </script>

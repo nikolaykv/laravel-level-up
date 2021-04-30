@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Console\Command;
 use App\Models\Admin;
 use App\Models\User;
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * Class AdminMakeCommand

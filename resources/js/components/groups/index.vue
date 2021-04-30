@@ -5,10 +5,10 @@
                 <thead>
                 <tr>
                     <th>{{ variables.index.id }}</th>
-                    <th>{{ variables.index.name }}</th>
-                    <th>{{ variables.index.created }}</th>
-                    <th>{{ variables.index.updated }}</th>
-                    <th>{{ variables.index.available_actions }}</th>
+                    <th>{{ variables.index.group }}</th>
+                    <th>{{ variables.index.dataCreated }}</th>
+                    <th>{{ variables.index.dataUpdated }}</th>
+                    <th>{{ variables.index.availableActions }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,13 +43,13 @@
         </div>
 
         <div class="alert alert-danger text-center d-none empty-result mt-3" v-else>
-            {{ variables.index.empty }}
+            {{ variables.index.groupEmpty }}
         </div>
 
         <div class="container-xl">
             <div class="row d-flex flex-row-reverse justify-content-between">
                 <a class="btn btn-primary" v-on:click.prevent="addNew(addData)">
-                    {{ variables.index.add_new }}
+                    {{ variables.index.groupAddNew }}
                 </a>
             </div>
         </div>
@@ -57,9 +57,10 @@
 </template>
 
 <script>
+
 import langVariables from '../../../lang/ru/crud.json'
-import deleteItem from "../delete";
 import pagination from "../pagination";
+import deleteItem from "../delete";
 
 export default {
     name: 'index',

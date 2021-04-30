@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api\CRUD;
 
+use App\Http\Requests\CRUD\Group\NewNameFormRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Group;
-use App\Http\Requests\CRUD\Group\NewNameFormRequest;
 
 class GroupController extends Controller
 {

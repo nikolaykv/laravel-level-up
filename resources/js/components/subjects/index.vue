@@ -4,13 +4,13 @@
             <table class="table table-bordered list">
                 <thead>
                 <tr>
-                    <th>{{ variables.subjects.id }}</th>
-                    <th>{{ variables.subjects.name }}</th>
-                    <th>{{ variables.subjects.students }}</th>
-                    <th>{{ variables.subjects.academic_grades }}</th>
-                    <th>{{ variables.subjects.created }}</th>
-                    <th>{{ variables.subjects.updated }}</th>
-                    <th>{{ variables.subjects.available_actions }}</th>
+                    <th>{{ variables.index.id }}</th>
+                    <th>{{ variables.index.subject }}</th>
+                    <th>{{ variables.index.students }}</th>
+                    <th>{{ variables.index.academicGrades }}</th>
+                    <th>{{ variables.index.dataCreated }}</th>
+                    <th>{{ variables.index.dataUpdated }}</th>
+                    <th>{{ variables.index.availableActions }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -49,13 +49,13 @@
         </div>
 
         <div class="alert alert-danger text-center d-none empty-result mt-3" v-else>
-            {{ variables.subjects.empty }}
+            {{ variables.index.subjectEmpty }}
         </div>
 
         <div class="container-xl">
             <div class="row d-flex flex-row-reverse justify-content-between">
                 <a class="btn btn-primary" v-on:click.prevent="addNew(addData)">
-                    {{ variables.subjects.add_new }}
+                    {{ variables.index.subjectAddNew }}
                 </a>
             </div>
         </div>
