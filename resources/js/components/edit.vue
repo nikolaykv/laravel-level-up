@@ -4,7 +4,7 @@
         <div class="form-group row col-md-8 ml-auto mr-auto mt-4">
             <label for="group-name"
                    class="col-md-3 col-form-label text-md-right">
-                {{ variables.edit.name }}
+                {{ variables.group }}:
             </label>
 
             <div class="col-md-9">
@@ -23,12 +23,12 @@
                 </span>
 
                 <div class="alert alert-success mt-3" v-bind:class="isActive">
-                    {{ variables.edit.success }}
+                    {{ variables.success }}
                 </div>
             </div>
             <div class="offset-md-2 col-md-10 text-right mt-3">
-                <button class="btn btn-primary" @click.prevent="update(obj)">
-                    {{ variables.edit["edit-btn"] }}
+                <button class="btn btn-primary" v-on:click.prevent="update(obj)">
+                    {{ variables.editBtn }}
                 </button>
             </div>
         </div>
@@ -40,7 +40,7 @@
         <!-- Название учебного предмета START -->
         <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
             <label for="subject-name" class="col-md-4 col-form-label text-md-right">
-                {{ variables.subjects.name }} учебного предмета:
+                {{ variables.subject }}:
             </label>
 
             <div class="col-md-8">
@@ -64,7 +64,7 @@
         <!-- Студент START -->
         <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
             <label for="subject-name" class="col-md-4 col-form-label text-md-right">
-                {{ variables.subjects.students }}:
+                {{ variables.titles.students }}:
             </label>
 
             <div class="col-md-8">
@@ -88,7 +88,7 @@
         <!-- Оценка студента START -->
         <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
             <label for="subject-name" class="col-md-4 col-form-label text-md-right">
-                {{ variables.subjects.academic_grades }}:
+                {{ variables.academicGrades }}:
             </label>
 
             <div class="col-md-8">
@@ -107,12 +107,12 @@
                 </span>
 
                 <div class="alert alert-success mt-3" v-bind:class="isActive">
-                    {{ variables.edit.success }}
+                    {{ variables.success }}
                 </div>
             </div>
             <div class="offset-md-2 col-md-10 text-right mt-3">
-                <button class="btn btn-primary" @click.prevent="update(obj)">
-                    {{ variables.edit["edit-btn"] }}
+                <button class="btn btn-primary" v-on:click.prevent="update(obj)">
+                    {{ variables.editBtn }}
                 </button>
             </div>
         </div>
@@ -177,7 +177,6 @@ export default {
                     method: 'patch',
                     dataType: 'json',
                     success: (data) => {
-                        console.log(data)
                         this.isActive = 'd-block';
                         $('.nav-link.active').text(data.name);
                         this.messages = '';

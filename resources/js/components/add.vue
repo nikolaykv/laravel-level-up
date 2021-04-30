@@ -2,9 +2,8 @@
     <!-- Группа START-->
     <div v-if="obj.hasOwnProperty('group')">
         <div class="form-group row col-md-8 ml-auto mr-auto mt-4">
-            <label for="group-name"
-                   class="col-md-3 col-form-label text-md-right">
-                {{ variables.add.name }}
+            <label for="group-name" class="col-md-3 col-form-label text-md-right">
+                {{ variables.group }}:
             </label>
 
             <div class="col-md-9">
@@ -16,7 +15,7 @@
                        v-model="formData.group.name">
 
                 <span class="success-message" v-bind:class="isActive">
-                    {{ variables.add.success }}
+                    {{ variables.add.groupSuccess }}
                 </span>
 
                 <span class="invalid-error" v-if="error">
@@ -26,7 +25,7 @@
 
             <div class="offset-md-2 col-md-10 text-right mt-3">
                 <button class="btn btn-primary" v-on:click="addNew(obj)">
-                    {{ variables.add.save }}
+                    {{ variables.save }}
                 </button>
             </div>
         </div>
@@ -39,7 +38,7 @@
         <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
             <label for="subject-name"
                    class="col-md-4 col-form-label text-md-right">
-                {{ variables.add.subjectName }}
+                {{ variables.subject }}:
             </label>
 
             <div class="col-md-8">
@@ -63,12 +62,12 @@
         <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
             <label for="group"
                    class="col-md-4 col-form-label text-md-right">
-                {{ variables.add.subjectGroup }}
+                {{ variables.group }}:
             </label>
 
             <div class="col-md-8">
                 <select class="form-control" v-model="formData.subject.group_id" id="group" required autofocus>
-                    <option value="" selected disabled hidden>Выберите группу из списка</option>
+                    <option value="" selected disabled hidden>{{ variables.select }}</option>
                     <option v-for="group in groups" v-bind:key="group.id">
                         {{ group.id }}. {{ group.name }}
                     </option>
@@ -87,7 +86,7 @@
         <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
             <label for="student-name"
                    class="col-md-4 col-form-label text-md-right">
-                {{ variables.add.subjectStudentFullName }}
+                {{ variables.student }}:
             </label>
 
             <div class="col-md-8">
@@ -111,7 +110,7 @@
         <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
             <label for="value"
                    class="col-md-4 col-form-label text-md-right">
-                {{ variables.add.subjectStudentGrade }}
+                {{ variables.academicGrades }}
             </label>
 
             <div class="col-md-8">
@@ -137,7 +136,7 @@
 
         <div class="offset-md-2 col-md-10 text-right mt-3">
             <button class="btn btn-primary" v-on:click="addNew(obj)">
-                {{ variables.add.save }}
+                {{ variables.save }}
             </button>
         </div>
     </div>
@@ -185,7 +184,7 @@ export default {
                             this.messages = '';
 
                             if (this.counter > 1) {
-                                $('.success-message').text('Вы успешно добавили ещё одну запись!')
+                                $('.success-message').text(langVariables.added);
                             }
                         },
                         error: (error) => {
@@ -207,12 +206,10 @@ export default {
                             this.messages = '';
 
                             if (this.counter > 1) {
-                                $('.success-message').text('Вы успешно добавили ещё одну запись!')
+                                $('.success-message').text(langVariables.added);
                             }
                         },
                         error: (error) => {
-                            console.log(error)
-
                             this.isActive = 'd-none';
                             this.error = true;
                             this.messages = error.responseJSON.errors;

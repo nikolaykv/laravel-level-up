@@ -242,7 +242,6 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'add',
@@ -286,7 +285,7 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
               _this.messages = '';
 
               if (_this.counter > 1) {
-                $('.success-message').text('Вы успешно добавили ещё одну запись!');
+                $('.success-message').text(_lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0__.added);
               }
             },
             error: function error(_error) {
@@ -309,11 +308,10 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
               _this.messages = '';
 
               if (_this.counter > 1) {
-                $('.success-message').text('Вы успешно добавили ещё одну запись!');
+                $('.success-message').text(_lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0__.added);
               }
             },
             error: function error(_error2) {
-              console.log(_error2);
               _this.isActive = 'd-none';
               _this.error = true;
               _this.messages = _error2.responseJSON.errors;
@@ -585,7 +583,6 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
           method: 'patch',
           dataType: 'json',
           success: function success(data) {
-            console.log(data);
             _this.isActive = 'd-block';
             $('.nav-link.active').text(data.name);
             _this.messages = '';
@@ -673,7 +670,6 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
 //
 //
 //
-//
 
 
 
@@ -690,7 +686,7 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
       url: '/api/groups?page=',
       addData: {
         group: {
-          name: 'Добавить новую группу',
+          name: _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0__.add.group,
           url: '/api/groups'
         },
         tabs: 'service',
@@ -804,6 +800,8 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
             _this.$parent.$parent.$data.groups = data.groups.data;
           } else if ('subjects' in data) {
             _this.$parent.$parent.$data.subjects = data.subjects.data;
+          } else {
+            _this.$parent.$parent.$data.students = data.students.data;
           }
 
           _this.paginationData.current_page = page;
@@ -911,8 +909,6 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -928,8 +924,8 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
   },
   methods: {
     redrawHtml: function redrawHtml() {
-      $('.show-item-group').html('<td class="alert alert-success text-center" colspan="5">Запись успешно удалена!</td>');
-      $('.show-item-subject').html('<td class="alert alert-success text-center" colspan="7">Запись успешно удалена!</td>');
+      $('.show-item-group').html('<td class="alert alert-success text-center" colspan="5">' + _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0__.deleted + '</td>');
+      $('.show-item-subject').html('<td class="alert alert-success text-center" colspan="7">' + _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0__.deleted + '</td>');
     }
   }
 });
@@ -972,17 +968,33 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'index',
-  props: ['students'],
+  props: ['students', 'pagination'],
   components: {
     pagination: _pagination__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
-      variables: _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0__
+      variables: _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0__,
+      url: '/api/students?page='
     };
   }
 });
@@ -1000,10 +1012,8 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../lang/ru/crud.json */ "./resources/lang/ru/crud.json");
 var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../../lang/ru/crud.json */ "./resources/lang/ru/crud.json", 1);
-/* harmony import */ var _delete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../delete */ "./resources/js/components/delete.vue");
-/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../pagination */ "./resources/js/components/pagination.vue");
-//
-//
+/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../pagination */ "./resources/js/components/pagination.vue");
+/* harmony import */ var _delete__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../delete */ "./resources/js/components/delete.vue");
 //
 //
 //
@@ -1072,8 +1082,8 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'index',
   components: {
-    pagination: _pagination__WEBPACK_IMPORTED_MODULE_2__["default"],
-    deleteItem: _delete__WEBPACK_IMPORTED_MODULE_1__["default"]
+    pagination: _pagination__WEBPACK_IMPORTED_MODULE_1__["default"],
+    deleteItem: _delete__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: ['subjects', 'pagination'],
   data: function data() {
@@ -1082,7 +1092,7 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
       url: '/api/subjects?page=',
       addData: {
         subject: {
-          name: 'Добавить новый учебный предмет',
+          name: _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0__.add.subject,
           url: '/api/subjects'
         },
         tabs: 'service',
@@ -1099,12 +1109,7 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
         method: 'get',
         cache: false,
         success: function success(data) {
-          console.log(data);
-
           _this.$emit('showDetail', data);
-        },
-        error: function error(_error) {
-          console.log(_error);
         }
       });
     },
@@ -1137,14 +1142,14 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lang/ru/crud.json */ "./resources/lang/ru/crud.json");
-var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../lang/ru/crud.json */ "./resources/lang/ru/crud.json", 1);
+/* harmony import */ var _add__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./add */ "./resources/js/components/add.vue");
 /* harmony import */ var _show__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./show */ "./resources/js/components/show.vue");
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./resources/js/components/edit.vue");
-/* harmony import */ var _add__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./add */ "./resources/js/components/add.vue");
-/* harmony import */ var _groups_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./groups/index */ "./resources/js/components/groups/index.vue");
-/* harmony import */ var _subjects_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./subjects/index */ "./resources/js/components/subjects/index.vue");
-/* harmony import */ var _students_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./students/index */ "./resources/js/components/students/index.vue");
+/* harmony import */ var _groups_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./groups/index */ "./resources/js/components/groups/index.vue");
+/* harmony import */ var _subjects_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./subjects/index */ "./resources/js/components/subjects/index.vue");
+/* harmony import */ var _students_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./students/index */ "./resources/js/components/students/index.vue");
+/* harmony import */ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lang/ru/crud.json */ "./resources/lang/ru/crud.json");
+var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../lang/ru/crud.json */ "./resources/lang/ru/crud.json", 1);
 //
 //
 //
@@ -1210,16 +1215,16 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'tabs',
   components: {
-    add: _add__WEBPACK_IMPORTED_MODULE_3__["default"],
+    add: _add__WEBPACK_IMPORTED_MODULE_0__["default"],
     edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
     show: _show__WEBPACK_IMPORTED_MODULE_1__["default"],
-    indexGroups: _groups_index__WEBPACK_IMPORTED_MODULE_4__["default"],
-    indexSubjects: _subjects_index__WEBPACK_IMPORTED_MODULE_5__["default"],
-    indexStudents: _students_index__WEBPACK_IMPORTED_MODULE_6__["default"]
+    indexGroups: _groups_index__WEBPACK_IMPORTED_MODULE_3__["default"],
+    indexSubjects: _subjects_index__WEBPACK_IMPORTED_MODULE_4__["default"],
+    indexStudents: _students_index__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   data: function data() {
     return {
-      variables: _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0__,
+      variables: _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_6__,
       activeItem: 'groups',
       subjects: [],
       groups: [],
@@ -1230,7 +1235,7 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
       pagination: {
         "groups": [],
         "subjects": [],
-        "student": []
+        "students": []
       }
     };
   },
@@ -1273,7 +1278,6 @@ var _lang_ru_crud_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__w
         url: '/api/students',
         method: 'get',
         success: function success(data) {
-          console.log(data);
           _this3.students = data.students.data;
           _this3.pagination.students = data.pagination;
         }
@@ -2456,9 +2460,7 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.variables.add.name) +
-                    "\n        "
+                  "\n            " + _vm._s(_vm.variables.group) + ":\n        "
                 )
               ]
             ),
@@ -2497,7 +2499,7 @@ var render = function() {
                 [
                   _vm._v(
                     "\n                " +
-                      _vm._s(_vm.variables.add.success) +
+                      _vm._s(_vm.variables.add.groupSuccess) +
                       "\n            "
                   )
                 ]
@@ -2531,7 +2533,7 @@ var render = function() {
                   [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.variables.add.save) +
+                        _vm._s(_vm.variables.save) +
                         "\n            "
                     )
                   ]
@@ -2556,8 +2558,8 @@ var render = function() {
               [
                 _vm._v(
                   "\n            " +
-                    _vm._s(_vm.variables.add.subjectName) +
-                    "\n        "
+                    _vm._s(_vm.variables.subject) +
+                    ":\n        "
                 )
               ]
             ),
@@ -2619,9 +2621,7 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.variables.add.subjectGroup) +
-                    "\n        "
+                  "\n            " + _vm._s(_vm.variables.group) + ":\n        "
                 )
               ]
             ),
@@ -2671,7 +2671,7 @@ var render = function() {
                         hidden: ""
                       }
                     },
-                    [_vm._v("Выберите группу из списка")]
+                    [_vm._v(_vm._s(_vm.variables.select))]
                   ),
                   _vm._v(" "),
                   _vm._l(_vm.groups, function(group) {
@@ -2719,8 +2719,8 @@ var render = function() {
               [
                 _vm._v(
                   "\n            " +
-                    _vm._s(_vm.variables.add.subjectStudentFullName) +
-                    "\n        "
+                    _vm._s(_vm.variables.student) +
+                    ":\n        "
                 )
               ]
             ),
@@ -2787,7 +2787,7 @@ var render = function() {
               [
                 _vm._v(
                   "\n            " +
-                    _vm._s(_vm.variables.add.subjectStudentGrade) +
+                    _vm._s(_vm.variables.academicGrades) +
                     "\n        "
                 )
               ]
@@ -2859,7 +2859,7 @@ var render = function() {
             },
             [
               _vm._v(
-                "\n            " + _vm._s(_vm.variables.add.save) + "\n        "
+                "\n            " + _vm._s(_vm.variables.save) + "\n        "
               )
             ]
           )
@@ -2937,9 +2937,7 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.variables.edit.name) +
-                    "\n        "
+                  "\n            " + _vm._s(_vm.variables.group) + ":\n        "
                 )
               ]
             ),
@@ -2994,7 +2992,7 @@ var render = function() {
                 [
                   _vm._v(
                     "\n                " +
-                      _vm._s(_vm.variables.edit.success) +
+                      _vm._s(_vm.variables.success) +
                       "\n            "
                   )
                 ]
@@ -3019,7 +3017,7 @@ var render = function() {
                   [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.variables.edit["edit-btn"]) +
+                        _vm._s(_vm.variables.editBtn) +
                         "\n            "
                     )
                   ]
@@ -3044,8 +3042,8 @@ var render = function() {
               [
                 _vm._v(
                   "\n            " +
-                    _vm._s(_vm.variables.subjects.name) +
-                    " учебного предмета:\n        "
+                    _vm._s(_vm.variables.subject) +
+                    ":\n        "
                 )
               ]
             ),
@@ -3109,7 +3107,7 @@ var render = function() {
               [
                 _vm._v(
                   "\n            " +
-                    _vm._s(_vm.variables.subjects.students) +
+                    _vm._s(_vm.variables.titles.students) +
                     ":\n        "
                 )
               ]
@@ -3174,7 +3172,7 @@ var render = function() {
               [
                 _vm._v(
                   "\n            " +
-                    _vm._s(_vm.variables.subjects.academic_grades) +
+                    _vm._s(_vm.variables.academicGrades) +
                     ":\n        "
                 )
               ]
@@ -3236,7 +3234,7 @@ var render = function() {
                 [
                   _vm._v(
                     "\n                " +
-                      _vm._s(_vm.variables.edit.success) +
+                      _vm._s(_vm.variables.success) +
                       "\n            "
                   )
                 ]
@@ -3261,7 +3259,7 @@ var render = function() {
                   [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.variables.edit["edit-btn"]) +
+                        _vm._s(_vm.variables.editBtn) +
                         "\n            "
                     )
                   ]
@@ -3303,17 +3301,15 @@ var render = function() {
             _c("table", { staticClass: "table table-bordered list" }, [
               _c("thead", [
                 _c("tr", [
-                  _c("th", [_vm._v(_vm._s(_vm.variables.index.id))]),
+                  _c("th", [_vm._v(_vm._s(_vm.variables.id))]),
                   _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(_vm.variables.index.group))]),
+                  _c("th", [_vm._v(_vm._s(_vm.variables.group))]),
                   _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(_vm.variables.index.dataCreated))]),
+                  _c("th", [_vm._v(_vm._s(_vm.variables.dataCreated))]),
                   _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(_vm.variables.index.dataUpdated))]),
+                  _c("th", [_vm._v(_vm._s(_vm.variables.dataUpdated))]),
                   _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.variables.index.availableActions))
-                  ])
+                  _c("th", [_vm._v(_vm._s(_vm.variables.availableActions))])
                 ])
               ]),
               _vm._v(" "),
@@ -3588,15 +3584,15 @@ var render = function() {
       ? _c("table", { staticClass: "table table-bordered list" }, [
           _c("thead", [
             _c("tr", [
-              _c("th", [_vm._v(_vm._s(_vm.variables.index.id))]),
+              _c("th", [_vm._v(_vm._s(_vm.variables.id))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.variables.index.name))]),
+              _c("th", [_vm._v(_vm._s(_vm.variables.group))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.variables.index.created))]),
+              _c("th", [_vm._v(_vm._s(_vm.variables.dataCreated))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.variables.index.updated))]),
+              _c("th", [_vm._v(_vm._s(_vm.variables.dataUpdated))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.variables.index.available_actions))])
+              _c("th", [_vm._v(_vm._s(_vm.variables.availableActions))])
             ])
           ]),
           _vm._v(" "),
@@ -3629,23 +3625,17 @@ var render = function() {
       ? _c("table", { staticClass: "table table-bordered list" }, [
           _c("thead", [
             _c("tr", [
-              _c("th", [_vm._v(_vm._s(_vm.variables.subjects.id))]),
+              _c("th", [_vm._v(_vm._s(_vm.variables.id))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.variables.subjects.name))]),
+              _c("th", [_vm._v(_vm._s(_vm.variables.subject))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.variables.subjects.students))]),
+              _c("th", [_vm._v(_vm._s(_vm.variables.student))]),
               _vm._v(" "),
-              _c("th", [
-                _vm._v(_vm._s(_vm.variables.subjects.academic_grades))
-              ]),
+              _c("th", [_vm._v(_vm._s(_vm.variables.academicGrades))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.variables.subjects.created))]),
+              _c("th", [_vm._v(_vm._s(_vm.variables.dataCreated))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.variables.subjects.updated))]),
-              _vm._v(" "),
-              _c("th", [
-                _vm._v(_vm._s(_vm.variables.subjects.available_actions))
-              ])
+              _c("th", [_vm._v(_vm._s(_vm.variables.availableActions))])
             ])
           ]),
           _vm._v(" "),
@@ -3659,11 +3649,11 @@ var render = function() {
                 _vm._v(_vm._s(_vm.data.subject.student.user.full_name))
               ]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(_vm.data.subject.value))]),
+              _c("td", { staticClass: "text-center" }, [
+                _vm._v(_vm._s(_vm.data.subject.value))
+              ]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(_vm.data.subject.created_at))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(_vm.data.subject.updated_at))]),
               _vm._v(" "),
               _c(
                 "td",
@@ -3709,29 +3699,59 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("table", { staticClass: "table table-bordered list" }, [
-      _c("thead", [
-        _c("tr", [
-          _c("th", [_vm._v(_vm._s(_vm.variables.index.id))]),
-          _vm._v(" "),
-          _c("th", [_vm._v(_vm._s(_vm.variables.index.student))]),
-          _vm._v(" "),
-          _c("th", [_vm._v(_vm._s(_vm.variables.index.email))]),
-          _vm._v(" "),
-          _c("th", [_vm._v(_vm._s(_vm.variables.index.group))]),
-          _vm._v(" "),
-          _c("th", [_vm._v(_vm._s(_vm.variables.index.academicGrades))]),
-          _vm._v(" "),
-          _c("th", [_vm._v(_vm._s(_vm.variables.index.dataCreated))]),
-          _vm._v(" "),
-          _c("th", [_vm._v(_vm._s(_vm.variables.index.dataUpdated))]),
-          _vm._v(" "),
-          _c("th", [_vm._v(_vm._s(_vm.variables.index.availableActions))])
-        ])
-      ]),
-      _vm._v(" "),
-      _vm._m(0)
-    ])
+    _vm.students.length > 0
+      ? _c(
+          "div",
+          [
+            _c("table", { staticClass: "table table-bordered list" }, [
+              _c("thead", [
+                _c("tr", [
+                  _c("th", [_vm._v(_vm._s(_vm.variables.id))]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(_vm._s(_vm.variables.student))]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(_vm._s(_vm.variables.group))]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(_vm._s(_vm.variables.subject))]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(_vm._s(_vm.variables.academicGrades))]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v(_vm._s(_vm.variables.availableActions))])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.students, function(student) {
+                  return _c("tr", { key: student.id }, [
+                    _c("td", [_vm._v(_vm._s(student.id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(student.user.full_name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(student.group.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(student.subject.name))]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-center" }, [
+                      _vm._v(_vm._s(student.subject.value))
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(0, true)
+                  ])
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _vm.pagination.last_page > 1
+              ? _c("pagination", {
+                  attrs: { url: _vm.url, pagination: _vm.pagination }
+                })
+              : _vm._e()
+          ],
+          1
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -3739,8 +3759,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tbody", [
-      _c("tr", [_c("td", { attrs: { colspan: "8" } }, [_vm._v("test")])])
+    return _c("td", { staticClass: "d-xl-flex justify-content-xl-around" }, [
+      _c("i", {
+        staticClass:
+          "far fa-edit bg-primary text-white btn d-flex align-items-center"
+      }),
+      _vm._v(" "),
+      _c("i", {
+        staticClass:
+          "far fa-eye bg-success text-white btn d-flex align-items-center"
+      }),
+      _vm._v(" "),
+      _c("i", {
+        staticClass:
+          "far fa-trash-alt bg-danger text-white btn d-flex align-items-center"
+      })
     ])
   }
 ]
@@ -3773,23 +3806,17 @@ var render = function() {
             _c("table", { staticClass: "table table-bordered list" }, [
               _c("thead", [
                 _c("tr", [
-                  _c("th", [_vm._v(_vm._s(_vm.variables.index.id))]),
+                  _c("th", [_vm._v(_vm._s(_vm.variables.id))]),
                   _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(_vm.variables.index.subject))]),
+                  _c("th", [_vm._v(_vm._s(_vm.variables.subject))]),
                   _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(_vm.variables.index.students))]),
+                  _c("th", [_vm._v(_vm._s(_vm.variables.titles.students))]),
                   _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.variables.index.academicGrades))
-                  ]),
+                  _c("th", [_vm._v(_vm._s(_vm.variables.academicGrades))]),
                   _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(_vm.variables.index.dataCreated))]),
+                  _c("th", [_vm._v(_vm._s(_vm.variables.dataCreated))]),
                   _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(_vm.variables.index.dataUpdated))]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(_vm._s(_vm.variables.index.availableActions))
-                  ])
+                  _c("th", [_vm._v(_vm._s(_vm.variables.availableActions))])
                 ])
               ]),
               _vm._v(" "),
@@ -3808,8 +3835,6 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(subject.created_at))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(subject.updated_at))]),
                     _vm._v(" "),
                     _c(
                       "td",
@@ -4038,7 +4063,14 @@ var render = function() {
           staticClass: "tab-pane fade",
           class: { "active show": _vm.isActive("students") }
         },
-        [_c("index-students", { attrs: { students: _vm.students } })],
+        [
+          _c("index-students", {
+            attrs: {
+              students: _vm.students,
+              pagination: _vm.pagination.students
+            }
+          })
+        ],
         1
       ),
       _vm._v(" "),
@@ -16862,10 +16894,10 @@ var Tabs = new Vue({
 /*!*************************************!*\
   !*** ./resources/lang/ru/crud.json ***!
   \*************************************/
-/*! exports provided: titles, index, add, edit, delete, pagination, default */
+/*! exports provided: titles, index, add, pagination, save, student, editBtn, id, group, subject, dataCreated, success, dataUpdated, deleted, select, availableActions, academicGrades, added, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"titles\":{\"groups\":\"Учебные группы\",\"subjects\":\"Учебные предметы\",\"students\":\"Студенты\"},\"index\":{\"id\":\"Идентификатор\",\"group\":\"Учебная группа\",\"dataCreated\":\"Дата создания\",\"dataUpdated\":\"Дата обновления\",\"availableActions\":\"Доступные действия\",\"groupAddNew\":\"Добавить новую группу\",\"groupEmpty\":\"В системе не заведено учебных групп!\",\"subject\":\"Название\",\"subjectAddNew\":\"Добавить предмет\",\"students\":\"Студенты\",\"student\":\"Студент\",\"academicGrades\":\"Академическая оценка\",\"subjectEmpty\":\"В системе не заведено учебных предметов!\",\"email\":\"Почтовый адрес\"},\"add\":{\"name\":\"Имя новой группы\",\"success\":\"Новая группа успешно добавлена!\",\"save\":\"Сохранить\",\"subjectName\":\"Имя нового учебного предмета\",\"subjectStudentFullName\":\"Имя студента\",\"subjectStudentGrade\":\"Оценка студента\",\"subjectGroup\":\"Учебная группа\",\"subjectSuccess\":\"Новый учебный предмет успешно добавлен!\"},\"edit\":{\"name\":\"Имя группы:\",\"success\":\"Успешно обновлено\",\"edit-btn\":\"Изменить\"},\"delete\":{\"success\":\"Запись успешно удалена!\"},\"pagination\":{\"next\":\"Следующая\",\"previous\":\"Предыдущая\"}}");
+module.exports = JSON.parse("{\"titles\":{\"students\":\"Студенты\",\"groups\":\"Учебные группы\",\"subjects\":\"Учебные предметы\"},\"index\":{\"subjectAddNew\":\"Добавить предмет\",\"groupAddNew\":\"Добавить новую группу\",\"groupEmpty\":\"В системе не заведено учебных групп!\",\"subjectEmpty\":\"В системе не заведено учебных предметов!\"},\"add\":{\"group\":\"Добавить новую учебную группу\",\"subject\":\"Добавить новый учебный предмет\",\"groupSuccess\":\"Новая группа успешно добавлена!\",\"subjectSuccess\":\"Новый учебный предмет успешно добавлен!\"},\"pagination\":{\"next\":\"Следующая\",\"previous\":\"Предыдущая\"},\"save\":\"Сохранить\",\"student\":\"Студент\",\"editBtn\":\"Изменить\",\"id\":\"Идентификатор\",\"group\":\"Учебная группа\",\"subject\":\"Учебный предмет\",\"dataCreated\":\"Дата создания\",\"success\":\"Успешно обновлено\",\"dataUpdated\":\"Дата обновления\",\"deleted\":\"Запись успешно удалена!\",\"select\":\"Выберите группу из списка\",\"availableActions\":\"Доступные действия\",\"academicGrades\":\"Академическая оценка\",\"added\":\"Вы успешно добавили ещё одну запись!\"}");
 
 /***/ }),
 

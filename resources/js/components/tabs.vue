@@ -2,13 +2,12 @@
     <div>
         <ul class="nav nav-tabs">
             <li class="nav-item" v-for="(item, index) in tabs" v-bind:key="index">
-                <a class="nav-link" v-on:click.prevent="setActive(item)" v-bind:class="{ active: isActive(item) }">
+                <a class="nav-link" v-on:click.prevent="setActive(item)" v-bind:class="{active: isActive(item)}">
                     <span v-if="item === 'groups'">{{ variables.titles.groups }}</span>
                     <span v-else-if="item === 'subjects'">{{ variables.titles.subjects }}</span>
                     <span v-else>{{ variables.titles.students }}</span>
                 </a>
             </li>
-
             <li class="nav-item" v-if="serviceTab">
                 <a class="nav-link" v-on:click.prevent="setActive('service')"
                    v-bind:class="{ active: isActive('service') }">
@@ -19,7 +18,7 @@
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane fade" v-bind:class="{ 'active show': isActive('groups') }">
+            <div class="tab-pane fade" v-bind:class="{'active show': isActive('groups')}">
                 <index-groups
                     v-bind:groups="groups"
                     v-bind:pagination="pagination.groups"
@@ -29,7 +28,7 @@
                 </index-groups>
 
             </div>
-            <div class="tab-pane fade" v-bind:class="{ 'active show': isActive('subjects') }">
+            <div class="tab-pane fade" v-bind:class="{'active show': isActive('subjects')}">
                 <index-subjects
                     v-bind:subjects="subjects"
                     v-bind:pagination="pagination.subjects"
@@ -38,12 +37,13 @@
                     v-on:addNewItem="addNew">
                 </index-subjects>
             </div>
-            <div class="tab-pane fade" v-bind:class="{ 'active show': isActive('students') }">
+            <div class="tab-pane fade" v-bind:class="{'active show': isActive('students')}">
                 <index-students
-                    v-bind:students="students">
+                    v-bind:students="students"
+                    v-bind:pagination="pagination.students">
                 </index-students>
             </div>
-            <div class="tab-pane fade" v-if="serviceTab" v-bind:class="{ 'active show': isActive('service') }">
+            <div class="tab-pane fade" v-if="serviceTab" v-bind:class="{'active show': isActive('service')}">
                 <show v-if="components === 'show'" v-bind:data="serviceTab"></show>
                 <edit v-else-if="components === 'edit'" v-bind:obj="serviceTab"></edit>
                 <add v-else-if="components === 'new'" v-bind:obj="serviceTab"></add>
@@ -54,16 +54,15 @@
 
 
 <script>
-
-import langVariables from '../../lang/ru/crud.json'
-
+import add from "./add";
 import show from "./show";
 import edit from "./edit";
-import add from "./add";
 
 import indexGroups from "./groups/index";
 import indexSubjects from './subjects/index'
 import indexStudents from './students/index'
+
+import langVariables from '../../lang/ru/crud.json'
 
 export default {
     name: 'tabs',
@@ -84,7 +83,7 @@ export default {
         serviceTab: false,
         components: false,
         tabs: ['groups', 'subjects', 'students'],
-        pagination: {"groups": [], "subjects": [], "student": []},
+        pagination: {"groups": [], "subjects": [], "students": []},
     }),
     methods: {
         // Переключение и определение текущей вкладки
@@ -119,11 +118,8 @@ export default {
                 url: '/api/students',
                 method: 'get',
                 success: (data) => {
-
-                    console.log(data)
-
-                    this.students = data.students.data
-                    this.pagination.students = data.pagination
+                    this.students = data.students.data;
+                    this.pagination.students = data.pagination;
                 },
             });
         },

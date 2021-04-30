@@ -8,10 +8,10 @@ use App\Models\Admin;
 use App\Models\User;
 
 /**
- * Class AdminMakeCommand
+ * Class AdminCreateCommand
  * @package App\Console\Commands
  */
-class AdminMakeCommand extends Command
+class AdminCreateCommand extends Command
 {
     /**
      * The name and signature of the console command.

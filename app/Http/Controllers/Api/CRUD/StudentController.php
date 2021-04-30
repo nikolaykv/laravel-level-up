@@ -15,7 +15,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::with('user')->paginate(5);
+        $students = Student::with(['subject', 'group', 'user'=> function($query) {
+            $query->where('profile_type', '=', Student::class);
+        }])->paginate(5);
 
         $response = [
             'pagination' => [

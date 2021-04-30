@@ -4,11 +4,11 @@
         <table class="table table-bordered list" v-if="'group' in data">
             <thead>
             <tr>
-                <th>{{ variables.index.id }}</th>
-                <th>{{ variables.index.name }}</th>
-                <th>{{ variables.index.created }}</th>
-                <th>{{ variables.index.updated }}</th>
-                <th>{{ variables.index.available_actions }}</th>
+                <th>{{ variables.id }}</th>
+                <th>{{ variables.group }}</th>
+                <th>{{ variables.dataCreated }}</th>
+                <th>{{ variables.dataUpdated }}</th>
+                <th>{{ variables.availableActions }}</th>
             </tr>
             </thead>
             <tbody>
@@ -30,13 +30,12 @@
         <table class="table table-bordered list" v-else-if="'subject' in data">
             <thead>
             <tr>
-                <th>{{ variables.subjects.id }}</th>
-                <th>{{ variables.subjects.name }}</th>
-                <th>{{ variables.subjects.students }}</th>
-                <th>{{ variables.subjects.academic_grades }}</th>
-                <th>{{ variables.subjects.created }}</th>
-                <th>{{ variables.subjects.updated }}</th>
-                <th>{{ variables.subjects.available_actions }}</th>
+                <th>{{ variables.id }}</th>
+                <th>{{ variables.subject }}</th>
+                <th>{{ variables.student }}</th>
+                <th>{{ variables.academicGrades }}</th>
+                <th>{{ variables.dataCreated }}</th>
+                <th>{{ variables.availableActions }}</th>
             </tr>
             </thead>
             <tbody>
@@ -44,9 +43,8 @@
                 <td>{{ data.subject.id }}</td>
                 <td>{{ data.subject.name }}</td>
                 <td>{{ data.subject.student.user.full_name }}</td>
-                <td>{{ data.subject.value }}</td>
+                <td class="text-center">{{ data.subject.value }}</td>
                 <td>{{ data.subject.created_at }}</td>
-                <td>{{ data.subject.updated_at }}</td>
                 <td class="d-xl-flex justify-content-xl-around">
                     <delete-item v-bind:deleteData="{id:data.subject.id, url:'/api/subjects/'}"></delete-item>
                 </td>
@@ -60,7 +58,7 @@
 <script>
 
 
-import LangVariables from '../../lang/ru/crud.json'
+import langVariables from '../../lang/ru/crud.json'
 import deleteItem from "./delete";
 
 export default {
@@ -68,12 +66,12 @@ export default {
     components: {deleteItem},
     props: ['data'],
     data: () => ({
-        variables: LangVariables,
+        variables: langVariables,
     }),
     methods: {
         redrawHtml() {
-            $('.show-item-group').html('<td class="alert alert-success text-center" colspan="5">Запись успешно удалена!</td>')
-            $('.show-item-subject').html('<td class="alert alert-success text-center" colspan="7">Запись успешно удалена!</td>')
+            $('.show-item-group').html('<td class="alert alert-success text-center" colspan="5">'+ langVariables.deleted +'</td>')
+            $('.show-item-subject').html('<td class="alert alert-success text-center" colspan="7">'+ langVariables.deleted +'</td>')
         }
     },
 }

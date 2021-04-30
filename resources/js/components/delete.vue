@@ -14,7 +14,6 @@
 
 
 <script>
-
 export default {
     name: 'delete-item',
     props: ['deleteData'],

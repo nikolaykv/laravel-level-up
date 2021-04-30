@@ -4,15 +4,14 @@
             <table class="table table-bordered list">
                 <thead>
                 <tr>
-                    <th>{{ variables.index.id }}</th>
-                    <th>{{ variables.index.group }}</th>
-                    <th>{{ variables.index.dataCreated }}</th>
-                    <th>{{ variables.index.dataUpdated }}</th>
-                    <th>{{ variables.index.availableActions }}</th>
+                    <th>{{ variables.id }}</th>
+                    <th>{{ variables.group }}</th>
+                    <th>{{ variables.dataCreated }}</th>
+                    <th>{{ variables.dataUpdated }}</th>
+                    <th>{{ variables.availableActions }}</th>
                 </tr>
                 </thead>
                 <tbody>
-
                 <tr v-for="group in groups" v-bind:key="group.id">
                     <td>{{ group.id }}</td>
                     <td>{{ group.name }}</td>
@@ -71,7 +70,7 @@ export default {
         url: '/api/groups?page=',
         addData: {
             group: {
-                name: 'Добавить новую группу',
+                name: langVariables.add.group,
                 url: '/api/groups'
             },
             tabs: 'service',

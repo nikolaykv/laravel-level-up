@@ -4,13 +4,12 @@
             <table class="table table-bordered list">
                 <thead>
                 <tr>
-                    <th>{{ variables.index.id }}</th>
-                    <th>{{ variables.index.subject }}</th>
-                    <th>{{ variables.index.students }}</th>
-                    <th>{{ variables.index.academicGrades }}</th>
-                    <th>{{ variables.index.dataCreated }}</th>
-                    <th>{{ variables.index.dataUpdated }}</th>
-                    <th>{{ variables.index.availableActions }}</th>
+                    <th>{{ variables.id }}</th>
+                    <th>{{ variables.subject }}</th>
+                    <th>{{ variables.titles.students }}</th>
+                    <th>{{ variables.academicGrades }}</th>
+                    <th>{{ variables.dataCreated }}</th>
+                    <th>{{ variables.availableActions }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -21,7 +20,6 @@
                     <td>{{ subject.student.user.full_name }}</td>
                     <td class="text-center">{{ subject.value }}</td>
                     <td>{{ subject.created_at }}</td>
-                    <td>{{ subject.updated_at }}</td>
                     <td class="d-xl-flex justify-content-xl-around">
                         <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
                            v-on:click="editSubject({
@@ -64,9 +62,8 @@
 
 <script>
 import langVariables from '../../../lang/ru/crud.json'
-
-import deleteItem from "../delete";
 import pagination from "../pagination";
+import deleteItem from "../delete";
 
 export default {
     name: 'index',
@@ -77,7 +74,7 @@ export default {
         url: '/api/subjects?page=',
         addData: {
             subject: {
-                name: 'Добавить новый учебный предмет',
+                name: langVariables.add.subject,
                 url: '/api/subjects'
             },
             tabs: 'service',
@@ -91,11 +88,7 @@ export default {
                 method: 'get',
                 cache: false,
                 success: (data) => {
-                    console.log(data)
                     this.$emit('showDetail', data)
-                },
-                error: (error) => {
-                    console.log(error)
                 }
             });
         },
