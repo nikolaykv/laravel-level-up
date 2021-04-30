@@ -18,7 +18,7 @@
                 <tr v-for="subject in subjects" v-bind:key="subject.id">
                     <td>{{ subject.id }}</td>
                     <td>{{ subject.name }}</td>
-                    <td>{{ subject.student.full_name }}</td>
+                    <td>{{ subject.student.user.full_name }}</td>
                     <td class="text-center">{{ subject.value }}</td>
                     <td>{{ subject.created_at }}</td>
                     <td>{{ subject.updated_at }}</td>
@@ -91,7 +91,11 @@ export default {
                 method: 'get',
                 cache: false,
                 success: (data) => {
+                    console.log(data)
                     this.$emit('showDetail', data)
+                },
+                error: (error) => {
+                    console.log(error)
                 }
             });
         },

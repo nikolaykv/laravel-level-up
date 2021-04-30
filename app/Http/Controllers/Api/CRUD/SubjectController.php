@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Api\CRUD;
 
-use App\Http\Controllers\Controller;
-use App\Models\Admin;
-use App\Models\Student;
-use App\Models\User;
-use App\Models\Subject;
-use Carbon\Carbon;
 use App\Http\Requests\CRUD\Subject\SubjectFormRequest;
+use App\Http\Controllers\Controller;
+use App\Models\Student;
+use App\Models\Subject;
+use App\Models\User;
 
 class SubjectController extends Controller
 {
@@ -19,7 +17,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::with('student')->paginate(5);
+        $subjects = Subject::with('student.user')->paginate(5);
 
         $response = [
             'pagination' => [
@@ -32,9 +30,7 @@ class SubjectController extends Controller
             ],
             'subjects' => $subjects
         ];
-
         return response()->json($response);
-
     }
 
     /**
@@ -45,7 +41,7 @@ class SubjectController extends Controller
      */
     public function store(SubjectFormRequest $request)
     {
-       /* $studentData = explode(' ', $request->student);
+        $studentData = explode(' ', $request->student);
 
         $name = $studentData[0];
         if (count($studentData) < 2) {
@@ -63,7 +59,7 @@ class SubjectController extends Controller
 
         // Создаём нового пользователя
         $student->user()->create(
-           [
+            [
                 'name' => $name,
                 'surname' => $surname,
                 'profile_id' => $student->id,
@@ -80,9 +76,7 @@ class SubjectController extends Controller
             ])
         );
 
-        return response()->json($validator);*/
-
-        return response()->json('Ответ');
+        return response()->json($validator);
     }
 
     /**
@@ -93,15 +87,7 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        $subject = [
-            "id" => $subject->id,
-            "name" => $subject->name,
-            "student_full_name" => User::find($subject->student_id)->full_name,
-            "value" => $subject->value,
-            "created_at" => Carbon::parse($subject->created_at)->format('Y-m-d H:m'),
-            "updated_at" => Carbon::parse($subject->updated_at)->format('Y-m-d H:m')
-        ];
-
+        $subject = $subject::with('student.user')->first();
         return response()->json(compact('subject'));
     }
 

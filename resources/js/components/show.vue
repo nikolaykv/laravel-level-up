@@ -43,7 +43,7 @@
             <tr class="show-item-subject">
                 <td>{{ data.subject.id }}</td>
                 <td>{{ data.subject.name }}</td>
-                <td>{{ data.subject.student_full_name }}</td>
+                <td>{{ data.subject.student.user.full_name }}</td>
                 <td>{{ data.subject.value }}</td>
                 <td>{{ data.subject.created_at }}</td>
                 <td>{{ data.subject.updated_at }}</td>

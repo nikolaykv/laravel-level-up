@@ -13,7 +13,7 @@ class Subject extends Model
     ];
     public function student()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Student::class);
     }
 
     protected $casts = [
