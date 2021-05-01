@@ -24,10 +24,10 @@ class RegisterFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:20'],
-            'surname' => ['required', 'string', 'max:20'],
+            'name'     => ['required', 'string', 'max:20'],
+            'surname'  => ['required', 'string', 'max:20'],
             'group_id' => ['required'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
@@ -36,14 +36,14 @@ class RegisterFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'group_id.required' => 'Поле "' . __('common.other.group') . '" не было выбрано!',
+            'group_id.required' => __('validation.custom.group_id.required'),
         ];
     }
 
     public function attributes()
     {
         return [
-            'surname' => "\"" . __('common.other.surname') . "\"",
+            'surname' => "\"" . __('validation.attributes.surname') . "\"",
         ];
     }
 

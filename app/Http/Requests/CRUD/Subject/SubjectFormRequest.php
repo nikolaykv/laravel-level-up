@@ -25,33 +25,31 @@ class SubjectFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:40'],
+            'name'     => ['required', 'max:40'],
             'group_id' => ['required'],
-            'student' => ['required', 'string', 'max:40'],
-            'value' => ['required', 'numeric', 'max:5', 'min:1'],
+            'student'  => ['required', 'max:40'],
+            'value'    => ['required', 'numeric', 'max:5', 'min:1'],
         ];
     }
     public function messages()
     {
         return [
-            'name.required' => 'Поле должно быть заполнено!',
-            'group_id.required' => 'Поле должно быть заполнено!',
-            'name.string' => 'Поле должно быть строкой!',
-            'name.max' => 'Поле не должно быть не длиннее 40 символов!',
-            'student.required' => 'Поле должно быть заполнено!',
-            'student.string' => 'Поле должно быть строкой!',
-            'student.max' => 'Поле не должно быть не длиннее 40 символов!',
-            'value.required' => 'Поле должно быть заполнено!',
-            'value.max' => 'Оценка не может быть больше 5 (пяти) баллов!',
-            'value.min' => 'Оценка не может быть меньше 1 (одного) бала!',
-            'value.numeric' => 'Поле должно быть числом!'
+            'name.required'     => __('validation.custom.name.required'),
+            'group_id.required' => __('validation.custom.group_id.required'),
+            'name.max:40'       => __('validation.custom.name.max:40'),
+            'student.required'  => __('validation.custom.student.required'),
+            'student.max:40'    => __('validation.custom.student.max:40'),
+            'value.required'    => __('validation.custom.value.required'),
+            'value.max:5'       => __('validation.custom.value.max:5'),
+            'value.min:1'       => __('validation.custom.value.min:1'),
+            'value.numeric'     => __('validation.custom.value.numeric')
         ];
     }
 
     public function attributes()
     {
         return [
-          'value' => 'оценка по предмету'
+          'value' => __('validation.attributes.value')
         ];
     }
 

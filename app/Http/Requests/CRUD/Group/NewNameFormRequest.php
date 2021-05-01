@@ -25,16 +25,15 @@ class NewNameFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:20'],
+            'name' => ['required', 'max:20'],
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Поле должно быть заполнено!',
-            'name.string' => 'Поле должно быть строкой!',
-            'name.max:20' => 'Поле не должно быть не длиннее 20 символов!'
+            'name.required' => __('validation.custom.name.required'),
+            'name.max:20'   => __('validation.custom.name.max:20')
         ];
     }
 
