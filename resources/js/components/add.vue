@@ -130,9 +130,7 @@
         </div>
         <!-- Оценка по предмету END -->
 
-        <span class="success-message" v-bind:class="isActive">
-                    {{ variables.add.subjectSuccess }}
-        </span>
+        <span class="success-message" v-bind:class="isActive">{{ variables.add.subjectSuccess }}</span>
 
         <div class="offset-md-2 col-md-10 text-right mt-3">
             <button class="btn btn-primary" v-on:click="addNew(obj)">
@@ -141,6 +139,12 @@
         </div>
     </div>
     <!-- Учебный предмет END -->
+
+    <!-- Студенты START -->
+    <div v-else>
+        <p>Форма для добавления студента</p>
+    </div>
+    <!-- Студенты END -->
 </template>
 
 <script>
@@ -215,6 +219,9 @@ export default {
                             this.messages = error.responseJSON.errors;
                         },
                     });
+                    break;
+                case obj.hasOwnProperty('student'):
+                    console.log('Добавляем студента');
                     break;
             }
         },

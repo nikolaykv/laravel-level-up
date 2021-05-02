@@ -87,7 +87,7 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        $subject = $subject::with('student.user')->first();
+        $subject = $subject::with('student.user')->findOrFail($subject->id);
         return response()->json(compact('subject'));
     }
 

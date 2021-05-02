@@ -74,7 +74,7 @@ export default {
         url: '/api/subjects?page=',
         addData: {
             subject: {
-                name: langVariables.add.subject,
+                name: langVariables.index.subjectAddNew,
                 url: '/api/subjects'
             },
             tabs: 'service',

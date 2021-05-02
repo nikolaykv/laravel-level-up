@@ -13,6 +13,7 @@
                    v-bind:class="{ active: isActive('service') }">
                     <span v-if="serviceTab.hasOwnProperty('group')">{{ serviceTab.group.name }}</span>
                     <span v-else-if="serviceTab.hasOwnProperty('subject')">{{ serviceTab.subject.name }}</span>
+                    <span v-else>{{serviceTab.student.user.full_name}}</span>
                 </a>
             </li>
         </ul>
@@ -40,7 +41,9 @@
             <div class="tab-pane fade" v-bind:class="{'active show': isActive('students')}">
                 <index-students
                     v-bind:students="students"
-                    v-bind:pagination="pagination.students">
+                    v-bind:pagination="pagination.students"
+                    v-on:showDetail="showDetail"
+                    v-on:addNewItem="addNew">
                 </index-students>
             </div>
             <div class="tab-pane fade" v-if="serviceTab" v-bind:class="{'active show': isActive('service')}">

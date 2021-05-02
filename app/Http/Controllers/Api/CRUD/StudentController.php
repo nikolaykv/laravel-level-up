@@ -53,7 +53,8 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        //
+        $student = $student::with('subject', 'group', 'user')->findOrFail($student->id);
+        return response()->json(compact('student'));
     }
 
     /**
@@ -76,6 +77,11 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        $deleteItem = Student::findOrFail($student->id);
+        if ($deleteItem) {
+            $deleteItem->delete();
+        } else {
+            return response('error', 404);
+        }
     }
 }

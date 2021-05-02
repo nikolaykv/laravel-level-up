@@ -70,7 +70,7 @@ export default {
         url: '/api/groups?page=',
         addData: {
             group: {
-                name: langVariables.add.group,
+                name: langVariables.index.groupAddNew,
                 url: '/api/groups'
             },
             tabs: 'service',

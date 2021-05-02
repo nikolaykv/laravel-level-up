@@ -52,6 +52,33 @@
             </tbody>
         </table>
         <!-- Предметы END -->
+
+        <!-- Студенты START -->
+        <table class="table table-bordered list" v-else>
+            <thead>
+            <tr>
+                <th>{{ variables.id }}</th>
+                <th>{{ variables.student }}</th>
+                <th>{{ variables.group }}</th>
+                <th>{{ variables.subject }}</th>
+                <th>{{ variables.academicGrades }}</th>
+                <th>{{ variables.availableActions }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="show-item-student">
+                <td>{{ data.student.id }}</td>
+                <td>{{ data.student.user.full_name }}</td>
+                <td>{{ data.student.group.name }}</td>
+                <td>{{ data.student.subject.name }}</td>
+                <td class="text-center">{{ data.student.subject.value }}</td>
+                <td class="d-xl-flex justify-content-xl-around">
+                    <delete-item v-bind:deleteData="{id:data.student.id, url:'/api/students/'}"></delete-item>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- Студенты END -->
     </div>
 </template>
 
@@ -70,8 +97,9 @@ export default {
     }),
     methods: {
         redrawHtml() {
-            $('.show-item-group').html('<td class="alert alert-success text-center" colspan="5">'+ langVariables.deleted +'</td>')
-            $('.show-item-subject').html('<td class="alert alert-success text-center" colspan="7">'+ langVariables.deleted +'</td>')
+            $('.show-item-group').html('<td class="alert alert-success text-center" colspan="5">' + langVariables.deleted + '</td>')
+            $('.show-item-subject').html('<td class="alert alert-success text-center" colspan="7">' + langVariables.deleted + '</td>')
+            $('.show-item-student').html('<td class="alert alert-success text-center" colspan="6">' + langVariables.deleted + '</td>')
         }
     },
 }
