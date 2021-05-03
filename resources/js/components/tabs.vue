@@ -17,7 +17,6 @@
                 </a>
             </li>
         </ul>
-
         <div class="tab-content">
             <div class="tab-pane fade" v-bind:class="{'active show': isActive('groups')}">
                 <index-groups
@@ -43,6 +42,7 @@
                     v-bind:students="students"
                     v-bind:pagination="pagination.students"
                     v-on:showDetail="showDetail"
+                    v-on:edit="editDetail"
                     v-on:addNewItem="addNew">
                 </index-students>
             </div>
@@ -54,7 +54,6 @@
         </div>
     </div>
 </template>
-
 
 <script>
 import add from "./add";

@@ -20,7 +20,17 @@
                     <td>{{ student.subject.name }}</td>
                     <td class="text-center">{{ student.subject.value }}</td>
                     <td class="d-xl-flex justify-content-xl-around">
-                        <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"></i>
+                        <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
+                           v-on:click="editStudent({
+                           student: {
+                               'id':student.id,
+                               'group': student.group.name,
+                               'subject': student.subject.name,
+                               'value':   student.subject.value,
+                               user: {full_name: student.user.full_name},
+                                url:'/api/students/'
+                           }})">
+                        </i>
                         <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
                            v-on:click="showStudent(student.id)"></i>
                         <delete-item v-bind:deleteData="{id:student.id, url:'/api/students/'}"></delete-item>
@@ -85,6 +95,11 @@ export default {
                     this.$emit('showDetail', data)
                 }
             });
+        },
+        editStudent(obj) {
+            if (obj) {
+                this.$emit('edit', obj);
+            }
         },
         addNew(obj) {
             this.$emit('addNewItem', obj);

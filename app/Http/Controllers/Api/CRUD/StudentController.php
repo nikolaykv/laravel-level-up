@@ -42,7 +42,7 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response('Ответ на создание ресурса', 200);
     }
 
     /**
@@ -66,7 +66,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        return response('Ответ на обновление', 200);
     }
 
     /**

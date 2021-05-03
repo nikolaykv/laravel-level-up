@@ -143,6 +143,11 @@
     <!-- Студенты START -->
     <div v-else>
         <p>Форма для добавления студента</p>
+        <div class="offset-md-2 col-md-10 text-right mt-3">
+            <button class="btn btn-primary" v-on:click="addNew(obj)">
+                {{ variables.save }}
+            </button>
+        </div>
     </div>
     <!-- Студенты END -->
 </template>
@@ -221,7 +226,20 @@ export default {
                     });
                     break;
                 case obj.hasOwnProperty('student'):
-                    console.log('Добавляем студента');
+                    $.ajax({
+                        url: obj.student.url,
+                        method: 'post',
+                        data: {
+                          запрос: 'Пример запроса на создание ресурса',
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                        },
+                        success: (data) => {
+                            console.log(data)
+                        },
+                        error: (error) => {
+                            console.log(error)
+                        },
+                    });
                     break;
             }
         },

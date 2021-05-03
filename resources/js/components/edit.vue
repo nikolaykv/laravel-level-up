@@ -119,6 +119,19 @@
         <!-- Оценка студента END -->
     </div>
     <!-- Учебный предмет END -->
+
+    <!-- Студенты START -->
+    <div v-else>
+        <p>
+            Какие-нибудь поля
+        </p>
+        <div class="offset-md-2 col-md-10 text-right mt-3">
+            <button class="btn btn-primary" v-on:click.prevent="update(obj)">
+                {{ variables.editBtn }}
+            </button>
+        </div>
+    </div>
+    <!-- Студенты END -->
 </template>
 
 <script>
@@ -145,7 +158,6 @@ export default {
                 _token: $('meta[name="csrf-token"]').attr('content'),
                 name: this.formData.group
             }
-
             let subjectFormData = {
                 _token: $('meta[name="csrf-token"]').attr('content'),
                 name: this.formData.subject,
@@ -153,40 +165,60 @@ export default {
                 value: this.formData.academic_grades,
             }
 
-            if (obj.hasOwnProperty('group')) {
-                $.ajax({
-                    url: obj.group.url + obj.group.id,
-                    data: groupFormData,
-                    method: 'patch',
-                    dataType: 'json',
-                    success: (data) => {
-                        this.isActive = 'd-block';
-                        $('.nav-link.active').text(data.name);
-                        this.messages = '';
-                    },
-                    error: (error) => {
-                        this.isActive = 'd-none';
-                        this.error = true;
-                        this.messages = error.responseJSON.errors.name[0];
-                    }
-                });
-            } else if (obj.hasOwnProperty('subject')) {
-                $.ajax({
-                    url: obj.subject.url + obj.subject.id,
-                    data: subjectFormData,
-                    method: 'patch',
-                    dataType: 'json',
-                    success: (data) => {
-                        this.isActive = 'd-block';
-                        $('.nav-link.active').text(data.name);
-                        this.messages = '';
-                    },
-                    error: (error) => {
-                        this.isActive = 'd-none';
-                        this.error = true;
-                        this.messages = error.responseJSON.errors;
-                    }
-                });
+            switch (true) {
+                case obj.hasOwnProperty('group'):
+                    $.ajax({
+                        url: obj.group.url + obj.group.id,
+                        data: groupFormData,
+                        method: 'patch',
+                        dataType: 'json',
+                        success: (data) => {
+                            this.isActive = 'd-block';
+                            $('.nav-link.active').text(data.name);
+                            this.messages = '';
+                        },
+                        error: (error) => {
+                            this.isActive = 'd-none';
+                            this.error = true;
+                            this.messages = error.responseJSON.errors.name[0];
+                        }
+                    });
+                    break;
+                case obj.hasOwnProperty('subject'):
+                    $.ajax({
+                        url: obj.subject.url + obj.subject.id,
+                        data: subjectFormData,
+                        method: 'patch',
+                        dataType: 'json',
+                        success: (data) => {
+                            this.isActive = 'd-block';
+                            $('.nav-link.active').text(data.name);
+                            this.messages = '';
+                        },
+                        error: (error) => {
+                            this.isActive = 'd-none';
+                            this.error = true;
+                            this.messages = error.responseJSON.errors;
+                        }
+                    });
+                    break;
+                case obj.hasOwnProperty('student'):
+                    $.ajax({
+                        url: obj.student.url + obj.student.id,
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            запрос: 'Пример запроса на обновление ресурса'
+                        },
+                        method: 'patch',
+                        dataType: 'json',
+                        success: (data) => {
+                            console.log(data)
+                        },
+                        error: (error) => {
+                            console.log(error)
+                        }
+                    });
+                    break;
             }
         },
     },
