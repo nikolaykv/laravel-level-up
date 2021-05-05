@@ -6,34 +6,47 @@
                 <tr>
                     <th>{{ variables.id }}</th>
                     <th>{{ variables.group }}</th>
+                    <th>{{ variables.titles.students }}</th>
                     <th>{{ variables.dataCreated }}</th>
                     <th>{{ variables.dataUpdated }}</th>
                     <th>{{ variables.availableActions }}</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="group in groups" v-bind:key="group.id">
-                    <td>{{ group.id }}</td>
-                    <td>{{ group.name }}</td>
-                    <td>{{ group.created_at }}</td>
-                    <td>{{ group.updated_at }}</td>
-                    <td class="d-xl-flex justify-content-xl-around">
-                        <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
-                           v-on:click="editGroup({
+                <tr v-for="(group, key) in groups" v-bind:key="key">
+                    <td class="align-middle">{{ group.id }}</td>
+                    <td class="align-middle">{{ group.name }}</td>
+                    <td class="align-middle" v-if="group.students.length > 0">
+                       <p v-for="(student, key) in group.students"
+                           v-bind:key="key"
+                           class="mb-0">
+                            {{student.user.full_name}}
+                        </p>
+                    </td>
+
+                    <td v-else>
+                        <p class="mb-0">{{variables.index.studentEmpty}}</p>
+                    </td>
+                    <td class="align-middle">{{ group.created_at }}</td>
+                    <td class="align-middle">{{ group.updated_at }}</td>
+                    <td class="align-middle">
+                        <span class="d-xl-flex justify-content-xl-around">
+                            <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
+                               v-on:click="editGroup({
                            group: {
                                'id':group.id,
                                 name: group.name,
                                 url:'/api/groups/'
                            }})">
-                        </i>
-                        <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
-                           v-on:click="showGroup(group.id)"></i>
-                        <delete-item v-bind:deleteData="{id:group.id, url:'/api/groups/'}"></delete-item>
+                            </i>
+                            <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
+                               v-on:click="showGroup(group.id)"></i>
+                            <delete-item v-bind:deleteData="{id:group.id, url:'/api/groups/'}"></delete-item>
+                        </span>
                     </td>
                 </tr>
                 </tbody>
             </table>
-
             <pagination
                 v-if="pagination.last_page > 1"
                 v-bind:url="url"
@@ -97,7 +110,7 @@ export default {
         },
         addNew(obj) {
             this.$emit('addNewItem', obj);
-        }
+        },
     },
     updated() {
         setTimeout(function () {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\CRUD;
 
 use App\Http\Requests\CRUD\Group\NewNameFormRequest;
 use App\Http\Controllers\Controller;
+use App\Models\Student;
 use App\Models\Group;
 
 class GroupController extends Controller
@@ -15,7 +16,9 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Group::paginate(5);
+        $groups = Group::with(['students.user' => function($query) {
+            $query->where('profile_type', '=', Student::class);
+        }])->paginate(5);
 
         $response = [
             'pagination' => [
