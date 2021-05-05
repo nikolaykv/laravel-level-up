@@ -162,5 +162,9 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
           апи контролере SubjectController с учётом отношений. Закончена первая версия CRUD SubjectController.
     35. В текущем коммите:
         - Общий рефакторинг;
-        - Компонент students/index.vue (частично) и index() метод в StudentController с учётом связей с таблицей пользователей.
-        
+        - Компонент students/index.vue (частично) и index() метод в StudentController с учётом связей с таблицей пользователей. 
+    36. В текущем коммите:
+        - Перевёрстана форма регистрации студента, html select для выбра учебной группы изменён на список;
+        - Обработка кастомного селекта в resources/js/app.js;
+        - Стили, валидация, тестирование;
+        - Часть коммитов, до текущей фиксации, отражены в только в commit messages репозитория (веток).

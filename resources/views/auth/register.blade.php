@@ -64,30 +64,38 @@
                                     </div>
                                 </div>
 
+
                                 {{-- Группа --}}
                                 <div class="form-group row">
-                                    <label for="group"
-                                           class="col-md-4 col-form-label text-md-right">
+                                    <div class="col-md-4 col-form-label text-md-right">
                                         {{ __('common.other.group') }}
-                                    </label>
-
+                                    </div>
                                     <div class="col-md-6">
-                                        <select class="form-control @error('group_id') is-invalid @enderror" id="group"
-                                                name="group_id" required>
-                                            <option disabled selected>Выберите группу</option>
-                                            @foreach($groups as $group)
-                                                <option value="{{$group->id}}">
-                                                    {{$group->name}}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                        <div class="select-group form-control @error('group_id') is-invalid @enderror">
+                                            <div class="d-flex
+                                                        align-items-center
+                                                        justify-content-between
+                                                        select-group-header">
+                                                <span class="w-100">Выберите группу</span>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                            <ul>
+                                                @foreach($groups as $group)
+                                                    <li class="select-group-item" data-value-id="{{$group->id}}">
+                                                        {{$group->name}}
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+
+                                        <input type="hidden" name="group_id">
 
                                         @error('group_id')
                                         <span class="invalid-feedback" role="alert">
-                                                <strong>
-                                                    {{ $message }}
-                                                </strong>
-                                            </span>
+                                                 <strong>
+                                                     {{ $message }}
+                                                 </strong>
+                                             </span>
                                         @enderror
 
                                     </div>
