@@ -6,6 +6,7 @@ use App\Http\Requests\CRUD\Group\NewNameFormRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Models\Group;
+use App\Models\User;
 
 class GroupController extends Controller
 {
@@ -16,7 +17,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Group::with(['students.user' => function($query) {
+        $groups = Group::with(['students.user' => function ($query) {
             $query->where('profile_type', '=', Student::class);
         }])->paginate(5);
 
@@ -46,8 +47,18 @@ class GroupController extends Controller
     {
         $validator = $request->validated();
 
-        Group::create($request->all());
+        $users = array();
+        foreach ($request->groupStudent as $student) {
+            $userData = explode(' ', $student);
+            array_push($users, User::where('name', '=', $userData[0])
+                ->where('surname', '=', $userData[1])
+                ->get());
+        }
+        $group = Group::create($request->all());
 
+        foreach ($users as $user) {
+            Student::where('id', '=', $user[0]->profile_id)->update(['group_id' => $group->id]);
+        }
         return response()->json($validator);
     }
 

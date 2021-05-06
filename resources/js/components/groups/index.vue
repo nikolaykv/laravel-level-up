@@ -84,7 +84,7 @@ export default {
         addData: {
             group: {
                 name: langVariables.index.groupAddNew,
-                url: '/api/groups'
+                url: '/api/groups',
             },
             tabs: 'service',
             components: 'new'

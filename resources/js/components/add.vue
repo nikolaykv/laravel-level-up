@@ -1,6 +1,7 @@
 <template>
     <!-- Группа START-->
     <div v-if="obj.hasOwnProperty('group')">
+
         <div class="form-group row col-md-8 ml-auto mr-auto mt-4">
             <label for="group-name" class="col-md-3 col-form-label text-md-right">
                 {{ variables.group }}:
@@ -22,7 +23,34 @@
                     {{ messages }}
                 </span>
             </div>
+        </div>
 
+
+        <div class="form-group row col-md-8 ml-auto mr-auto mt-4">
+            <label for="student"
+                   class="col-md-3 col-form-label text-md-right">
+                {{ variables.titles.students }}:
+            </label>
+
+            <div class="col-md-9">
+                <select class="form-control"
+                        id="student"
+                        v-model="formData.group.groupStudent"
+                        multiple="multiple"
+                        size="5"
+                        required
+                        autofocus>
+                    <option v-for="(student, key) in iterateStudents"
+                        v-bind:key="key">
+                        {{ student.user.full_name }}
+                    </option>
+                </select>
+
+                <span class="success-message" v-bind:class="isActive">
+                      {{ variables.add.groupSuccess }}
+                </span>
+
+            </div>
             <div class="offset-md-2 col-md-10 text-right mt-3">
                 <button class="btn btn-primary" v-on:click="addNew(obj)">
                     {{ variables.save }}
@@ -163,6 +191,7 @@ export default {
             group: {
                 name: '',
                 _token: $('meta[name="csrf-token"]').attr('content'),
+                groupStudent: [],
             },
             subject: {
                 name: '',
@@ -193,10 +222,14 @@ export default {
                             this.messages = '';
 
                             if (this.counter > 1) {
+                                // TODO сюда по хорошему надо апдейт метод вызывать на обновление
                                 $('.success-message').text(langVariables.added);
                             }
                         },
                         error: (error) => {
+
+                            console.log(error)
+
                             this.isActive = 'd-none';
                             this.error = true;
                             this.messages = error.responseJSON.errors.name[0];
@@ -230,7 +263,7 @@ export default {
                         url: obj.student.url,
                         method: 'post',
                         data: {
-                          запрос: 'Пример запроса на создание ресурса',
+                            запрос: 'Пример запроса на создание ресурса',
                             _token: $('meta[name="csrf-token"]').attr('content'),
                         },
                         success: (data) => {
@@ -252,6 +285,17 @@ export default {
                 this.groups = data.groups.data
             },
         });
+    },
+    computed: {
+        iterateStudents: function () {
+            let allStudents = [];
+            this.groups.forEach(function (group) {
+                group.students.forEach(function (student) {
+                    allStudents.push(student)
+                });
+            });
+            return allStudents;
+        }
     }
 }
 </script>
