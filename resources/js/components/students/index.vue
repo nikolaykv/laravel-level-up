@@ -14,26 +14,34 @@
                 </thead>
                 <tbody>
                 <tr v-for="student in students" v-bind:key="student.id">
-                    <td>{{ student.id }}</td>
-                    <td>{{ student.user.full_name }}</td>
-                    <td>{{ student.group.name }}</td>
-                    <td>{{ student.subject.name }}</td>
+                    <td class="align-middle">{{ student.id }}</td>
+                    <td class="align-middle">{{ student.user.full_name }}</td>
+                    <td class="align-middle"
+                        v-if="student.group">
+                        {{ student.group.name }}
+                    </td>
+                    <td class="align-middle" v-else>
+                        {{ variables.index.studentGroupEmpty }}
+                    </td>
+                    <td class="align-middle">{{ student.subject.name }}</td>
                     <td class="text-center">{{ student.subject.value }}</td>
-                    <td class="d-xl-flex justify-content-xl-around">
-                        <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
-                           v-on:click="editStudent({
-                           student: {
-                               'id':student.id,
-                               'group': student.group.name,
-                               'subject': student.subject.name,
-                               'value':   student.subject.value,
-                               user: {full_name: student.user.full_name},
-                                url:'/api/students/'
-                           }})">
-                        </i>
-                        <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
-                           v-on:click="showStudent(student.id)"></i>
-                        <delete-item v-bind:deleteData="{id:student.id, url:'/api/students/'}"></delete-item>
+                    <td class="align-middle">
+                        <span class="d-xl-flex justify-content-xl-around">
+                            <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
+                               v-on:click="editStudent({
+                               student: {
+                                   'id':student.id,
+                                   'group': student.group.name,
+                                   'subject': student.subject.name,
+                                   'value':   student.subject.value,
+                                   user: {full_name: student.user.full_name},
+                                    url:'/api/students/'
+                               }})">
+                            </i>
+                            <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
+                               v-on:click="showStudent(student.id)"></i>
+                            <delete-item v-bind:deleteData="{id:student.id, url:'/api/students/'}"></delete-item>
+                        </span>
                     </td>
                 </tr>
                 </tbody>

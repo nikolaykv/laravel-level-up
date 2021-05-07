@@ -45,10 +45,10 @@ class GroupController extends Controller
      */
     public function store(NewNameFormRequest $request)
     {
+        // TODO нужно дать возможность создавать группы без привязки студентов
         $validator = $request->validated();
-
         $users = array();
-        foreach ($request->groupStudent as $student) {
+        foreach ($request->students as $student) {
             $userData = explode(' ', $student);
             array_push($users, User::where('name', '=', $userData[0])
                 ->where('surname', '=', $userData[1])
@@ -57,7 +57,8 @@ class GroupController extends Controller
         $group = Group::create($request->all());
 
         foreach ($users as $user) {
-            Student::where('id', '=', $user[0]->profile_id)->update(['group_id' => $group->id]);
+            Student::where('id', '=', $user[0]->profile_id)
+                ->update(['group_id' => $group->id]);
         }
         return response()->json($validator);
     }

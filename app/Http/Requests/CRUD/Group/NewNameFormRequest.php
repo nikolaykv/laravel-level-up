@@ -25,17 +25,18 @@ class NewNameFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'max:40'],
-            'groupStudent' => ['required'],
+            'name'     => ['required', 'max:40', 'unique:groups'],
+            'students' => ['array', 'min:1']
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required'               => __('validation.custom.name.required'),
-            'name.max:40'                 => __('validation.custom.name.max:40'),
-            'groupStudent.required'       => __('validation.custom.groupStudent.required')
+            'name.required' => __('validation.custom.name.required'),
+            'name.max:40'   => __('validation.custom.name.max:40'),
+            'name.unique'   => __('validation.custom.name.unique'),
+            'students'      => __('validation.custom.students.min:1')
         ];
     }
 

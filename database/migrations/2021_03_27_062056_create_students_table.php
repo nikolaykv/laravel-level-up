@@ -17,9 +17,10 @@ class CreateStudentsTable extends Migration
             $table->id();
 
             $table->foreignId('group_id')
+                ->nullable()
                 ->constrained('groups')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

@@ -20,20 +20,22 @@
                     <td>{{ subject.student.user.full_name }}</td>
                     <td class="text-center">{{ subject.value }}</td>
                     <td>{{ subject.created_at }}</td>
-                    <td class="d-xl-flex justify-content-xl-around">
-                        <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
-                           v-on:click="editSubject({
-                           subject: {
-                               'id':subject.id,
-                                name: subject.name,
-                                student: subject.student.full_name,
-                                academic_grades: subject.value,
-                                url:'/api/subjects/'
-                           }})">
-                        </i>
-                        <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
-                           v-on:click="showSubject(subject.id)"></i>
-                        <delete-item v-bind:deleteData="{id:subject.id, url:'/api/subjects/'}"></delete-item>
+                    <td>
+                        <span class="d-xl-flex justify-content-xl-around">
+                            <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
+                               v-on:click="editSubject({
+                               subject: {
+                                   'id':subject.id,
+                                    name: subject.name,
+                                    student: subject.student.full_name,
+                                    academic_grades: subject.value,
+                                    url:'/api/subjects/'
+                               }})">
+                            </i>
+                            <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
+                               v-on:click="showSubject(subject.id)"></i>
+                            <delete-item v-bind:deleteData="{id:subject.id, url:'/api/subjects/'}"></delete-item>
+                        </span>
                     </td>
                 </tr>
                 </tbody>

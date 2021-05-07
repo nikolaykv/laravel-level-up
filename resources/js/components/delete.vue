@@ -32,10 +32,10 @@ export default {
                     if (this.$parent.$options.name === 'show') {
                         this.$parent.$options.methods.redrawHtml()
                     } else if (this.$parent.$options.name === 'index') {
-                        $($(this.$el).parent()).parent().fadeOut("slow")
+                        $($(this.$el).parent()).parent().parent().fadeOut('slow');
                     }
                 }
-            })
+            });
         },
     },
 }

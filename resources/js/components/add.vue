@@ -15,7 +15,7 @@
                        autofocus
                        v-model="formData.group.name">
 
-                <span class="success-message" v-bind:class="isActive">
+                <span class="success-message added-now" v-bind:class="isActive">
                     {{ variables.add.groupSuccess }}
                 </span>
 
@@ -35,22 +35,30 @@
             <div class="col-md-9">
                 <select class="form-control"
                         id="student"
-                        v-model="formData.group.groupStudent"
+                        v-model="formData.group.students"
                         multiple="multiple"
-                        size="5"
-                        required
-                        autofocus>
-                    <option v-for="(student, key) in iterateStudents"
-                        v-bind:key="key">
+                        size="5">
+
+                    <!-- TODO нужно дать возможность создавать группы без привязки студентов-->
+               <!-- <option value="false">{{variables.add.dontBindStudents}}</option>-->
+
+                    <option v-for="(student, key) in allStudents"
+                            v-bind:value="student.user.full_name"
+                            v-bind:key="key">
                         {{ student.user.full_name }}
                     </option>
                 </select>
 
+
                 <span class="success-message" v-bind:class="isActive">
-                      {{ variables.add.groupSuccess }}
+                    {{ variables.add.studentsAssigned }}
                 </span>
 
+                <span class="invalid-error front-end-validation">
+                    &nbsp;
+                </span>
             </div>
+
             <div class="offset-md-2 col-md-10 text-right mt-3">
                 <button class="btn btn-primary" v-on:click="addNew(obj)">
                     {{ variables.save }}
@@ -190,8 +198,8 @@ export default {
         formData: {
             group: {
                 name: '',
+                students: [],
                 _token: $('meta[name="csrf-token"]').attr('content'),
-                groupStudent: [],
             },
             subject: {
                 name: '',
@@ -206,35 +214,43 @@ export default {
         error: false,
         messages: '',
         isActive: 'd-none',
-        groups: []
+        groups: [],
+        allStudents: []
     }),
     methods: {
         addNew(obj) {
             switch (true) {
                 case obj.hasOwnProperty('group'):
-                    $.ajax({
-                        url: obj.group.url,
-                        method: 'post',
-                        data: this.formData.group,
-                        success: () => {
-                            this.counter += 1;
-                            this.isActive = 'd-block';
-                            this.messages = '';
+                    if (this.formData.group.students.length > 0) {
+                        $('.front-end-validation').text('').addClass('d-none');
+                        $.ajax({
+                            url: obj.group.url,
+                            method: 'post',
+                            data: this.formData.group,
+                            success: (data) => {
 
-                            if (this.counter > 1) {
-                                // TODO сюда по хорошему надо апдейт метод вызывать на обновление
-                                $('.success-message').text(langVariables.added);
-                            }
-                        },
-                        error: (error) => {
+                                console.log(data)
 
-                            console.log(error)
+                                this.counter += 1;
+                                this.isActive = 'd-block';
+                                this.messages = '';
 
-                            this.isActive = 'd-none';
-                            this.error = true;
-                            this.messages = error.responseJSON.errors.name[0];
-                        },
-                    });
+                                if (this.counter > 1) {
+                                    $('.success-message.added-now').text(langVariables.added);
+                                }
+                            },
+                            error: (error) => {
+
+                                console.log(error)
+
+                                this.isActive = 'd-none';
+                                this.error = true;
+                                this.messages = error.responseJSON.errors.name[0];
+                            },
+                        });
+                    } else {
+                        $('.front-end-validation').text('Вы не выбрали ни одного студента!')
+                    }
                     break;
                 case obj.hasOwnProperty('subject'):
                     this.formData.subject.group_id = this.formData.subject.group_id.split('.')[0];
@@ -285,18 +301,14 @@ export default {
                 this.groups = data.groups.data
             },
         });
+        $.ajax({
+            url: '/api/students?get=all',
+            method: 'get',
+            success: (data) => {
+                this.allStudents = data.students;
+            },
+        });
     },
-    computed: {
-        iterateStudents: function () {
-            let allStudents = [];
-            this.groups.forEach(function (group) {
-                group.students.forEach(function (student) {
-                    allStudents.push(student)
-                });
-            });
-            return allStudents;
-        }
-    }
 }
 </script>
 
