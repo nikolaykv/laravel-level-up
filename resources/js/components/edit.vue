@@ -14,7 +14,12 @@
                        required
                        autofocus
                        v-bind:placeholder="obj.group.name"
-                       v-model="formData.group">
+                       v-model="formData.group.name">
+
+
+                <span class="success-message" v-bind:class="isActive">
+                     {{ variables.success }}
+                </span>
 
                 <span class="invalid-error" v-if="error">
                     <strong>
@@ -22,16 +27,48 @@
                     </strong>
                 </span>
 
-                <div class="alert alert-success mt-3" v-bind:class="isActive">
-                    {{ variables.success }}
-                </div>
             </div>
+        </div>
+
+
+        <div class="form-group row col-md-8 ml-auto mr-auto mt-4">
+            <label for="student"
+                   class="col-md-3 col-form-label text-md-right">
+                {{ variables.titles.students }}:
+            </label>
+
+            <div class="col-md-9">
+                <select class="form-control"
+                        id="student"
+                        multiple="multiple"
+                        size="5">
+                    <option value="false">
+                        {{ variables.add.dontBindStudents }}
+                    </option>
+                    <option v-for="(intersection, key) in intersectionStudents"
+                            v-bind:key="key"
+                            v-bind:selected="intersection.user.intersection">
+                        {{ intersection.user.full_name }}
+                    </option>
+                </select>
+
+                <span class="success-message" v-bind:class="isActive">
+                    {{ variables.add.studentsAssigned }}
+                </span>
+
+                <span class="invalid-error front-end-validation">
+                    &nbsp;
+                </span>
+
+            </div>
+
             <div class="offset-md-2 col-md-10 text-right mt-3">
                 <button class="btn btn-primary" v-on:click.prevent="update(obj)">
                     {{ variables.editBtn }}
                 </button>
             </div>
         </div>
+
     </div>
     <!-- Учебная группа END -->
 
@@ -142,7 +179,10 @@ export default {
     props: ['obj'],
     data: () => ({
         formData: {
-            group: '',
+            group: {
+                name: '',
+                students: []
+            },
             subject: '',
             student: '',
             academic_grades: ''
@@ -151,38 +191,53 @@ export default {
         messages: '',
         isActive: 'd-none',
         variables: langVariables,
+        students: {
+            all: [],
+            current: []
+        }
     }),
     methods: {
         update(obj) {
             let groupFormData = {
                 _token: $('meta[name="csrf-token"]').attr('content'),
-                name: this.formData.group
+                name: this.formData.group.name,
+                students: $('#student').val()
             }
+
             let subjectFormData = {
                 _token: $('meta[name="csrf-token"]').attr('content'),
                 name: this.formData.subject,
                 student: this.formData.student,
                 value: this.formData.academic_grades,
             }
-
             switch (true) {
                 case obj.hasOwnProperty('group'):
-                    $.ajax({
-                        url: obj.group.url + obj.group.id,
-                        data: groupFormData,
-                        method: 'patch',
-                        dataType: 'json',
-                        success: (data) => {
-                            this.isActive = 'd-block';
-                            $('.nav-link.active').text(data.name);
-                            this.messages = '';
-                        },
-                        error: (error) => {
-                            this.isActive = 'd-none';
-                            this.error = true;
-                            this.messages = error.responseJSON.errors.name[0];
-                        }
-                    });
+                    if (groupFormData.students.length > 0) {
+                        $('.front-end-validation').text('').addClass('d-none');
+                        $.ajax({
+                            url: obj.group.url + obj.group.id,
+                            data: groupFormData,
+                            method: 'patch',
+                            dataType: 'json',
+                            success: (data) => {
+                                console.log(data)
+
+                                this.isActive = 'd-block';
+                                $('.nav-link.active').text(data.name);
+                                this.messages = '';
+                            },
+                            error: (error) => {
+
+                                console.log(error)
+
+                                this.isActive = 'd-none';
+                                this.error = true;
+                                this.messages = error.responseJSON.errors.name[0];
+                            }
+                        });
+                    } else {
+                        $('.front-end-validation').html('<strong>' + langVariables.add.notSelectedStudents + '</strong>');
+                    }
                     break;
                 case obj.hasOwnProperty('subject'):
                     $.ajax({
@@ -222,5 +277,41 @@ export default {
             }
         },
     },
+    beforeCreate() {
+        $.ajax({
+            url: '/api/students?get=all',
+            method: 'get',
+            success: (data) => {
+                this.students.all = data.students;
+            },
+        });
+
+        if ('group' in this.$options.propsData.obj) {
+            $.ajax({
+                url: this.$options.propsData.obj.group.url + this.$options.propsData.obj.group.id,
+                method: 'get',
+                success: (data) => {
+                    this.students.current = data.group;
+                },
+            });
+        }
+    },
+    computed: {
+        // Определить пересечение значений в объектах,
+        // чтобы отрисовать в форме <option selected> для групп в которых имеются студенты
+        intersectionStudents: function () {
+            let studentsAll = this.students.all;
+            let students = this.students.current;
+            studentsAll.forEach(function (student) {
+                students.forEach(function (intersection) {
+                    if (student.user.full_name === intersection.user[0].full_name) {
+                        student.user['intersection'] = 'true';
+                    }
+                });
+            });
+
+            return studentsAll;
+        }
+    }
 }
 </script>

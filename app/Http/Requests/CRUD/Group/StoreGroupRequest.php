@@ -5,7 +5,7 @@ namespace App\Http\Requests\CRUD\Group;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class NewNameFormRequest extends FormRequest
+class StoreGroupRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

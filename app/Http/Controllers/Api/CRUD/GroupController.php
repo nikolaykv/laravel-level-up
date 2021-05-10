@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Api\CRUD;
 
-use App\Http\Requests\CRUD\Group\NewNameFormRequest;
+use App\Http\Requests\CRUD\Group\StoreGroupRequest;
+use App\Http\Requests\CRUD\Group\UpdateGroupRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Models\Group;
@@ -40,25 +41,28 @@ class GroupController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\CRUD\Group\StoreGroupRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(NewNameFormRequest $request)
+    public function store(StoreGroupRequest $request)
     {
-        // TODO нужно дать возможность создавать группы без привязки студентов
         $validator = $request->validated();
-        $users = array();
-        foreach ($request->students as $student) {
-            $userData = explode(' ', $student);
-            array_push($users, User::where('name', '=', $userData[0])
-                ->where('surname', '=', $userData[1])
-                ->get());
-        }
-        $group = Group::create($request->all());
+        if ($request->get('students')[0] === 'false') {
+            Group::create($request->all());
+        } else {
+            $users = array();
+            foreach ($request->students as $student) {
+                $userData = explode(' ', $student);
+                array_push($users, User::where('name', '=', $userData[0])
+                    ->where('surname', '=', $userData[1])
+                    ->get());
+            }
+            $group = Group::create($request->all());
 
-        foreach ($users as $user) {
-            Student::where('id', '=', $user[0]->profile_id)
-                ->update(['group_id' => $group->id]);
+            foreach ($users as $user) {
+                Student::where('id', '=', $user[0]->profile_id)
+                    ->update(['group_id' => $group->id]);
+            }
         }
         return response()->json($validator);
     }
@@ -71,22 +75,46 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
+        $group = $group->students()->get();
+        $group->map(function ($item) {
+            $item->user = User::where('id', '=', $item->id)
+                ->where('profile_type', '=', Student::class)->get();
+        });
+
         return response()->json(compact('group'));
+
+
+        //return response()->json(compact('group'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\CRUD\Group $request
+     * @param \App\Http\Requests\CRUD\Group\UpdateGroupRequest $request
      * @param \App\Models\Group $group
      * @return \Illuminate\Http\Response
      */
-    public function update(NewNameFormRequest $request, Group $group)
+    public function update(UpdateGroupRequest $request, Group $group)
     {
-        $updateItem = Group::findOrFail($group->id);
-        if ($updateItem) {
+        if (Group::findOrFail($group->id)) {
             $validator = $request->validated();
-            $updateItem->update($request->all('name'));
+            if ($request->get('students')[0] === 'false') {
+                $group->update($request->all('name'));
+            } else {
+                $users = array();
+                foreach ($request->students as $student) {
+                    $userData = explode(' ', $student);
+                    array_push($users, User::where('name', '=', $userData[0])
+                        ->where('surname', '=', $userData[1])
+                        ->get());
+                }
+                $group->update($request->all('name'));
+
+                foreach ($users as $user) {
+                    Student::where('id', '=', $user[0]->profile_id)
+                        ->update(['group_id' => $group->id]);
+                }
+            }
             return response()->json($validator);
         } else {
             return response('Not Found', 404);

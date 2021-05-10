@@ -38,10 +38,9 @@
                         v-model="formData.group.students"
                         multiple="multiple"
                         size="5">
-
-                    <!-- TODO нужно дать возможность создавать группы без привязки студентов-->
-               <!-- <option value="false">{{variables.add.dontBindStudents}}</option>-->
-
+                    <option value="false">
+                        {{ variables.add.dontBindStudents }}
+                    </option>
                     <option v-for="(student, key) in allStudents"
                             v-bind:value="student.user.full_name"
                             v-bind:key="key">
@@ -51,7 +50,7 @@
 
 
                 <span class="success-message" v-bind:class="isActive">
-                    {{ variables.add.studentsAssigned }}
+                    {{ variables.add.studentsAssignedNew }}
                 </span>
 
                 <span class="invalid-error front-end-validation">
@@ -227,10 +226,7 @@ export default {
                             url: obj.group.url,
                             method: 'post',
                             data: this.formData.group,
-                            success: (data) => {
-
-                                console.log(data)
-
+                            success: () => {
                                 this.counter += 1;
                                 this.isActive = 'd-block';
                                 this.messages = '';
@@ -240,16 +236,13 @@ export default {
                                 }
                             },
                             error: (error) => {
-
-                                console.log(error)
-
                                 this.isActive = 'd-none';
                                 this.error = true;
                                 this.messages = error.responseJSON.errors.name[0];
                             },
                         });
                     } else {
-                        $('.front-end-validation').text('Вы не выбрали ни одного студента!')
+                        $('.front-end-validation').html('<strong>' + langVariables.add.notSelectedStudents + '</strong>');
                     }
                     break;
                 case obj.hasOwnProperty('subject'):
@@ -311,9 +304,3 @@ export default {
     },
 }
 </script>
-
-<style scoped="scoped">
-.success-message {
-    color: #1d643b;
-}
-</style>
