@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api\CRUD;
 use App\Http\Requests\CRUD\Group\StoreGroupRequest;
 use App\Http\Requests\CRUD\Group\UpdateGroupRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Group;
 use App\Models\User;
+use App\Helpers\Main;
 
 class GroupController extends Controller
 {
@@ -50,15 +52,8 @@ class GroupController extends Controller
         if ($request->get('students')[0] === 'false') {
             Group::create($request->all());
         } else {
-            $users = array();
-            foreach ($request->students as $student) {
-                $userData = explode(' ', $student);
-                array_push($users, User::where('name', '=', $userData[0])
-                    ->where('surname', '=', $userData[1])
-                    ->get());
-            }
+            $users = Main::getStudentsByFullName($request->students);
             $group = Group::create($request->all());
-
             foreach ($users as $user) {
                 Student::where('id', '=', $user[0]->profile_id)
                     ->update(['group_id' => $group->id]);
@@ -73,18 +68,18 @@ class GroupController extends Controller
      * @param \App\Models\Group $group
      * @return \Illuminate\Http\Response
      */
-    public function show(Group $group)
+    public function show(Request $request, Group $group)
     {
-        $group = $group->students()->get();
-        $group->map(function ($item) {
-            $item->user = User::where('id', '=', $item->id)
-                ->where('profile_type', '=', Student::class)->get();
-        });
-
-        return response()->json(compact('group'));
-
-
-        //return response()->json(compact('group'));
+        if ($request->input('action') === 'edit') {
+            $group = $group->students()->get();
+            $group->map(function ($item) {
+                $item->user = User::where('id', '=', $item->id)
+                    ->where('profile_type', '=', Student::class)->get();
+            });
+            return response()->json(compact('group'));
+        } else {
+            return response()->json(compact('group'));
+        }
     }
 
     /**
@@ -101,13 +96,7 @@ class GroupController extends Controller
             if ($request->get('students')[0] === 'false') {
                 $group->update($request->all('name'));
             } else {
-                $users = array();
-                foreach ($request->students as $student) {
-                    $userData = explode(' ', $student);
-                    array_push($users, User::where('name', '=', $userData[0])
-                        ->where('surname', '=', $userData[1])
-                        ->get());
-                }
+                $users = Main::getStudentsByFullName($request->students);
                 $group->update($request->all('name'));
 
                 foreach ($users as $user) {

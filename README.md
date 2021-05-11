@@ -171,3 +171,8 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
     37. В текущем коммите:
         - Вывод групп в groups/index.vue через связь hasMany(Student::class) с сохранением пагинации и соблюдением полиморфной связи с таблицей пользователей
           (т.е. админы, которые находятся в той же таблице - выводиться не будут). Редактирование компонента groups/index.vue
+    38. В текущем коммите:
+        - Правка функционала update and store Api/GroupController c привязкой к группе студентов (при создании и редактировании записи в add.vue and edit.vue);
+        - Создан Helper/Main.php - для обработки из запроса массива студентов из <select multiple> формы;
+        - Для update метода в Api/GroupController создан собственный класс валидации формы UpdateGroupRequest;
+        - Часть истории изменений в проекте, логировалось только в commit messeges.

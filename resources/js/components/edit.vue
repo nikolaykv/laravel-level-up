@@ -16,8 +16,7 @@
                        v-bind:placeholder="obj.group.name"
                        v-model="formData.group.name">
 
-
-                <span class="success-message" v-bind:class="isActive">
+                <span class="success-message added-now" v-bind:class="isActive">
                      {{ variables.success }}
                 </span>
 
@@ -194,7 +193,8 @@ export default {
         students: {
             all: [],
             current: []
-        }
+        },
+        counter: 0,
     }),
     methods: {
         update(obj) {
@@ -220,16 +220,17 @@ export default {
                             method: 'patch',
                             dataType: 'json',
                             success: (data) => {
-                                console.log(data)
-
+                                this.counter += 1;
                                 this.isActive = 'd-block';
                                 $('.nav-link.active').text(data.name);
                                 this.messages = '';
+
+                                if (this.counter > 1) {
+                                    $('.success-message.added-now').text(langVariables.updated);
+                                }
+
                             },
                             error: (error) => {
-
-                                console.log(error)
-
                                 this.isActive = 'd-none';
                                 this.error = true;
                                 this.messages = error.responseJSON.errors.name[0];
@@ -288,7 +289,7 @@ export default {
 
         if ('group' in this.$options.propsData.obj) {
             $.ajax({
-                url: this.$options.propsData.obj.group.url + this.$options.propsData.obj.group.id,
+                url: this.$options.propsData.obj.group.url + this.$options.propsData.obj.group.id + '?action=edit',
                 method: 'get',
                 success: (data) => {
                     this.students.current = data.group;
