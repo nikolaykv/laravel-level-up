@@ -31,8 +31,10 @@
                                v-on:click="editStudent({
                                student: {
                                    'id':student.id,
-                                   'group': student.group.name,
-                                   'subject': student.subject.name,
+                                   //'group': student.group.name,
+                                   'group': student.group,
+                                   //'subject': student.subject.name,
+                                   'subject': student.subject,
                                    'value':   student.subject.value,
                                    user: {full_name: student.user.full_name},
                                     url:'/api/students/'

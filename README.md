@@ -180,4 +180,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - app/Http/Controllers/Api/CRUD/GroupController.php - рефакторинг и вывод связанных студентов в методе show(group_id);
         - app/Http/Controllers/Api/CRUD/StudentController.php - незначительный рефакторинг;
         - компоненты vue рефакторинг, связанные с выводом студентов в show.vue;
-        - добавлена иконка favicon.ico, выведена в шаблон, настроено webpack mix правило copy для неё. 
+        - добавлена иконка favicon.ico, выведена в шаблон, настроено webpack mix правило copy для неё.
+    40. В текущем коммите:
+        - Разметка формы для редактирования студента и отрисовка <select> с учетом совпедений в объектах;
+        - Правка индексных методов с обработка реквеста на бекенде в апи контролерах.

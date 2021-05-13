@@ -29,7 +29,6 @@
             </div>
         </div>
 
-
         <div class="form-group row col-md-8 ml-auto mr-auto mt-4">
             <label for="student"
                    class="col-md-3 col-form-label text-md-right">
@@ -67,7 +66,6 @@
                 </button>
             </div>
         </div>
-
     </div>
     <!-- Учебная группа END -->
 
@@ -158,9 +156,77 @@
 
     <!-- Студенты START -->
     <div v-else>
-        <p>
-            Какие-нибудь поля
-        </p>
+        <!-- Имя -->
+        <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
+            <label for="student-firstname" class="col-md-4 col-form-label text-md-right">
+                {{ variables.firstname }}
+            </label>
+
+            <div class="col-md-8">
+                <input id="student-firstname"
+                       type="text"
+                       class="form-control"
+                       v-bind:placeholder="fullNameUserSplit.name"
+                       required
+                       autofocus>
+            </div>
+        </div>
+
+        <!-- Фамилия -->
+        <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
+            <label for="student-lastname" class="col-md-4 col-form-label text-md-right">
+                {{ variables.lastname }}:
+            </label>
+
+            <div class="col-md-8">
+                <input id="student-lastname"
+                       type="text"
+                       class="form-control"
+                       v-bind:placeholder="fullNameUserSplit.surname"
+                       required
+                       autofocus>
+            </div>
+        </div>
+
+        <!-- Группа -->
+        <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
+            <label for="student-group" class="col-md-4 col-form-label text-md-right">
+                {{ variables.group }}:
+            </label>
+            <div class="col-md-8">
+                <select class="form-control"
+                        id="student-group"
+                        size="5">
+                    <option v-for="(intersection, key) in intersectionGroups"
+                            v-bind:key="key"
+                            v-bind:selected="intersection.intersection">
+                        {{ intersection.name }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Предмет -->
+        <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
+
+            <label for="student-subject" class="col-md-4 col-form-label text-md-right">
+                {{ variables.subject }}:
+            </label>
+
+            <div class="col-md-8">
+                <select class="form-control"
+                        id="student-subject"
+                        size="5">
+                    <option v-for="(intersection, key) in intersectionSubjects"
+                            v-bind:key="key"
+                            v-bind:selected="intersection.intersection">
+                        {{ intersection.name }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+
         <div class="offset-md-2 col-md-10 text-right mt-3">
             <button class="btn btn-primary" v-on:click.prevent="update(obj)">
                 {{ variables.editBtn }}
@@ -184,7 +250,7 @@ export default {
             },
             subject: '',
             student: '',
-            academic_grades: ''
+            academic_grades: '',
         },
         error: false,
         messages: '',
@@ -195,6 +261,8 @@ export default {
             current: []
         },
         counter: 0,
+        allGroups: [],
+        allSubjects: []
     }),
     methods: {
         update(obj) {
@@ -296,10 +364,25 @@ export default {
                 },
             });
         }
+
+        $.ajax({
+            url: '/api/groups?get=all',
+            method: 'get',
+            success: (data) => {
+                this.allGroups = data
+            },
+        });
+
+        $.ajax({
+            url: '/api/subjects?get=all',
+            method: 'get',
+            success: (data) => {
+                this.allSubjects = data;
+            },
+        });
     },
     computed: {
-        // Определить пересечение значений в объектах,
-        // чтобы отрисовать в форме <option selected> для групп в которых имеются студенты
+        // Определить пересечение значений в объектах
         intersectionStudents: function () {
             let studentsAll = this.students.all;
             let students = this.students.current;
@@ -312,7 +395,39 @@ export default {
             });
 
             return studentsAll;
-        }
+        },
+
+        intersectionGroups: function () {
+            let allGroups = this.allGroups;
+            let groupCurrent = this.obj.student.group;
+
+            allGroups.forEach(function (group) {
+                if (group.name && group.name === groupCurrent) {
+                    group['intersection'] = 'true';
+                }
+            });
+            return allGroups;
+        },
+
+        intersectionSubjects: function () {
+            let allSubjects = this.allSubjects;
+            let subjectCurrent = this.obj.student.subject;
+
+            allSubjects.forEach(function (subject) {
+                if (subject.name === subjectCurrent) {
+                    subject['intersection'] = 'true';
+                }
+            });
+            return allSubjects;
+        },
+
+        fullNameUserSplit: function () {
+            let split = this.obj.student.user.full_name.split(" ")
+            return {
+                name: split[0],
+                surname: split[1]
+            }
+        },
     }
 }
 </script>

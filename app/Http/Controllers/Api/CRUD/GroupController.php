@@ -16,28 +16,33 @@ class GroupController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $groups = Group::with(['students.user' => function ($query) {
-            $query->where('profile_type', '=', Student::class);
-        }])->paginate(5);
+        if ($request->input('get') === 'all') {
+            return response()->json(Group::all());
 
-        $response = [
-            'pagination' => [
-                'total' => $groups->total(),
-                'per_page' => $groups->perPage(),
-                'current_page' => $groups->currentPage(),
-                'last_page' => $groups->lastPage(),
-                'from' => $groups->firstItem(),
-                'to' => $groups->lastItem(),
-            ],
-            'groups' => $groups
-        ];
+        } else {
+            $groups = Group::with(['students.user' => function ($query) {
+                $query->where('profile_type', '=', Student::class);
+            }])->paginate(5);
 
-        return response()->json($response);
+            $response = [
+                'pagination' => [
+                    'total' => $groups->total(),
+                    'per_page' => $groups->perPage(),
+                    'current_page' => $groups->currentPage(),
+                    'last_page' => $groups->lastPage(),
+                    'from' => $groups->firstItem(),
+                    'to' => $groups->lastItem(),
+                ],
+                'groups' => $groups
+            ];
 
+            return response()->json($response);
+        }
     }
 
     /**

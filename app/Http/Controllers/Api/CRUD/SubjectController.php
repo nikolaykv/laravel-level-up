@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\CRUD;
 
 use App\Http\Requests\CRUD\Subject\SubjectFormRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\User;
@@ -13,24 +14,29 @@ class SubjectController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $subjects = Subject::with('student.user')->paginate(5);
+        if ($request->input('get') === 'all') {
+            return response()->json(Subject::all());
+        } else {
+            $subjects = Subject::with('student.user')->paginate(5);
 
-        $response = [
-            'pagination' => [
-                'total' => $subjects->total(),
-                'per_page' => $subjects->perPage(),
-                'current_page' => $subjects->currentPage(),
-                'last_page' => $subjects->lastPage(),
-                'from' => $subjects->firstItem(),
-                'to' => $subjects->lastItem(),
-            ],
-            'subjects' => $subjects
-        ];
-        return response()->json($response);
+            $response = [
+                'pagination' => [
+                    'total' => $subjects->total(),
+                    'per_page' => $subjects->perPage(),
+                    'current_page' => $subjects->currentPage(),
+                    'last_page' => $subjects->lastPage(),
+                    'from' => $subjects->firstItem(),
+                    'to' => $subjects->lastItem(),
+                ],
+                'subjects' => $subjects
+            ];
+            return response()->json($response);
+        }
     }
 
     /**

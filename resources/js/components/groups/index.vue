@@ -31,12 +31,14 @@
                     <td class="align-middle">{{ group.updated_at }}</td>
                     <td class="align-middle">
                         <span class="d-xl-flex justify-content-xl-around">
-                            <i class="far fa-edit bg-primary text-white btn d-flex align-items-center" v-on:click="editGroup({
-                           group: {
-                               'id':group.id,
-                                name: group.name,
-                                url:'/api/groups/'
-                           }})">
+                            <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
+                               v-on:click="editGroup({
+                                                            group: {
+                                                                'id':group.id,
+                                                                name: group.name,
+                                                                url:'/api/groups/'
+                                                            }
+                                                          })">
                             </i>
                             <i class="far fa-eye bg-success text-white btn d-flex align-items-center"
                                v-on:click="showGroup(group.id)"></i>
