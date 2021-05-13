@@ -17,22 +17,21 @@
                     <td class="align-middle">{{ group.id }}</td>
                     <td class="align-middle">{{ group.name }}</td>
                     <td class="align-middle" v-if="group.students.length > 0">
-                       <p v-for="(student, key) in group.students"
+                        <p v-for="(student, key) in group.students"
                            v-bind:key="key"
                            class="mb-0">
-                            {{student.user.full_name}}
+                            {{ student.user.full_name }}
                         </p>
                     </td>
 
                     <td v-else>
-                        <p class="mb-0">{{variables.index.studentEmpty}}</p>
+                        <p class="mb-0">{{ variables.index.studentEmpty }}</p>
                     </td>
                     <td class="align-middle">{{ group.created_at }}</td>
                     <td class="align-middle">{{ group.updated_at }}</td>
                     <td class="align-middle">
                         <span class="d-xl-flex justify-content-xl-around">
-                            <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
-                               v-on:click="editGroup({
+                            <i class="far fa-edit bg-primary text-white btn d-flex align-items-center" v-on:click="editGroup({
                            group: {
                                'id':group.id,
                                 name: group.name,

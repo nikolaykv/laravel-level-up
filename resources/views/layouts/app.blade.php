@@ -12,6 +12,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 
+    <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon">
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>

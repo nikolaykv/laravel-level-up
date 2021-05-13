@@ -176,3 +176,8 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
         - Создан Helper/Main.php - для обработки из запроса массива студентов из <select multiple> формы;
         - Для update метода в Api/GroupController создан собственный класс валидации формы UpdateGroupRequest;
         - Часть истории изменений в проекте, логировалось только в commit messeges.
+    39. В текущем коммите:
+        - app/Http/Controllers/Api/CRUD/GroupController.php - рефакторинг и вывод связанных студентов в методе show(group_id);
+        - app/Http/Controllers/Api/CRUD/StudentController.php - незначительный рефакторинг;
+        - компоненты vue рефакторинг, связанные с выводом студентов в show.vue;
+        - добавлена иконка favicon.ico, выведена в шаблон, настроено webpack mix правило copy для неё. 

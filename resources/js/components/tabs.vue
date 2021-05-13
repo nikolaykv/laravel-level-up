@@ -11,9 +11,9 @@
             <li class="nav-item" v-if="serviceTab">
                 <a class="nav-link" v-on:click.prevent="setActive('service')"
                    v-bind:class="{ active: isActive('service') }">
-                    <span v-if="serviceTab.hasOwnProperty('group')">{{ serviceTab.group.name }}</span>
+                    <span v-if="serviceTab.hasOwnProperty('group')">{{ defineType }}</span>
                     <span v-else-if="serviceTab.hasOwnProperty('subject')">{{ serviceTab.subject.name }}</span>
-                    <span v-else>{{serviceTab.student.user.full_name}}</span>
+                    <span v-else>{{ serviceTab.student.user.full_name }}</span>
                 </a>
             </li>
         </ul>
@@ -157,5 +157,14 @@ export default {
         this.getSubjects();
         this.getStudents()
     },
+    computed: {
+        defineType: function () {
+            if (Array.isArray(this.serviceTab.group)) {
+                return this.serviceTab.group[0].name;
+            } else {
+                return this.serviceTab.group.name;
+            }
+        }
+    }
 }
 </script>

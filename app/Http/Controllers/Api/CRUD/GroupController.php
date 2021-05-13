@@ -66,6 +66,7 @@ class GroupController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Group $group
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, Group $group)
@@ -76,10 +77,12 @@ class GroupController extends Controller
                 $item->user = User::where('id', '=', $item->id)
                     ->where('profile_type', '=', Student::class)->get();
             });
-            return response()->json(compact('group'));
         } else {
-            return response()->json(compact('group'));
+            $group = $group->with(['students.user' => function ($query) {
+                $query->where('profile_type', '=', Student::class);
+            }])->where('id', '=', $group->id)->get();
         }
+        return response()->json(compact('group'));
     }
 
     /**
@@ -91,23 +94,19 @@ class GroupController extends Controller
      */
     public function update(UpdateGroupRequest $request, Group $group)
     {
-        if (Group::findOrFail($group->id)) {
-            $validator = $request->validated();
-            if ($request->get('students')[0] === 'false') {
-                $group->update($request->all('name'));
-            } else {
-                $users = Main::getStudentsByFullName($request->students);
-                $group->update($request->all('name'));
-
-                foreach ($users as $user) {
-                    Student::where('id', '=', $user[0]->profile_id)
-                        ->update(['group_id' => $group->id]);
-                }
-            }
-            return response()->json($validator);
+        $validator = $request->validated();
+        if ($request->get('students')[0] === 'false') {
+            $group->update($request->all('name'));
         } else {
-            return response('Not Found', 404);
+            $users = Main::getStudentsByFullName($request->students);
+            $group->update($request->all('name'));
+
+            foreach ($users as $user) {
+                Student::where('id', '=', $user[0]->profile_id)
+                    ->update(['group_id' => $group->id]);
+            }
         }
+        return response()->json($validator);
     }
 
     /**
