@@ -15,8 +15,9 @@ class CreateSubjectsTable extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
-
-            $table->string('name')->comment('Название предмета');
+            $table->string('name')
+                ->nullable()
+                ->comment('Название предмета');
             $table->integer('value')->comment('Оценка студенту по предмету');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

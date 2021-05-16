@@ -194,38 +194,20 @@
                 {{ variables.group }}:
             </label>
             <div class="col-md-8">
-                <select class="form-control"
-                        id="student-group"
-                        size="5">
-                    <option v-for="(intersection, key) in intersectionGroups"
-                            v-bind:key="key"
-                            v-bind:selected="intersection.intersection">
-                        {{ intersection.name }}
+                <select class="form-control" id="student-group" size="5">
+
+                    <option v-if="Object.values(obj.student).indexOf(null) > -1" selected disabled>Без учебной группы</option>
+                    <option v-else selected disabled>Текущая учебная группа: {{obj.student.group.name}}</option>
+
+                    <option v-for="(group, key) in allGroups" v-bind:key="key">
+                        {{ group.name }}
                     </option>
                 </select>
             </div>
         </div>
 
         <!-- Предмет -->
-        <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
-
-            <label for="student-subject" class="col-md-4 col-form-label text-md-right">
-                {{ variables.subject }}:
-            </label>
-
-            <div class="col-md-8">
-                <select class="form-control"
-                        id="student-subject"
-                        size="5">
-                    <option v-for="(intersection, key) in intersectionSubjects"
-                            v-bind:key="key"
-                            v-bind:selected="intersection.intersection">
-                        {{ intersection.name }}
-                    </option>
-                </select>
-            </div>
-        </div>
-
+        {{allSubjects}}
 
         <div class="offset-md-2 col-md-10 text-right mt-3">
             <button class="btn btn-primary" v-on:click.prevent="update(obj)">
@@ -393,32 +375,7 @@ export default {
                     }
                 });
             });
-
             return studentsAll;
-        },
-
-        intersectionGroups: function () {
-            let allGroups = this.allGroups;
-            let groupCurrent = this.obj.student.group;
-
-            allGroups.forEach(function (group) {
-                if (group.name && group.name === groupCurrent) {
-                    group['intersection'] = 'true';
-                }
-            });
-            return allGroups;
-        },
-
-        intersectionSubjects: function () {
-            let allSubjects = this.allSubjects;
-            let subjectCurrent = this.obj.student.subject;
-
-            allSubjects.forEach(function (subject) {
-                if (subject.name === subjectCurrent) {
-                    subject['intersection'] = 'true';
-                }
-            });
-            return allSubjects;
         },
 
         fullNameUserSplit: function () {
