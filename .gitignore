@@ -16,3 +16,9 @@ public/vendor
 composer.lock
 routes.txt
 *.LICENSE.txt
+
+public/css/*
+public/js/app.js
+public/js/tabs.js
+
+!.keep
