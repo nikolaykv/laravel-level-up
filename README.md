@@ -184,3 +184,16 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
     40. В текущем коммите:
         - Разметка формы для редактирования студента и отрисовка <select> с учетом совпедений в объектах;
         - Правка индексных методов с обработка реквеста на бекенде в апи контролерах.
+    41. В текущем коммите:
+        - Переписаны отношения между студентом и учебным предметом. Файлы (app/Models/Student.php, app/Models/Subject.php). Теперь несколько студентов
+          могут заниматься одним предметом (Subject->hasMany(Student));
+        - database/factories/StudentFactory.php - теперь имеет поля:
+            a) subject_id - внешний ключ на таблицу subject к полю id;
+            b) academic_grade - каждый студенто имеет свою собственную оценку по предмету.
+        - database/factories/SubjectFactory.php - поле value - удалено, в связи с логикой, описанной выше;
+        - В миграции database/migrations/2021_03_21_164430_create_subjects_table.php убрал поле value (оценка студента);
+        - В миграции database/migrations/2021_03_27_062056_create_students_table.php, добавлен внешний ключ subject_id и academic_grade - оценка студента;
+        - Миграция database/migrations/2021_03_27_062057_add_foreign_key_to_subjects_table.php - удалена, связь была не верна по ТЗ;
+        - Переписан database/seeds/DatabaseSeeder.php класс, с учётом новых отношений;
+        - Добавлен новый database/seeds/SubjectSeeder.php класс для тестирования учебных предметов;
+        - routes/console.php - добавлена консольная команда, для очистки папки логов приложения.

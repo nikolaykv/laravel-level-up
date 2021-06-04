@@ -9,11 +9,10 @@ class Subject extends Model
 
     protected $fillable = [
         'name',
-        'value'
     ];
-    public function student()
-    {
-        return $this->belongsTo(Student::class);
+
+    public function student() {
+        return $this->hasMany(Student::class);
     }
 
     protected $casts = [

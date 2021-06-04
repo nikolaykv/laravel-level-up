@@ -12,6 +12,5 @@ $factory->define(Subject::class, function (Faker $faker) {
 
     return [
         'name' => 'Название предмета ' . $faker->text(7),
-        'value' => rand(1, 5)
     ];
 });

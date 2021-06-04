@@ -12,5 +12,7 @@ $factory->define(Student::class, function (Faker $faker)  {
 
     return [
         'group_id' => $faker->numberBetween(1, 5),
+        'subject_id' => $faker->numberBetween(1, 5),
+        'academic_grade' => rand(1, 5)
     ];
 });

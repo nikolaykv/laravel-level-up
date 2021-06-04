@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -12,7 +13,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            GroupSeeder::class
+            GroupSeeder::class,
+            SubjectSeeder::class,
         ]);
 
         factory(App\Models\Student::class, 5)->create()->each(function ($student) {
@@ -21,16 +23,13 @@ class DatabaseSeeder extends Seeder
                 factory(App\Models\User::class)->make([
                     'profile_id' => $student->id,
                     'profile_type' => App\Models\User::class
-                ])
-            );
+                ]),
 
-            // отношения один к одному
-            $student->subject()->save(
                 factory(App\Models\Subject::class)->make([
-                    'student_id' => $student->id
+                    'id' => $student->subject_id
                 ])
+
             );
         });
-
     }
 }
