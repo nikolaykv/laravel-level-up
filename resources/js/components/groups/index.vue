@@ -25,7 +25,7 @@
                     </td>
 
                     <td v-else>
-                        <p class="mb-0">{{ variables.index.studentEmpty }}</p>
+                        {{ variables.index.studentEmpty }}
                     </td>
                     <td class="align-middle">{{ group.created_at }}</td>
                     <td class="align-middle">{{ group.updated_at }}</td>

@@ -5,6 +5,7 @@
         "subjects": "Учебные предметы"
     },
     "index": {
+        "academicGradeEmpty": "Нет оценки",
         "studentGroupEmpty": "Без учебной группы",
         "groupAddNew": "Добавить новую учебную группу",
         "studentAddNew": "Добавить нового пользователя",

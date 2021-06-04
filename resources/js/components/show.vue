@@ -55,13 +55,40 @@
             </thead>
             <tbody>
             <tr class="show-item-subject">
-                <td>{{ data.subject.id }}</td>
-                <td>{{ data.subject.name }}</td>
-                <td>{{ data.subject.student.user.full_name }}</td>
-                <td class="text-center">{{ data.subject.value }}</td>
-                <td>{{ data.subject.created_at }}</td>
-                <td class="d-xl-flex justify-content-xl-around">
-                    <delete-item v-bind:deleteData="{id:data.subject.id, url:'/api/subjects/'}"></delete-item>
+                <td class="align-middle">{{ data.subject.id }}</td>
+                <td class="align-middle">{{ data.subject.name }}</td>
+
+                <!-- Полное имя студента START -->
+                <td class="align-middle" v-if="data.subject.student.length > 0">
+                    <p class="mb-0" v-for="(student, key) in data.subject.student"
+                       v-bind:key="key">
+                        {{ student.user.full_name }}
+                    </p>
+                </td>
+
+                <td class="align-middle" v-else>
+                    {{ variables.index.studentEmpty }}
+                </td>
+                <!-- Полное имя студента END -->
+
+                <!-- Академическая оценка студента START -->
+                <td class="align-middle" v-if="data.subject.student.length > 0">
+                    <p class="mb-0" v-for="(student, key) in data.subject.student"
+                       v-bind:key="key">
+                        {{ student.academic_grade }}
+                    </p>
+                </td>
+
+                <td class="align-middle" v-else>
+                    {{ variables.index.academicGradeEmpty }}
+                </td>
+                <!-- Академическая оценка студента END -->
+
+                <td class="align-middle">{{ data.subject.created_at }}</td>
+                <td class="align-middle">
+                     <span class="d-xl-flex justify-content-xl-around">
+                        <delete-item v-bind:deleteData="{id:data.subject.id, url:'/api/subjects/'}"></delete-item>
+                     </span>
                 </td>
             </tr>
             </tbody>

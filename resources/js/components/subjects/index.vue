@@ -15,12 +15,39 @@
                 <tbody>
 
                 <tr v-for="subject in subjects" v-bind:key="subject.id">
-                    <td>{{ subject.id }}</td>
-                    <td>{{ subject.name }}</td>
-                    <td>{{ subject.student.user.full_name }}</td>
-                    <td class="text-center">{{ subject.value }}</td>
-                    <td>{{ subject.created_at }}</td>
-                    <td>
+                    <td class="align-middle">{{ subject.id }}</td>
+                    <td class="align-middle">{{ subject.name }}</td>
+
+                    <!-- Полное имя студента START -->
+                    <td class="align-middle" v-if="subject.student.length > 0">
+                        <p v-for="(student, key) in subject.student"
+                           v-bind:key="key"
+                           class="mb-0">
+                            {{student.user.full_name}}
+                        </p>
+                    </td>
+
+                    <td class="align-middle" v-else>
+                        {{ variables.index.studentEmpty }}
+                    </td>
+                    <!-- Полное имя студента END -->
+
+                    <!-- Академическая оценка студента START -->
+                    <td class="align-middle" v-if="subject.student.length > 0">
+                        <p v-for="(student, key) in subject.student"
+                           v-bind:key="key"
+                           class="mb-0">
+                            {{student.academic_grade}}
+                        </p>
+                    </td>
+
+                    <td class="align-middle" v-else>
+                        {{ variables.index.academicGradeEmpty }}
+                    </td>
+                    <!-- Академическая оценка студента END -->
+
+                    <td class="align-middle">{{ subject.created_at }}</td>
+                    <td class="align-middle">
                         <span class="d-xl-flex justify-content-xl-around">
                             <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
                                v-on:click="editSubject({
@@ -101,7 +128,7 @@ export default {
         },
         addNew(obj) {
             this.$emit('addNewItem', obj);
-        }
+        },
     },
     updated() {
         setTimeout(function () {
