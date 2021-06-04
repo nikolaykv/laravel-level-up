@@ -156,4 +156,9 @@
         - Миграция database/migrations/2021_03_27_062057_add_foreign_key_to_subjects_table.php - удалена, связь была не верна по ТЗ;
         - Переписан database/seeds/DatabaseSeeder.php класс, с учётом новых отношений;
         - Добавлен новый database/seeds/SubjectSeeder.php класс для тестирования учебных предметов;
-        - routes/console.php - добавлена консольная команда, для очистки папки логов приложения._
+        - routes/console.php - добавлена консольная команда, для очистки папки логов приложения.
+    42. В текущем коммите:
+        - Добавлен как dev зависимость пакет beyondcode/laravel-er-diagram-generator для генерации схемы отношений базы данных приложения;
+        - config/erd-generator.php - скопированы настройки пакета beyondcode/laravel-er-diagram-generator в папку config данного приложения;
+        - lrlup.png - визуализаия отношений между моделями.
+        
