@@ -39,3 +39,14 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 В репозитории представлена собственная реализация [тестового задания](https://docs.google.com/document/d/1iyhYo-xlRT5Xq-p8wzOwyY6d79zZiGhoDhbj18J215g/edit#heading=h.3qvtvhi25eb4) от Framework Team.
 
 История изменений перенесена в файл [CHANGELOG.md](https://github.com/nikolaykv/laravel-level-up/blob/969a57393a9f1b27a1f53a27a90b7a031bb94484/CHANGELOG.md)
+
+<p>
+    Схема отношений между моделями в данном приложении, сгенерированная при помощи пакета:</br>
+    <a href="https://github.com/beyondcode/laravel-er-diagram-generator" target="_blank">beyondcode/laravel-er-diagram-generator</a>
+</p>
+
+<p align="center">
+ <a href="https://github.com/nikolaykv/laravel-level-up/blob/102f27ee4080756d2c7f028b7823e95252c26812/lrlup.png" target="_blank">
+        <img src="https://github.com/nikolaykv/laravel-level-up/blob/102f27ee4080756d2c7f028b7823e95252c26812/lrlup.png">
+    </a>
+</p>
