@@ -7,6 +7,7 @@
     "index": {
         "academicGradeEmpty": "Нет оценки",
         "studentGroupEmpty": "Без учебной группы",
+        "studentSubjectEmpty": "Без учебного предмета",
         "groupAddNew": "Добавить новую учебную группу",
         "studentAddNew": "Добавить нового пользователя",
         "subjectAddNew": "Добавить новый учебный предмет",

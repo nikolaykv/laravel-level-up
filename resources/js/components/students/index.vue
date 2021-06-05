@@ -23,8 +23,26 @@
                     <td class="align-middle" v-else>
                         {{ variables.index.studentGroupEmpty }}
                     </td>
-                    <td class="align-middle">{{ student.subject.name }}</td>
-                    <td class="text-center">{{ student.subject.value }}</td>
+
+                    <td v-if="student.subject"
+                        class="align-middle">
+                        {{ student.subject.name }}
+                    </td>
+                    <td v-else class="align-middle">
+                        {{ variables.index.studentSubjectEmpty }}
+                    </td>
+
+                    <td v-if="student.academic_grade" class="text-center">
+                        {{ student.academic_grade }}
+                    </td>
+                    <td v-else class="align-middle text-center">
+                        {{ variables.index.academicGradeEmpty }}
+                    </td>
+
+
+
+<!--                    <td class="align-middle">{{ student.subject.name }}</td>-->
+<!--                    <td class="text-center">{{ student.subject.value }}</td>-->
                     <td class="align-middle">
                         <span class="d-xl-flex justify-content-xl-around">
                             <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
