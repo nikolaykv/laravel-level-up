@@ -112,8 +112,27 @@
                 <td>{{ data.student.id }}</td>
                 <td>{{ data.student.user.full_name }}</td>
                 <td>{{ data.student.group.name }}</td>
-                <td>{{ data.student.subject.name }}</td>
-                <td class="text-center">{{ data.student.subject.value }}</td>
+
+                <!-- Название предмета START -->
+                <td v-if="data.student.subject"
+                    class="align-middle">
+                    {{ data.student.subject.name }}
+                </td>
+                <td v-else class="align-middle">
+                    {{ variables.index.studentSubjectEmpty }}
+                </td>
+                <!-- Название предмета END -->
+
+                <!-- Оценка студента по предмету START -->
+                <td v-if="data.student.academic_grade"
+                    class="text-center">
+                    {{ data.student.academic_grade }}
+                </td>
+                <td v-else class="align-middle text-center">
+                    {{ variables.index.academicGradeEmpty }}
+                </td>
+                <!-- Оценка студента по предмету END -->
+
                 <td class="d-xl-flex justify-content-xl-around">
                     <delete-item v-bind:deleteData="{id:data.student.id, url:'/api/students/'}"></delete-item>
                 </td>

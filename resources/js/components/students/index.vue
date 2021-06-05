@@ -24,6 +24,7 @@
                         {{ variables.index.studentGroupEmpty }}
                     </td>
 
+                    <!-- Название предмета START -->
                     <td v-if="student.subject"
                         class="align-middle">
                         {{ student.subject.name }}
@@ -31,27 +32,24 @@
                     <td v-else class="align-middle">
                         {{ variables.index.studentSubjectEmpty }}
                     </td>
+                    <!-- Название предмета END -->
 
+                    <!-- Оценка студента по предмету START -->
                     <td v-if="student.academic_grade" class="text-center">
                         {{ student.academic_grade }}
                     </td>
                     <td v-else class="align-middle text-center">
                         {{ variables.index.academicGradeEmpty }}
                     </td>
+                    <!-- Оценка студента по предмету END -->
 
-
-
-<!--                    <td class="align-middle">{{ student.subject.name }}</td>-->
-<!--                    <td class="text-center">{{ student.subject.value }}</td>-->
                     <td class="align-middle">
                         <span class="d-xl-flex justify-content-xl-around">
                             <i class="far fa-edit bg-primary text-white btn d-flex align-items-center"
                                v-on:click="editStudent({
                                student: {
                                    'id':student.id,
-                                   //'group': student.group.name,
                                    'group': student.group,
-                                   //'subject': student.subject.name,
                                    'subject': student.subject,
                                    'value':   student.subject.value,
                                    user: {full_name: student.user.full_name},
