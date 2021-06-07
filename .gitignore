@@ -22,3 +22,8 @@ public/js/app.js
 public/js/tabs.js
 
 !.keep
+
+# Package barryvdh/laravel-ide-helper generated files
+.phpstorm.meta.php
+_ide_helper.php
+_ide_helper_models.php
