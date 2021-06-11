@@ -25,31 +25,22 @@ class SubjectFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'     => ['required', 'max:40'],
+            'name' => ['required', 'max:40'],
             'group_id' => ['required'],
-            'student'  => ['required', 'max:40'],
-            'value'    => ['required', 'numeric', 'max:5', 'min:1'],
-        ];
-    }
-    public function messages()
-    {
-        return [
-            'name.required'     => __('validation.custom.name.required'),
-            'group_id.required' => __('validation.custom.group_id.required'),
-            'name.max:40'       => __('validation.custom.name.max:40'),
-            'student.required'  => __('validation.custom.student.required'),
-            'student.max:40'    => __('validation.custom.student.max:40'),
-            'value.required'    => __('validation.custom.value.required'),
-            'value.max:5'       => __('validation.custom.value.max:5'),
-            'value.min:1'       => __('validation.custom.value.min:1'),
-            'value.numeric'     => __('validation.custom.value.numeric')
+            'students' => ['required', 'array', 'min:1'],
+            'academic_grade' => ['required', 'array', 'min:1'],
+            'students.*' => ['required', 'string', 'max:40'],
+            'academic_grade.*' => ['required', 'integer', 'between:1,5', 'min:1'],
         ];
     }
 
-    public function attributes()
+    public function messages()
     {
         return [
-          'value' => __('validation.attributes.value')
+            'name.required' => __('validation.custom.name.required'),
+            'group_id.required' => __('validation.custom.group_id.required'),
+            'name.max:40' => __('validation.custom.name.max:40'),
+            'academic_grade.*.between' => __('validation.custom.academic_grade_item.between'),
         ];
     }
 

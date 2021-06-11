@@ -78,7 +78,7 @@ export default {
     },
     data: () => ({
         variables: langVariables,
-        activeItem: 'students',
+        activeItem: 'subjects',
         subjects: [],
         groups: [],
         students: [],

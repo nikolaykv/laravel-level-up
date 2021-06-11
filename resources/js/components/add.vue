@@ -68,7 +68,7 @@
     <!-- Группа END -->
 
     <!-- Учебный предмет START -->
-    <div v-else-if="obj.hasOwnProperty('subject')">
+    <div v-else-if="obj.hasOwnProperty('subject')" class="subject">
         <!-- Имя START-->
         <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
             <label for="subject-name"
@@ -103,6 +103,7 @@
             <div class="col-md-8">
                 <select class="form-control" v-model="formData.subject.group_id" id="group" required autofocus>
                     <option value="" selected disabled hidden>{{ variables.select }}</option>
+                    <option value="false">Не привязывать группу</option>
                     <option v-for="group in groups" v-bind:key="group.id">
                         {{ group.id }}. {{ group.name }}
                     </option>
@@ -113,59 +114,91 @@
                         {{ messages.group_id[0] }}
                     </strong>
                 </span>
+
             </div>
         </div>
         <!-- Группа END -->
 
         <!-- Студент START-->
-        <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
-            <label for="student-name"
+        <div class="form-group row col-md-10 ml-auto mr-auto mt-4 students">
+            <label for="students"
                    class="col-md-4 col-form-label text-md-right">
                 {{ variables.student }}:
             </label>
 
             <div class="col-md-8">
-                <input id="student-name"
-                       type="text"
-                       class="form-control"
-                       required
-                       autofocus
-                       v-model="formData.subject.student">
+                <select class="form-control"
+                        id="students"
+                        multiple="multiple"
+                        size="5"
+                        autofocus
+                        v-model="formData.subject.students">
+                    <option value="false">
+                        {{ variables.add.dontBindStudents }}
+                    </option>
+                    <option v-for="student in allStudents"
+                            v-bind:value="student.user.full_name"
+                            v-bind:key="student.id">
+                        {{ student.id }}. {{ student.user.full_name }}
+                    </option>
+                </select>
 
                 <span class="invalid-error" v-if="error">
-                    <strong v-if="messages.hasOwnProperty('student')">
-                        {{ messages.student[0] }}
+                    <strong v-if="messages.hasOwnProperty('students')">
+                        {{ messages.students[0] }}
                     </strong>
                 </span>
+
+                <span class="invalid-error front-end-validation">
+                    &nbsp;
+                </span>
+
+
             </div>
         </div>
         <!-- Студент END -->
 
         <!-- Оценка по предмету START-->
-        <div class="form-group row col-md-10 ml-auto mr-auto mt-4">
-            <label for="value"
+        <div class="form-group row col-md-10 ml-auto mr-auto academic-grade">
+            <label for="academic_grade"
                    class="col-md-4 col-form-label text-md-right">
                 {{ variables.academicGrades }}
             </label>
 
             <div class="col-md-8">
-                <input id="value"
+                <p class="text-primary mb-0 academic-grade-info">
+                    Академическая оценка присваивается студенту в порядке добавления - через запятую.<br/>
+                    Допустимы только целые значения от 1 до 5.
+                    Лишние символы и буквы - будут автоматически обрезаны!
+                </p>
+                <input id="academic_grade"
                        type="text"
                        class="form-control"
-                       required
                        autofocus
-                       v-model="formData.subject.value">
+                       placeholder="Например: 3,5,4"
+                       v-on:change="academicGradeCleaning"
+                       v-model="formData.subject.academic_grade">
 
                 <span class="invalid-error" v-if="error">
-                    <strong v-if="messages.hasOwnProperty('value')">
-                        {{ messages.value[0] }}
+                    <strong v-if="!messages.hasOwnProperty('name') && !messages.hasOwnProperty('group_id') && !messages.hasOwnProperty('students')">
+                     {{ Object.values(messages)[0].toString() }}
                     </strong>
                 </span>
+
+                <span class="invalid-error front-end-validation">
+                    &nbsp;
+                </span>
+
             </div>
+
+            <div class="ml-auto col-md-8 text-right">
+                <span class="success-message" v-bind:class="isActive">
+                    {{ variables.add.subjectSuccess }}
+                </span>
+            </div>
+
         </div>
         <!-- Оценка по предмету END -->
-
-        <span class="success-message" v-bind:class="isActive">{{ variables.add.subjectSuccess }}</span>
 
         <div class="offset-md-2 col-md-10 text-right mt-3">
             <button class="btn btn-primary" v-on:click="addNew(obj)">
@@ -202,8 +235,8 @@ export default {
             },
             subject: {
                 name: '',
-                student: '',
-                value: '',
+                students: [],
+                academic_grade: [],
                 group_id: '',
                 _token: $('meta[name="csrf-token"]').attr('content'),
             }
@@ -246,26 +279,43 @@ export default {
                     }
                     break;
                 case obj.hasOwnProperty('subject'):
-                    this.formData.subject.group_id = this.formData.subject.group_id.split('.')[0];
-                    $.ajax({
-                        url: obj.subject.url,
-                        method: 'post',
-                        data: this.formData.subject,
-                        success: () => {
-                            this.counter += 1;
-                            this.isActive = 'd-block';
-                            this.messages = '';
+                    if (this.formData.subject.students.length === 0) {
+                        $('.subject .students .front-end-validation').html('<strong>' + langVariables.add.notSelectedStudents + '</strong>');
+                    } else {
+                        $('.subject .students .front-end-validation').html('');
+                        if (this.formData.subject.students[0] === 'false') {
+                            $('.subject .students .front-end-validation').html('');
+                            console.log('Запрос на создание учебного предмета без студентов!')
+                        } else {
+                            if (this.formData.subject.students.length < this.formData.subject.academic_grade.length || this.formData.subject.academic_grade.length < this.formData.subject.students.length) {
+                                $('.subject .academic-grade .front-end-validation').html('<strong>' + langVariables.add.quantityDiscrepancy + '</strong>');
 
-                            if (this.counter > 1) {
-                                $('.success-message').text(langVariables.added);
+                            } else {
+                                $('.subject .students .front-end-validation').html('');
+                                $('.subject .academic-grade .front-end-validation').html('');
+
+                                $.ajax({
+                                    url: obj.subject.url,
+                                    method: 'post',
+                                    data: this.formData.subject,
+                                    success: (data) => {
+                                        this.isActive = 'd-block';
+                                        this.error = false;
+
+                                        console.log(data)
+                                    },
+                                    error: (error) => {
+                                        this.error = true;
+                                        this.isActive = 'd-none';
+                                        this.messages = error.responseJSON.errors
+
+                                        console.log(error)
+                                    },
+                                });
                             }
-                        },
-                        error: (error) => {
-                            this.isActive = 'd-none';
-                            this.error = true;
-                            this.messages = error.responseJSON.errors;
-                        },
-                    });
+                        }
+                    }
+
                     break;
                 case obj.hasOwnProperty('student'):
                     $.ajax({
@@ -284,6 +334,24 @@ export default {
                     });
                     break;
             }
+        },
+        academicGradeCleaning() {
+
+            let cleanDataArray = [];
+            // Обрезать все символы из строки, кроме цифр и запятых
+            let rawData = this.formData.subject.academic_grade.replace(/[^1-5,]/gi, '');
+
+            // Отфильтровать элементы строки, чтобы убрать лишние запятые
+            rawData = rawData.split(',').filter(function (item) {
+                return item != "";
+            });
+
+            // Преобразовать элементы массива в num тип
+            rawData.forEach(function (item) {
+                cleanDataArray.push(Number(item))
+            });
+
+            this.formData.subject.academic_grade = cleanDataArray;
         },
     },
     beforeCreate() {
@@ -304,3 +372,16 @@ export default {
     },
 }
 </script>
+
+<style scoped="scoped">
+.academic-grade {
+    position: relative;
+    margin-top: 4.3rem;
+}
+
+.academic-grade .academic-grade-info {
+    position: absolute;
+    font-size: 13px;
+    top: -65px;
+}
+</style>

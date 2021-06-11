@@ -47,42 +47,46 @@ class SubjectController extends Controller
      */
     public function store(SubjectFormRequest $request)
     {
-        $studentData = explode(' ', $request->student);
+         $validator = $request->validated();
+         return response()->json($validator);
 
-        $name = $studentData[0];
-        if (count($studentData) < 2) {
-            $surname = ' ';
-        } else {
-            $surname = $studentData[1];
-        }
 
-        $validator = $request->validated();
+        /*  $studentData = explode(' ', $request->student);
 
-        // Создать нового студента
-        $student = Student::create([
-            'group_id' => $request->group_id,
-        ]);
+          $name = $studentData[0];
+          if (count($studentData) < 2) {
+              $surname = ' ';
+          } else {
+              $surname = $studentData[1];
+          }
 
-        // Создаём нового пользователя
-        $student->user()->create(
-            [
-                'name' => $name,
-                'surname' => $surname,
-                'profile_id' => $student->id,
-                'profile_type' => App\Models\Student::class
-            ]
-        );
+          $validator = $request->validated();
 
-        // Создаём новый учебный предмет
-        $student->subject()->save(
-            new Subject([
-                'name' => $request->name,
-                'value' => $request->value,
-                'student_id' => $student->id
-            ])
-        );
+          // Создать нового студента
+          $student = Student::create([
+              'group_id' => $request->group_id,
+          ]);
 
-        return response()->json($validator);
+          // Создаём нового пользователя
+          $student->user()->create(
+              [
+                  'name' => $name,
+                  'surname' => $surname,
+                  'profile_id' => $student->id,
+                  'profile_type' => App\Models\Student::class
+              ]
+          );
+
+          // Создаём новый учебный предмет
+          $student->subject()->save(
+              new Subject([
+                  'name' => $request->name,
+                  'value' => $request->value,
+                  'student_id' => $student->id
+              ])
+          );
+
+          return response()->json($validator);*/
     }
 
     /**
